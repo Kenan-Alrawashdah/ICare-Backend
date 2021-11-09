@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 
+
 namespace ICare.Core.Data
 {
     public partial class Subscription : BaseDataModel

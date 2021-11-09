@@ -3,9 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ICare.Core.Data
 {
-    //TODO: implement the identity here 
-    public class ApplicationUser 
+    public class ApplicationUser : BaseDataModel
     {
+
+        [Required]
+        [MaxLength(150)]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        [RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})", ErrorMessage = "Please enter a valid password")]
+        public string PasswordHash { get; set; }
+
+        [Required]
+        [MaxLength(15)]
+        [Phone]
+        public string PhoneNumber { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
