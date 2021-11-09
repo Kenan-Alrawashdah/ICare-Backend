@@ -14,6 +14,10 @@ namespace ICare.Core.Data
         }
 
         [Required]
+        [MaxLength(250)]
+        public string DrugName { get; set; }
+
+        [Required]
         [ForeignKey(nameof(PatientId))]
         public int PatientId { get; set; }
 
