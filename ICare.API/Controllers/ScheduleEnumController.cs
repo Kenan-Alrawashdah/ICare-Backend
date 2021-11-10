@@ -13,10 +13,10 @@ namespace ICare.API.Controllers
     [ApiController]
     public class ScheduleEnumController : ControllerBase
     {
-        private readonly ICRUDServices<ScheduleEnum> ICRUDServices;
-        public ScheduleEnumController(ICRUDServices<ScheduleEnum> ICRUDServices)
+        private readonly IScheduleEnumServices _scheduleEnumServices;
+        public ScheduleEnumController(IScheduleEnumServices ICRUDServices)
         {
-            this.ICRUDServices = ICRUDServices;
+            this._scheduleEnumServices = ICRUDServices;
         }
         [HttpPost]
         [Route("Create")]
@@ -24,31 +24,31 @@ namespace ICare.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public bool Create(ScheduleEnum t)
         {
-            return ICRUDServices.Create(t);
+            return _scheduleEnumServices.Create(t);
         }
         [HttpDelete, Route("delete/{id}")]
         public bool Delete(int id)
         {
-            return ICRUDServices.Delete(id);
+            return _scheduleEnumServices.Delete(id);
         }
         [HttpGet]
         [Route("GetAll")]
         public IEnumerable<ScheduleEnum> GetAll()
         {
-            return ICRUDServices.GetAll();
+            return _scheduleEnumServices.GetAll();
         }
         [HttpGet]
         [Route("GetById/{id}")]
         public ScheduleEnum GetById(int id)
         {
-            return ICRUDServices.GetById(id);
+            return _scheduleEnumServices.GetById(id);
 
         }
         [HttpPut]
         [Route("Update")]
         public bool Update(ScheduleEnum t)
         {
-            return ICRUDServices.Update(t);
+            return _scheduleEnumServices.Update(t);
 
         }
     }

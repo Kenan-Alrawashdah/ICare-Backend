@@ -13,10 +13,10 @@ namespace ICare.API.Controllers
     [ApiController]
     public class DrugDoseTimeController : Controller
     {
-        private readonly ICRUDServices<DrugDoseTime> ICRUDServices;
-        public DrugDoseTimeController(ICRUDServices<DrugDoseTime> ICRUDServices)
+        private readonly IDrugDoseTimeServices _drugDoseTimeServices;
+        public DrugDoseTimeController(IDrugDoseTimeServices ICRUDServices)
         {
-            this.ICRUDServices = ICRUDServices;
+            this._drugDoseTimeServices = ICRUDServices;
         }
         [HttpPost]
         [Route("Create")]
@@ -24,31 +24,31 @@ namespace ICare.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public bool Create(DrugDoseTime t)
         {
-            return ICRUDServices.Create(t);
+            return _drugDoseTimeServices.Create(t);
         }
         [HttpDelete, Route("delete/{id}")]
         public bool Delete(int id)
         {
-            return ICRUDServices.Delete(id);
+            return _drugDoseTimeServices.Delete(id);
         }
         [HttpGet]
         [Route("GetAll")]
         public IEnumerable<DrugDoseTime> GetAll()
         {
-            return ICRUDServices.GetAll();
+            return _drugDoseTimeServices.GetAll();
         }
         [HttpGet]
         [Route("GetById/{id}")]
         public DrugDoseTime GetById(int id)
         {
-            return ICRUDServices.GetById(id);
+            return _drugDoseTimeServices.GetById(id);
 
         }
         [HttpPut]
         [Route("Update")]
         public bool Update(DrugDoseTime t)
         {
-            return ICRUDServices.Update(t);
+            return _drugDoseTimeServices.Update(t);
 
         }
     }
