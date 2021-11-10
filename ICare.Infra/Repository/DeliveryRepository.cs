@@ -62,9 +62,12 @@ namespace ICare.Infra.Repository
             return deliverys;
         }
 
-        public Delivery GetById(int id)
+        public Delivery GetById(int deliveryId)
         {
-            var delivery = _dbContext.Connection.QueryFirstOrDefault<Delivery>("DeliverySelect", commandType: CommandType.StoredProcedure);
+            var param = new DynamicParameters();
+            param.Add("@Id", deliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var delivery = _dbContext.Connection.QueryFirstOrDefault<Delivery>("DeliverySelect", param,  commandType: CommandType.StoredProcedure);
 
             return delivery;
         }

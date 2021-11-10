@@ -35,7 +35,7 @@ namespace ICare.API.Controllers
             return _deliveryService.Create(delivery);
         }
 
-        [HttpDelete("Delete/{bookId:int}")]
+        [HttpDelete("Delete/{deliveryId:int}")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public bool DeleteDelivery(int deliveryId)
         {
@@ -49,7 +49,7 @@ namespace ICare.API.Controllers
             return _deliveryService.Update(delivery);
         }
 
-        [HttpPost("GetById/{bookId:int}")]
+        [HttpPost("GetById/{deliveryId:int}")]
         [ProducesResponseType(typeof(Delivery), StatusCodes.Status200OK)]
         public Delivery GetDeliveryById(int deliveryId)
         {
