@@ -23,7 +23,14 @@ namespace ICare.API.Extension
             services.AddScoped<IDbContext, DbContext>();
 
 
+
             //Repository
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+            services.AddScoped<IUserTokensRepository, UserTokensRepository>();
+            services.AddScoped<IUserLoginsRepository, UserLoginsRepository>();
+            services.AddScoped<IEmployessRepository, EmployessRepository>();
+            services.AddScoped<IJWTRepository, JWTRepository>();
             services.AddScoped<IPatientDrugsRepository, PatientDrugsRepository>(); 
             services.AddScoped<IScheduleEnumRepository, ScheduleEnumRepository>(); 
             services.AddScoped<IDrugDoseTimeRepository, DrugDoseTimeRepository>();
@@ -35,6 +42,13 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             //Services
+
+            services.AddScoped<IUserServices, UserServices>();
+            services.AddScoped<IUserRolesServices, UserRolesServices>();
+            services.AddScoped<IUserTokensServices, UserTokensServices>();
+            services.AddScoped<IUserLoginsServices, UserLoginsServices>();
+            services.AddScoped<IEmployessServices, EmployessServices>();
+            services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IDrugDoseTimeServices, DrugDoseTimeServices>();
             services.AddScoped<IPatientDrugsServices, PatientDrugsServices>();
             services.AddScoped<IScheduleEnumServices, ScheduleEnumServices>();
@@ -44,6 +58,7 @@ namespace ICare.API.Extension
             services.AddScoped<IDrugCategoryService, DrugCategoryService>();
             services.AddScoped<IDrugService, DrugService>();
             services.AddScoped<IOrderService, OrderService>();
+
 
         }
     }

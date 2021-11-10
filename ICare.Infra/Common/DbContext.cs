@@ -12,6 +12,7 @@ namespace ICare.Infra.Common
     public class DbContext : IDbContext
     {
 
+
         private DbConnection _connection;
         private readonly IConfiguration _configuration;
         //test

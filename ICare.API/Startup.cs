@@ -1,18 +1,12 @@
 using ICare.API.Extension;
-using ICare.Core.ICommon;
-using ICare.Infra.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace ICare.API
 {
@@ -28,6 +22,25 @@ namespace ICare.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(
+    x =>
+    {
+        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }
+    ).AddJwtBearer(y =>
+    {
+        y.RequireHttpsMetadata = false;
+        y.SaveToken = true;
+        y.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("[Hello my Name is Anas Ahmad Alfasatleh]")),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
             services.AddControllers();
 
             services.DependencyInjection();
@@ -45,6 +58,8 @@ namespace ICare.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
