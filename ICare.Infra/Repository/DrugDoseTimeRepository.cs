@@ -56,7 +56,7 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@Id", t.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.DateTime2, direction: ParameterDirection.Input);
+            p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@PatientDrugId", t.PatientDrugId, dbType: DbType.Int32, direction: ParameterDirection.Input);
             p.Add("@Time", t.Time, dbType: DbType.Date, direction: ParameterDirection.Input); 
             var result = _DbContext.Connection.ExecuteAsync("DrugDoseTimeUpdate", p, commandType: CommandType.StoredProcedure);

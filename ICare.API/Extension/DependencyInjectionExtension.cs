@@ -29,7 +29,8 @@ namespace ICare.API.Extension
             services.AddScoped<ICRUDRepository<DrugDoseTime>, DrugDoseTimeRepository>(); //emad
 
             //Services
-            services.AddScoped<ICRUDServices<DrugDoseTime>, DrugDoseTimeServices>();
+            services.AddScoped<ICRUDServices<DrugDoseTime>, DrugDoseTimeServices>(); //emad
+            services.AddScoped<ICRUDServices<PatientDrugs>, PatientDrugsServices>();//emad
 
 
         }

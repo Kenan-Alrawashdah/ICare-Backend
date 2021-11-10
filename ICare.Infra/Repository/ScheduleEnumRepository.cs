@@ -20,7 +20,7 @@ namespace ICare.Infra.Repository
         public bool Create(ScheduleEnum t)
         {
             var p = new DynamicParameters();
-            p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.DateTime2, direction: ParameterDirection.Input);
+            p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@ValueName", t.ValueName, dbType: DbType.String, direction: ParameterDirection.Input);
             var result = _DbContext.Connection.ExecuteAsync("ScheduleEnumInsert", p, commandType: CommandType.StoredProcedure);
             return true;
@@ -52,7 +52,7 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@Id", t.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.DateTime2, direction: ParameterDirection.Input);
+            p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@ValueName", t.ValueName, dbType: DbType.String, direction: ParameterDirection.Input);
             var result = _DbContext.Connection.ExecuteAsync("ScheduleEnumUpdate", p, commandType: CommandType.StoredProcedure);
             return true;
