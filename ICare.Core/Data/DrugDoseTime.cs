@@ -13,6 +13,6 @@ namespace ICare.Core.Data
         public PatientDrugs PatientDrug { get; set; }
 
         [Required]
-        public TimeSpan Time { get; set; }
+        public DateTime Time { get; set; }
     }
 }
