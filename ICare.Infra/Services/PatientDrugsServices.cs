@@ -7,36 +7,36 @@ using System.Text;
 
 namespace ICare.Infra.Services
 {
-    public class PatientDrugsServices : ICRUDServices<PatientDrugs>
+    public class PatientDrugsServices : IPatientDrugsServices
     {
-        private readonly ICRUDRepository<PatientDrugs> ICRUDRepository;
-        public PatientDrugsServices(ICRUDRepository<PatientDrugs> ICRUDRepository)
+        private readonly IPatientDrugsServices _patientDrugsServices;
+        public PatientDrugsServices(IPatientDrugsServices patientDrugsServices)
         {
-            this.ICRUDRepository = ICRUDRepository;
+            this._patientDrugsServices = patientDrugsServices;
         }
         public bool Create(PatientDrugs t)
         {
-            return ICRUDRepository.Create(t);
+            return _patientDrugsServices.Create(t);
         }
 
         public bool Delete(int id)
         {
-            return ICRUDRepository.Delete(id);
+            return _patientDrugsServices.Delete(id);
         }
 
         public IEnumerable<PatientDrugs> GetAll()
         {
-            return ICRUDRepository.GetAll();
+            return _patientDrugsServices.GetAll();
         }
 
         public PatientDrugs GetById(int id)
         {
-            return ICRUDRepository.GetById(id);
+            return _patientDrugsServices.GetById(id);
         }
 
         public bool Update(PatientDrugs t)
         {
-            return ICRUDRepository.Update(t);
+            return _patientDrugsServices.Update(t);
         }
 
     }

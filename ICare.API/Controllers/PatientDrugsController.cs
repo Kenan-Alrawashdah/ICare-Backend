@@ -1,4 +1,5 @@
 ﻿using ICare.Core.Data;
+using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,10 @@ namespace ICare.API.Controllers
     [ApiController]
     public class PatientDrugsController : ControllerBase
     {
-        private readonly ICRUDServices<PatientDrugs> ICRUDServices;
-        public PatientDrugsController(ICRUDServices<PatientDrugs> ICRUDServices)
+        private readonly IPatientDrugsRepository _patientDrugsServices;
+        public PatientDrugsController(IPatientDrugsRepository ICRUDServices)
         {
-            this.ICRUDServices = ICRUDServices;
+            this._patientDrugsServices = ICRUDServices;
         }
         [HttpPost]
         [Route("Create")]
@@ -24,31 +25,31 @@ namespace ICare.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public bool Create(PatientDrugs t)
         {
-            return ICRUDServices.Create(t);
+            return _patientDrugsServices.Create(t);
         }
         [HttpDelete, Route("delete/{id}")]
         public bool Delete(int id)
         {
-            return ICRUDServices.Delete(id);
+            return _patientDrugsServices.Delete(id);
         }
         [HttpGet]
         [Route("GetAll")]
         public IEnumerable<PatientDrugs> GetAll()
         {
-            return ICRUDServices.GetAll();
+            return _patientDrugsServices.GetAll();
         }
         [HttpGet]
         [Route("GetById/{id}")]
         public PatientDrugs GetById(int id)
         {
-            return ICRUDServices.GetById(id);
+            return _patientDrugsServices.GetById(id);
 
         }
         [HttpPut]
         [Route("Update")]
         public bool Update(PatientDrugs t)
         {
-            return ICRUDServices.Update(t);
+            return _patientDrugsServices.Update(t);
 
         }
     }

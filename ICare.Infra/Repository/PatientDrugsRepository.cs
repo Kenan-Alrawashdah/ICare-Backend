@@ -10,7 +10,7 @@ using System.Text;
 
 namespace ICare.Infra.Repository
 {
-    public class PatientDrugsRepository : ICRUDRepository<PatientDrugs>
+    public class PatientDrugsRepository : IPatientDrugsRepository
     {
         private readonly IDbContext _DbContext;
         public PatientDrugsRepository(IDbContext dbContext)

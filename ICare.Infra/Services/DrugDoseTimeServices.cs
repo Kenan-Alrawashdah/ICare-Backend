@@ -7,33 +7,33 @@ using System.Text;
 
 namespace ICare.Infra.Services
 {
-    public class DrugDoseTimeServices : ICRUDServices<DrugDoseTime>
+    public class DrugDoseTimeServices : IDrugDoseTimeServices
     {
-        private readonly ICRUDRepository<DrugDoseTime> ICRUDRepository;
-        public DrugDoseTimeServices(ICRUDRepository<DrugDoseTime> ICRUDRepository)
+        private readonly IDrugDoseTimeServices _drugDoseTimeServices;
+        public DrugDoseTimeServices(IDrugDoseTimeServices drugDoseTimeServices)
         {
-            this.ICRUDRepository = ICRUDRepository;
+            this._drugDoseTimeServices = drugDoseTimeServices;
         }
         public bool Create(DrugDoseTime t)
         {
-            return ICRUDRepository.Create(t);
+            return _drugDoseTimeServices.Create(t);
         }
         public bool Delete(int id)
         {
-            return ICRUDRepository.Delete(id);
+            return _drugDoseTimeServices.Delete(id);
         }
         public IEnumerable<DrugDoseTime> GetAll()
         {
-            return ICRUDRepository.GetAll();
+            return _drugDoseTimeServices.GetAll();
         }
         public DrugDoseTime GetById(int id)
         {
-            return ICRUDRepository.GetById(id);
+            return _drugDoseTimeServices.GetById(id);
 
         }
         public bool Update(DrugDoseTime t)
         {
-            return ICRUDRepository.Update(t);
+            return _drugDoseTimeServices.Update(t);
 
         }
     }

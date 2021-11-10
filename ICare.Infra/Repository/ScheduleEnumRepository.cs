@@ -10,7 +10,7 @@ using System.Text;
 
 namespace ICare.Infra.Repository
 {
-    public class ScheduleEnumRepository : ICRUDRepository<ScheduleEnum>
+    public class ScheduleEnumRepository : IScheduleEnumRepository
     {
         private readonly IDbContext _DbContext;
         public ScheduleEnumRepository(IDbContext dbContext)

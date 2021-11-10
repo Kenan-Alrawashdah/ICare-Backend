@@ -23,15 +23,14 @@ namespace ICare.API.Extension
             services.AddScoped<IDbContext, DbContext>();
 
             //Repository
+            services.AddScoped<IPatientDrugsRepository, PatientDrugsRepository>(); 
+            services.AddScoped<IScheduleEnumRepository, ScheduleEnumRepository>(); 
+            services.AddScoped<IDrugDoseTimeRepository, DrugDoseTimeRepository>();
 
-            services.AddScoped<ICRUDRepository<PatientDrugs>, PatientDrugsRepository>(); //emad
-            services.AddScoped<ICRUDRepository<ScheduleEnum>, ScheduleEnumRepository>(); //emad
-            services.AddScoped<ICRUDRepository<DrugDoseTime>, DrugDoseTimeRepository>(); //emad
-
-            //Services
-            services.AddScoped<ICRUDServices<DrugDoseTime>, DrugDoseTimeServices>(); //emad
-            services.AddScoped<ICRUDServices<PatientDrugs>, PatientDrugsServices>();//emad
-            services.AddScoped<ICRUDServices<ScheduleEnum>, ScheduleEnumServices>();//emad
+            //Services  
+            services.AddScoped<IDrugDoseTimeServices, DrugDoseTimeServices>();
+            services.AddScoped<IPatientDrugsServices, PatientDrugsServices>();
+            services.AddScoped<IScheduleEnumServices, ScheduleEnumServices>();
 
 
         }

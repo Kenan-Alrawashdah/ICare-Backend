@@ -11,7 +11,7 @@ using System.Text;
 namespace ICare.Infra.Repository
 {
    
-    public class DrugDoseTimeRepository : ICRUDRepository<DrugDoseTime>
+    public class DrugDoseTimeRepository : IDrugDoseTimeRepository
     {
         private readonly IDbContext _DbContext;
         public DrugDoseTimeRepository(IDbContext dbContext)

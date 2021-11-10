@@ -7,33 +7,33 @@ using System.Text;
 
 namespace ICare.Infra.Services
 {
-    public class ScheduleEnumServices: ICRUDServices<ScheduleEnum>
+    public class ScheduleEnumServices: IScheduleEnumServices
     {
-        private readonly ICRUDRepository<ScheduleEnum> ICRUDRepository;
-        public ScheduleEnumServices(ICRUDRepository<ScheduleEnum> ICRUDRepository)
+        private readonly IScheduleEnumServices _scheduleEnumServices;
+        public ScheduleEnumServices(IScheduleEnumServices scheduleEnumServices)
         {
-            this.ICRUDRepository = ICRUDRepository;
+            this._scheduleEnumServices = scheduleEnumServices;
         }
         public bool Create(ScheduleEnum t)
         {
-            return ICRUDRepository.Create(t);
+            return _scheduleEnumServices.Create(t);
         }
         public bool Delete(int id)
         {
-            return ICRUDRepository.Delete(id);
+            return _scheduleEnumServices.Delete(id);
         }
         public IEnumerable<ScheduleEnum> GetAll()
         {
-            return ICRUDRepository.GetAll();
+            return _scheduleEnumServices.GetAll();
         }
         public ScheduleEnum GetById(int id)
         {
-            return ICRUDRepository.GetById(id);
+            return _scheduleEnumServices.GetById(id);
 
         }
         public bool Update(ScheduleEnum t)
         {
-            return ICRUDRepository.Update(t);
+            return _scheduleEnumServices.Update(t);
 
         }
     }
