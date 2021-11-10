@@ -1,14 +1,16 @@
 ﻿using Dapper;
 using ICare.Core.DTO;
 using ICare.Core.ICommon;
+using ICare.Core.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 namespace ICare.Infra.Repository
 {
-   public class JWTRepository
+   public class JWTRepository : IJWTRepository
     {
         private readonly IDbContext _dbContext;
 
@@ -27,8 +29,9 @@ namespace ICare.Infra.Repository
             if(result != null)
             { 
             var e = new DynamicParameters();
-            p.Add("@Id", result.Id, dbType: DbType.String, ParameterDirection.Input);
-            result.RoleName = _dbContext.Connection.QuerySingle<List<string>>("GetUserRoles", e, commandType: CommandType.StoredProcedure);
+            e.Add("@Id", result.Id, dbType: DbType.String, ParameterDirection.Input);
+            var a = _dbContext.Connection.Query<string>("GetUserRoles", e, commandType: CommandType.StoredProcedure);
+            result.RoleName = a.ToList();
             }
 
             return result;
