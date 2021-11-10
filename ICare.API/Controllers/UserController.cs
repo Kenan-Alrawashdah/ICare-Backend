@@ -1,16 +1,19 @@
 ﻿using ICare.Core.Data;
 using ICare.Core.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "TestRolde")]
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
@@ -62,6 +65,10 @@ namespace ICare.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IEnumerable<ApplicationUser> GetAll()
         {
+            var currentUser = this.User;
+
+            bool isAdmin = currentUser.IsInRole("TestRole");
+
             return _userServices.GetAll();
         }
 

@@ -35,6 +35,7 @@ namespace ICare.API.Extension
             services.AddScoped<IUserRolesServices, UserRolesServices>();
             services.AddScoped<IUserTokensServices, UserTokensServices>();
             services.AddScoped<IUserLoginsServices, UserLoginsServices>();
+            services.AddScoped<IEmployessServices, EmployessServices>();
             services.AddScoped<IJWTService, JWTService>();
 
 
