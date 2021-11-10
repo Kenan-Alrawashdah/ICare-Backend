@@ -1,5 +1,5 @@
-﻿using ICare.Core.Data;
-using ICare.Core.ICommon;
+
+﻿using ICare.Core.ICommon;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using ICare.Infra.Common;
@@ -22,16 +22,28 @@ namespace ICare.API.Extension
             //DbContext
             services.AddScoped<IDbContext, DbContext>();
 
+
             //Repository
             services.AddScoped<IPatientDrugsRepository, PatientDrugsRepository>(); 
             services.AddScoped<IScheduleEnumRepository, ScheduleEnumRepository>(); 
             services.AddScoped<IDrugDoseTimeRepository, DrugDoseTimeRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+            services.AddScoped<IDrugCategoryRepository, DrugCategoryRepository>();
+            services.AddScoped<IDrugRepository, DrugRepository>();
+            services.AddScoped<IOrderDrugsRepository, OrderDrugsRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
-            //Services  
+            //Services
             services.AddScoped<IDrugDoseTimeServices, DrugDoseTimeServices>();
             services.AddScoped<IPatientDrugsServices, PatientDrugsServices>();
             services.AddScoped<IScheduleEnumServices, ScheduleEnumServices>();
-
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IDeliveryService, DeliveryService>();
+            services.AddScoped<IOrderDrugsService, OrderDrugsService>();
+            services.AddScoped<IDrugCategoryService, DrugCategoryService>();
+            services.AddScoped<IDrugService, DrugService>();
+            services.AddScoped<IOrderService, OrderService>();
 
         }
     }
