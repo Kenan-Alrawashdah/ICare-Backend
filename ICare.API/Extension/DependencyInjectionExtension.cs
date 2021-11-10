@@ -26,6 +26,7 @@ namespace ICare.API.Extension
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
             services.AddScoped<IUserTokensRepository, UserTokensRepository>();
             services.AddScoped<IUserLoginsRepository, UserLoginsRepository>();
+            services.AddScoped<IEmployessRepository, EmployessRepository>();
 
 
             //Services
@@ -33,6 +34,7 @@ namespace ICare.API.Extension
             services.AddScoped<IUserRolesServices, UserRolesServices>();
             services.AddScoped<IUserTokensServices, UserTokensServices>();
             services.AddScoped<IUserLoginsServices, UserLoginsServices>();
+            services.AddScoped<IEmployessServices, EmployessServices>();
 
 
         }
