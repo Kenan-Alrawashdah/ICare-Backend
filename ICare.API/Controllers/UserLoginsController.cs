@@ -11,31 +11,31 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserTokensController : ControllerBase
+    public class UserLoginsController : ControllerBase
     {
-        private readonly IUserTokensServices _userServices;
+        private readonly IUserLoginsServices _userLoginsServices;
 
-        public UserTokensController(IUserTokensServices userServices)
+        public UserLoginsController(IUserLoginsServices userServices)
         {
-            this._userServices = userServices;
+            this._userLoginsServices = userServices;
         }
 
         [HttpPost]
         [Route("Create")]
         [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Create(UserTokens UserTokensModel)
+        public bool Create(UserLogins userLoginssModel)
         {
-            return _userServices.Create(UserTokensModel);
+            return _userLoginsServices.Create(userLoginssModel);
         }
 
         [HttpPut]
         [Route("Update")]
         [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Update(UserTokens UserTokensModel)
+        public bool Update(UserLogins userLoginssModel)
         {
-            return _userServices.Update(UserTokensModel);
+            return _userLoginsServices.Update(userLoginssModel);
         }
 
         [HttpDelete]
@@ -44,25 +44,25 @@ namespace ICare.API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public bool Delete(int id)
         {
-            return _userServices.Delete(id);
+            return _userLoginsServices.Delete(id);
         }
 
         [HttpGet]
         [Route("GetById/{id}")]
-        [ProducesResponseType(type: typeof(UserTokens), StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(UserLogins), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public UserTokens GetById(int id)
+        public UserLogins GetById(int id)
         {
-            return _userServices.GetById(id);
+            return _userLoginsServices.GetById(id);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        [ProducesResponseType(type: typeof(IEnumerable<UserTokens>), StatusCodes.Status200OK)]
+        [ProducesResponseType(type: typeof(IEnumerable<UserLogins>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IEnumerable<UserTokens> GetAll()
+        public IEnumerable<UserLogins> GetAll()
         {
-            return _userServices.GetAll();
+            return _userLoginsServices.GetAll();
         }
     }
 }
