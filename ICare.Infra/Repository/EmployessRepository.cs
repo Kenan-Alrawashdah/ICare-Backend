@@ -31,7 +31,7 @@ namespace ICare.Infra.Repository
                 var result = _dbContext.Connection.Execute("EmployeeInsert", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
-            catch (Exception E)
+            catch (Exception )
             { 
                 return false;
             }

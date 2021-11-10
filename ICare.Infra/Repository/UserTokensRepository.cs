@@ -30,7 +30,7 @@ namespace ICare.Infra.Repository
                 var result = _dbContext.Connection.Execute("UserTokensInsert", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
-            catch (Exception e)
+            catch (Exception )
             {
                 return false;
             }
