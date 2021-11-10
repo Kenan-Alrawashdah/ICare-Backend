@@ -5,12 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ICare.Core\ICare.Core.csproj" />
-    <ProjectReference Include="..\ICare.Infra\ICare.Infra.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.1" />
   </ItemGroup>
 
+
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\ICare.Core\ICare.Core.csproj" />
+    <ProjectReference Include="..\ICare.Infra\ICare.Infra.csproj" />
   </ItemGroup>
 
 
