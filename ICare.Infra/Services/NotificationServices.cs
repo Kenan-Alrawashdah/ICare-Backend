@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 namespace ICare.Infra.Services
 {
-    class NotificationServices : INotificationServices
+    public class NotificationServices : INotificationServices
     {
         private readonly INotificationServices _NotificationServices;
 

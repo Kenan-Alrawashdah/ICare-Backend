@@ -8,7 +8,7 @@ using System.Data;
 using System.Text;
 namespace ICare.Infra.Repository
 {
-    class HealthReportTypesRepository : IHealthReportTypesRepository
+    public class HealthReportTypesRepository : IHealthReportTypesRepository
     {
         private readonly IDbContext _dbContext;
 
