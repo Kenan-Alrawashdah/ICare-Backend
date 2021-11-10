@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ICare.Infra.Services
 {
-    class SubscriptionTypeServices : ISubscriptionTypeServices
+    public class SubscriptionTypeServices : ISubscriptionTypeServices
     {
         private readonly ISubscriptionTypeServices _subscriptionTypeServices;
 

@@ -25,6 +25,13 @@ namespace ICare.API.Extension
 
 
             //Repository
+            services.AddScoped<IHealthReportRepository, HealthReportRepository>();
+            services.AddScoped<IHealthReportTypesRepository, HealthReportTypesRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddScoped<INotificationTypesRepository, NotificationTypesRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+            services.AddScoped<ISubscriptionTypeRepository, SubscriptionTypeRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
             services.AddScoped<IUserTokensRepository, UserTokensRepository>();
@@ -42,7 +49,13 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderRepository, OrderRepository>();
 
             //Services
-
+            services.AddScoped<IHealthReportServices, HealthReportServices>();
+            services.AddScoped<IHealthReportTypesServices, HealthReportTypesServices>();
+            services.AddScoped<INotificationServices, NotificationServices>();
+            services.AddScoped<INotificationTypesServices, NotificationTypesServices>();
+            services.AddScoped<IPatientServices, PatientServices>();
+            services.AddScoped<ISubscriptionServices, SubscriptionServices>();
+            services.AddScoped<ISubscriptionTypeServices, SubscriptionTypeServices>();
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IUserRolesServices, UserRolesServices>();
             services.AddScoped<IUserTokensServices, UserTokensServices>();

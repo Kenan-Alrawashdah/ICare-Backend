@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ICare.Infra.Services
 {
-    class NotificationTypesServices : INotificationTypesServices
+    public class NotificationTypesServices : INotificationTypesServices
     {
         private readonly INotificationTypesServices _NotificationTypesServices;
 

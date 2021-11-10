@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ICare.Infra.Repository
 {
-    class NotificationRepository : INotificationRepository
+    public class NotificationRepository : INotificationRepository
     {
         private readonly IDbContext _dbContext;
 
