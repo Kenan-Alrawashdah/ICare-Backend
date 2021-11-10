@@ -24,11 +24,13 @@ namespace ICare.API.Extension
             //Repository
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserRolesRepository, UserRolesRepository>();
+            services.AddScoped<IUserTokensRepository, UserTokensRepository>();
 
 
             //Services
             services.AddScoped<IUserServices, UserServices>();
             services.AddScoped<IUserRolesServices, UserRolesServices>();
+            services.AddScoped<IUserTokensServices, UserTokensServices>();
 
 
         }
