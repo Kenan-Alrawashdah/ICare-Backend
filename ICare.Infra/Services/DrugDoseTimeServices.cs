@@ -9,31 +9,31 @@ namespace ICare.Infra.Services
 {
     public class DrugDoseTimeServices : IDrugDoseTimeServices
     {
-        private readonly IDrugDoseTimeServices _drugDoseTimeServices;
-        public DrugDoseTimeServices(IDrugDoseTimeServices drugDoseTimeServices)
+        private readonly IDrugDoseTimeRepository _drugDoseTimeRepository;
+        public DrugDoseTimeServices(IDrugDoseTimeRepository drugDoseTimeRepository)
         {
-            this._drugDoseTimeServices = drugDoseTimeServices;
+            this._drugDoseTimeRepository = drugDoseTimeRepository;
         }
         public bool Create(DrugDoseTime t)
         {
-            return _drugDoseTimeServices.Create(t);
+            return _drugDoseTimeRepository.Create(t);
         }
         public bool Delete(int id)
         {
-            return _drugDoseTimeServices.Delete(id);
+            return _drugDoseTimeRepository.Delete(id);
         }
         public IEnumerable<DrugDoseTime> GetAll()
         {
-            return _drugDoseTimeServices.GetAll();
+            return _drugDoseTimeRepository.GetAll();
         }
         public DrugDoseTime GetById(int id)
         {
-            return _drugDoseTimeServices.GetById(id);
+            return _drugDoseTimeRepository.GetById(id);
 
         }
         public bool Update(DrugDoseTime t)
         {
-            return _drugDoseTimeServices.Update(t);
+            return _drugDoseTimeRepository.Update(t);
 
         }
     }

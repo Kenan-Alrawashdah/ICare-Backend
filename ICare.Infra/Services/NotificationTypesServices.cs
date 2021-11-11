@@ -1,4 +1,5 @@
 ﻿using ICare.Core.Data;
+using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
@@ -8,35 +9,35 @@ namespace ICare.Infra.Services
 {
     public class NotificationTypesServices : INotificationTypesServices
     {
-        private readonly INotificationTypesServices _NotificationTypesServices;
+        private readonly INotificationTypesRepository _NotificationTypesRepository;
 
-        public NotificationTypesServices(INotificationTypesServices NotificationTypesServices)
+        public NotificationTypesServices(INotificationTypesRepository NotificationTypesRepository)
         {
-            this._NotificationTypesServices = NotificationTypesServices;
+            this._NotificationTypesRepository = NotificationTypesRepository;
         }
         public bool Create(NotificationTypes NotificationTypes)
         {
-            return _NotificationTypesServices.Create(NotificationTypes);
+            return _NotificationTypesRepository.Create(NotificationTypes);
         }
 
         public bool Delete(int id)
         {
-            return _NotificationTypesServices.Delete(id);
+            return _NotificationTypesRepository.Delete(id);
         }
 
         public IEnumerable<NotificationTypes> GetAll()
         {
-            return _NotificationTypesServices.GetAll();
+            return _NotificationTypesRepository.GetAll();
         }
 
         public NotificationTypes GetById(int id)
         {
-            return _NotificationTypesServices.GetById(id);
+            return _NotificationTypesRepository.GetById(id);
         }
 
         public bool Update(NotificationTypes NotificationTypes)
         {
-            return _NotificationTypesServices.Update(NotificationTypes);
+            return _NotificationTypesRepository.Update(NotificationTypes);
         }
     }
 }
