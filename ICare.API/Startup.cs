@@ -12,6 +12,7 @@ namespace ICare.API
 {
     public class Startup
     {
+        private readonly string corsPolicy = "AllowAllOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +41,18 @@ namespace ICare.API
             ValidateAudience = false
         };
     });
+            // Allow all origins
+            services.AddCors(options =>
+            {
+                options.AddPolicy(corsPolicy,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                    });
+            });
+            services.AddOpenAPI();
 
             services.AddControllers();
 
@@ -55,6 +68,8 @@ namespace ICare.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureOpenAPI();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -62,6 +77,9 @@ namespace ICare.API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            // Adding Cors
+            app.UseCors(corsPolicy);
 
             app.UseEndpoints(endpoints =>
             {
