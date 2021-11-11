@@ -1,4 +1,5 @@
 ﻿using ICare.Core.Data;
+using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
@@ -8,35 +9,35 @@ namespace ICare.Infra.Services
 {
     public class SubscriptionTypeServices : ISubscriptionTypeServices
     {
-        private readonly ISubscriptionTypeServices _subscriptionTypeServices;
+        private readonly ISubscriptionTypeRepository _subscriptionTypeRepository;
 
-        public SubscriptionTypeServices(ISubscriptionTypeServices subscriptionTypeServices)
+        public SubscriptionTypeServices(ISubscriptionTypeRepository subscriptionTypeRepositorys)
         {
-            this._subscriptionTypeServices = subscriptionTypeServices;
+            this._subscriptionTypeRepository = subscriptionTypeRepositorys;
         }
         public bool Create(SubscribeType subscribeType)
         {
-            return _subscriptionTypeServices.Create(subscribeType);
+            return _subscriptionTypeRepository.Create(subscribeType);
         }
 
         public bool Delete(int id)
         {
-            return _subscriptionTypeServices.Delete(id);
+            return _subscriptionTypeRepository.Delete(id);
         }
 
         public IEnumerable<SubscribeType> GetAll()
         {
-            return _subscriptionTypeServices.GetAll();
+            return _subscriptionTypeRepository.GetAll();
         }
 
         public SubscribeType GetById(int id)
         {
-            return _subscriptionTypeServices.GetById(id);
+            return _subscriptionTypeRepository.GetById(id);
         }
 
         public bool Update(SubscribeType subscribeType)
         {
-            return _subscriptionTypeServices.Update(subscribeType);
+            return _subscriptionTypeRepository.Update(subscribeType);
         }
     }
 }

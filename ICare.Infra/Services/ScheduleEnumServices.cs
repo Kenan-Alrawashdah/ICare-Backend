@@ -9,31 +9,31 @@ namespace ICare.Infra.Services
 {
     public class ScheduleEnumServices: IScheduleEnumServices
     {
-        private readonly IScheduleEnumServices _scheduleEnumServices;
-        public ScheduleEnumServices(IScheduleEnumServices scheduleEnumServices)
+        private readonly IScheduleEnumRepository _scheduleEnumRepository;
+        public ScheduleEnumServices(IScheduleEnumRepository scheduleEnumRepository)
         {
-            this._scheduleEnumServices = scheduleEnumServices;
+            this._scheduleEnumRepository = scheduleEnumRepository;
         }
         public bool Create(ScheduleEnum t)
         {
-            return _scheduleEnumServices.Create(t);
+            return _scheduleEnumRepository.Create(t);
         }
         public bool Delete(int id)
         {
-            return _scheduleEnumServices.Delete(id);
+            return _scheduleEnumRepository.Delete(id);
         }
         public IEnumerable<ScheduleEnum> GetAll()
         {
-            return _scheduleEnumServices.GetAll();
+            return _scheduleEnumRepository.GetAll();
         }
         public ScheduleEnum GetById(int id)
         {
-            return _scheduleEnumServices.GetById(id);
+            return _scheduleEnumRepository.GetById(id);
 
         }
         public bool Update(ScheduleEnum t)
         {
-            return _scheduleEnumServices.Update(t);
+            return _scheduleEnumRepository.Update(t);
 
         }
     }

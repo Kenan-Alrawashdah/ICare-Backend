@@ -9,34 +9,34 @@ namespace ICare.Infra.Services
 {
     public class PatientDrugsServices : IPatientDrugsServices
     {
-        private readonly IPatientDrugsServices _patientDrugsServices;
-        public PatientDrugsServices(IPatientDrugsServices patientDrugsServices)
+        private readonly IPatientDrugsRepository _patientDrugsRepository;
+        public PatientDrugsServices(IPatientDrugsRepository patientDrugsServices)
         {
-            this._patientDrugsServices = patientDrugsServices;
+            this._patientDrugsRepository = patientDrugsServices;
         }
         public bool Create(PatientDrugs t)
         {
-            return _patientDrugsServices.Create(t);
+            return _patientDrugsRepository.Create(t);
         }
 
         public bool Delete(int id)
         {
-            return _patientDrugsServices.Delete(id);
+            return _patientDrugsRepository.Delete(id);
         }
 
         public IEnumerable<PatientDrugs> GetAll()
         {
-            return _patientDrugsServices.GetAll();
+            return _patientDrugsRepository.GetAll();
         }
 
         public PatientDrugs GetById(int id)
         {
-            return _patientDrugsServices.GetById(id);
+            return _patientDrugsRepository.GetById(id);
         }
 
         public bool Update(PatientDrugs t)
         {
-            return _patientDrugsServices.Update(t);
+            return _patientDrugsRepository.Update(t);
         }
 
     }

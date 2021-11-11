@@ -1,4 +1,5 @@
 ﻿using ICare.Core.Data;
+using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
@@ -8,35 +9,35 @@ namespace ICare.Infra.Services
 {
     public class HealthReportServices : IHealthReportServices
     {
-        private readonly IHealthReportServices _HealthReportServices;
+        private readonly IHealthReportRepository _HealthReportRepository;
 
-        public HealthReportServices(IHealthReportServices HealthReportServices)
+        public HealthReportServices(IHealthReportRepository HealthReportRepository)
         {
-            this._HealthReportServices = HealthReportServices;
+            this._HealthReportRepository = HealthReportRepository;
         }
         public bool Create(HealthReport healthReport)
         {
-            return _HealthReportServices.Create(healthReport);
+            return _HealthReportRepository.Create(healthReport);
         }
 
         public bool Delete(int id)
         {
-            return _HealthReportServices.Delete(id);
+            return _HealthReportRepository.Delete(id);
         }
 
         public IEnumerable<HealthReport> GetAll()
         {
-            return _HealthReportServices.GetAll();
+            return _HealthReportRepository.GetAll();
         }
 
         public HealthReport GetById(int id)
         {
-            return _HealthReportServices.GetById(id);
+            return _HealthReportRepository.GetById(id);
         }
 
         public bool Update(HealthReport healthReport)
         {
-            return _HealthReportServices.Update(healthReport);
+            return _HealthReportRepository.Update(healthReport);
         }
     }
 }
