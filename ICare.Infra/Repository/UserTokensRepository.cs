@@ -54,7 +54,7 @@ namespace ICare.Infra.Repository
 
         public IEnumerable<UserTokens> GetAll()
         {
-            var result = _dbContext.Connection.Query<UserTokens>("GetAllUserTokens", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<UserTokens>("UserTokensGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 

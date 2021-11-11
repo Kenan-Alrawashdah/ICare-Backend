@@ -57,7 +57,7 @@ namespace ICare.Infra.Repository
 
         public IEnumerable<Notification> GetAll()
         {
-            var result = _dbContext.Connection.Query<Notification>("GetAllNotification", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<Notification>("NotificationGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 

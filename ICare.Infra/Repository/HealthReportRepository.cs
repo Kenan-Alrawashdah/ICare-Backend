@@ -57,7 +57,7 @@ namespace ICare.Infra.Repository
 
         public IEnumerable<HealthReport> GetAll()
         {
-            var result = _dbContext.Connection.Query<HealthReport>("GetAllHealthReport", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<HealthReport>("HealthReportGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 

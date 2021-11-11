@@ -43,11 +43,10 @@ namespace ICare.Infra.Services
                     //userName, roleName
                     Subject = new ClaimsIdentity(new Claim[]
                         {
-                    new Claim(ClaimTypes.Name, result.UserName)
-                    ,
-                    new Claim(ClaimTypes.Role, result.RoleName[0])
-               
-                        }),
+                    new Claim(ClaimTypes.Name, result.FirstName),
+                    new Claim(ClaimTypes.Role, result.RoleName[0]),
+                    new Claim(ClaimTypes.Email , result.Email)
+                         }),
 
                     //expire == session timeout
                     Expires = DateTime.UtcNow.AddHours(1),

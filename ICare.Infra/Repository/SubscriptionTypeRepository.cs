@@ -58,7 +58,7 @@ namespace ICare.Infra.Repository
 
         public IEnumerable<SubscribeType> GetAll()
         {
-            var result = _dbContext.Connection.Query<SubscribeType>("GetAllSubscriptionType", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<SubscribeType>("SubscriptionTypeGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 

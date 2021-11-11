@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,7 +14,6 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "TestRolde")]
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
@@ -25,11 +25,16 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("Create")]
-        [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Create(ApplicationUser UserModel)
+        public ActionResult<ApiResponse> Create(ApplicationUser UserModel)
         {
-            return _userServices.Create(UserModel);
+            var response = new ApiResponse();
+            if (_userServices.CheckEmailExist(UserModel.Email))
+            {
+                response.AddError("The email is already exist");
+                return Ok(response);
+            }
+            _userServices.Create(UserModel);
+            return Ok(response);
         }
 
         [HttpPut]
@@ -52,24 +57,31 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetById/{id}")]
-        [ProducesResponseType(type: typeof(ApplicationUser), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ApplicationUser GetById(int id)
+        public ActionResult<ApiResponse<GetUserByIdApiDTO.Response>> GetById(int id)
         {
-            return _userServices.GetById(id);
+            var response = new ApiResponse<GetUserByIdApiDTO.Response>();
+            var user = _userServices.GetById(id); 
+            if(user == null)
+            {
+                response.AddError("No User With this id");
+                return response; 
+            }
+
+            response.Data = new GetUserByIdApiDTO.Response
+            {
+                User = user
+            };
+            
+            return Ok(response);
         }
 
         [HttpGet]
         [Route("GetAll")]
-        [ProducesResponseType(type: typeof(IEnumerable<ApplicationUser>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IEnumerable<ApplicationUser> GetAll()
+        public ActionResult<ApiResponse<GetAllUserApiDTO.Response>> GetAll()
         {
-            var currentUser = this.User;
+            var response = new ApiResponse<GetAllUserApiDTO.Response>();
 
-            bool isAdmin = currentUser.IsInRole("TestRole");
-
-            return _userServices.GetAll();
+            return Ok(response);
         }
 
     }

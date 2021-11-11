@@ -2,11 +2,14 @@
 using ICare.Core.IRepository;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace ICare.Core.IServices
 {
     public interface IUserServices : ICRUDRepository<ApplicationUser>
     {
+        bool CheckEmailExist(string Email);
+        ApplicationUser GetUser(ClaimsPrincipal userClaims);
     }
 }

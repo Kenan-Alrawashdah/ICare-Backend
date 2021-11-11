@@ -2,10 +2,12 @@
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using System.Linq;
+using System.Security.Claims;
 
 namespace ICare.Infra.Repository
 {
@@ -16,6 +18,40 @@ namespace ICare.Infra.Repository
         public UserRepository(IDbContext dbContext)
         {
             this._dbContext = dbContext;
+        }
+        public bool CheckEmailExist(string Email)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Email", Email, dbType: DbType.String, ParameterDirection.Input);
+
+
+            var user = _dbContext.Connection.QueryFirstOrDefault<int?>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+
+            }
+        }
+
+        [Authorize]
+        public ApplicationUser GetUser(ClaimsPrincipal userClaims)
+        {
+            try
+            {
+                var email = userClaims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                var p = new DynamicParameters();
+                p.Add("@Email", email, dbType: DbType.String, ParameterDirection.Input);
+                var user = _dbContext.Connection.QueryFirstOrDefault<ApplicationUser>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);
+                return user;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
         public bool Create(ApplicationUser userModle)
         {
@@ -33,7 +69,32 @@ namespace ICare.Infra.Repository
 
             try
             {
-                var result = _dbContext.Connection.Execute("UserInsert", p, commandType: CommandType.StoredProcedure);
+                var userId = _dbContext.Connection.ExecuteScalar<int>("UserInsert", p, commandType: CommandType.StoredProcedure);
+                var userRoleModle = new UserRoles
+                {
+                    UserId = userId
+                };
+                var e = new DynamicParameters();
+                e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
+                userRoleModle.RoleId = _dbContext.Connection.ExecuteScalar<int>("GetRoleIdByName", e, commandType: CommandType.StoredProcedure);
+                AddPatientRole(userRoleModle);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        private bool AddPatientRole(UserRoles userRolesModle)
+        {
+            var p = new DynamicParameters();
+            p.Add("@RoleId", userRolesModle.RoleId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@UserId", userRolesModle.UserId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@CreatedOn", userRolesModle.CreatedOn, DbType.Date, ParameterDirection.Input);
+
+            try
+            {
+                var result = _dbContext.Connection.Execute("UserRolesInsert", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
             catch (Exception)
@@ -60,7 +121,7 @@ namespace ICare.Infra.Repository
 
         public IEnumerable<ApplicationUser> GetAll()
         {
-            var result = _dbContext.Connection.Query<ApplicationUser>("GetAllUsers", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<ApplicationUser>("UsersGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 

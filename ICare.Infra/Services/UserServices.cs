@@ -2,6 +2,7 @@
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace ICare.Infra.Services
 {
@@ -38,6 +39,15 @@ namespace ICare.Infra.Services
         public bool Update(ApplicationUser userModle)
         {
             return _userRepository.Update(userModle);
+
+        }
+        public ApplicationUser GetUser(ClaimsPrincipal userClaims)
+        {
+            return _userRepository.GetUser(userClaims);
+        }
+        public bool CheckEmailExist(string Email)
+        {
+            return _userRepository.CheckEmailExist(Email);
 
         }
     }

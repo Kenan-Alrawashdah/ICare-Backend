@@ -11,6 +11,7 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class JWTController : ControllerBase
     {
         private readonly IJWTService _jWTService;

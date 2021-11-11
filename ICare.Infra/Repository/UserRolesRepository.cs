@@ -9,6 +9,7 @@ using System.Text;
 
 namespace ICare.Infra.Repository
 {
+    //NOT NEEDED ANY MORE
     public class UserRolesRepository : IUserRolesRepository
     {
         private readonly IDbContext _dbContext;

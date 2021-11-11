@@ -55,7 +55,7 @@ namespace ICare.Infra.Repository
 
         public IEnumerable<Employee> GetAll()
         {
-            var result = _dbContext.Connection.Query<Employee>("GetAllEmployees", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<Employee>("EmployeesGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 
