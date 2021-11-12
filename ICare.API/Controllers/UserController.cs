@@ -17,23 +17,56 @@ namespace ICare.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserServices _userServices;
+        private readonly IFileService _fileService;
 
-        public UserController(IUserServices userServices)
+        public UserController(IUserServices userServices,IFileService fileService)
         {
             this._userServices = userServices;
+            this._fileService = fileService;
         }
 
+        /// <summary>
+        /// SignUp Page
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("Create")]
-        public ActionResult<ApiResponse> Create(ApplicationUser UserModel)
+        [Route("PatientRegistration")]
+        public ActionResult<ApiResponse> PatientRegistration(RegistrationApiDTO.Request request)
         {
             var response = new ApiResponse();
-            if (_userServices.CheckEmailExist(UserModel.Email))
+            if (_userServices.CheckEmailExist(request.Email))
             {
                 response.AddError("The email is already exist");
                 return Ok(response);
             }
-            _userServices.Create(UserModel);
+            _userServices.Registration(request);
+            //TODO: Return the Token 
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Upload profile image 
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("UploadProilePicture")]
+        public async Task< ActionResult<ApiResponse>> UploadProilePicture(IFormFile image)
+        {
+            var user = _userServices.GetUser(User);
+            var response = new ApiResponse();
+            if(!_fileService.IsPicture(image.FileName))
+            {
+                response.AddError("The file must be an image");
+                return Ok(response);
+            }
+            if(_fileService.CheckPictureSizeInMB(image.Length,2))
+            {
+                response.AddError("The file must be less than 2 MB");
+                return Ok(response);
+            }
+            var imageName = _fileService.GenerateFileName(image.FileName);
+           await  _fileService.SavePic(image, imageName);
             return Ok(response);
         }
 

@@ -48,6 +48,7 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderDrugsRepository, OrderDrugsRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
 
+
             //Services
             services.AddScoped<IHealthReportServices, HealthReportServices>();
             services.AddScoped<IHealthReportTypesServices, HealthReportTypesServices>();
@@ -71,6 +72,8 @@ namespace ICare.API.Extension
             services.AddScoped<IDrugCategoryService, DrugCategoryService>();
             services.AddScoped<IDrugService, DrugService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IFileService, FileService>();
+
 
 
         }

@@ -22,12 +22,11 @@ namespace ICare.Core.Data
 
         public ApplicationUser User { get; set; }
 
-        //TODO: Check the max number
-        [Required]
         [Range(minimum: 0.01, maximum: 10.0)]
         public double Liters { get; set; }
 
         public DateTime? SubscriptionValidation { get; set; }
+
         public virtual ICollection<Cart> Cart { get; set; }
         public virtual ICollection<PatientDrugs> PatientDrugs { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

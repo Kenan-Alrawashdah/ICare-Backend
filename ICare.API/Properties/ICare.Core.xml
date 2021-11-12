@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ICare.Core</name>
+    </assembly>
+    <members>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Email">
+            <summary>
+            the Email Of the patient
+            </summary>
+            <example>Test@test.test</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.PasswordHash">
+            <summary>
+            the password of the patient
+            </summary>
+            <example>Q!qwe123</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.PhoneNumber">
+            <summary>
+            
+            </summary>
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.FirstName">
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.LastName">
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.Data.PatientDrugs.ScheduleId">
+            <summary>
+            Use ScheduleEnum  class
+            </summary>
+        </member>
+        <member name="P:ICare.Core.Data.PatientDrugs.StartDate">
+            <summary>
+            The started date of taking the drug
+            "if needed to be not in the same time of adding the drug"
+            </summary>
+        </member>
+    </members>
+</doc>

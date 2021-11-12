@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
@@ -48,24 +49,26 @@ namespace ICare.Infra.Repository
                 var user = _dbContext.Connection.QueryFirstOrDefault<ApplicationUser>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);
                 return user;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
         }
-        public bool Create(ApplicationUser userModle)
+
+
+        public bool Registration(RegistrationApiDTO.Request userModle)
         {
             var p = new DynamicParameters();
             p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
-            p.Add("@CreatedOn", userModle.CreatedOn, DbType.Date, ParameterDirection.Input);
+            p.Add("@CreatedOn", DateTime.UtcNow, DbType.Date, ParameterDirection.Input);
             p.Add("@PasswordHash", userModle.PasswordHash, DbType.String, ParameterDirection.Input);
             p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
-            p.Add("@ProfilePicturePath", userModle.ProfilePicturePath, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", userModle.LocationId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@EmployeeId", userModle.EmployeeId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@PatientId", userModle.PatientId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
+            p.Add("@LocationId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
 
             try
             {
@@ -77,10 +80,19 @@ namespace ICare.Infra.Repository
                 var e = new DynamicParameters();
                 e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
                 userRoleModle.RoleId = _dbContext.Connection.ExecuteScalar<int>("GetRoleIdByName", e, commandType: CommandType.StoredProcedure);
-                AddPatientRole(userRoleModle);
+                if(!AddPatientRole(userRoleModle))
+                {
+                    return false;
+                }
+                var patient = new Patient();
+                patient.UserId = userId;
+                if (!CreatePatient(patient))
+                {
+                    return false;
+                }
                 return true;
             }
-            catch (Exception)
+            catch (Exception )
             {
                 return false;
             }
@@ -99,6 +111,27 @@ namespace ICare.Infra.Repository
             }
             catch (Exception)
             {
+                return false;
+            }
+        }
+
+        private bool CreatePatient(Patient patient)
+        {
+            var p = new DynamicParameters();
+            p.Add("@CreatedOn", patient.CreatedOn, DbType.DateTime, ParameterDirection.Input);
+            p.Add("@UserId", patient.UserId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Liters", patient.Liters, DbType.Double, ParameterDirection.Input);
+            p.Add("@SubscriptionValidation", patient.SubscriptionValidation, DbType.DateTime, ParameterDirection.Input);
+
+
+            try
+            {
+                var result = _dbContext.Connection.Execute("PatientInsert", p, commandType: CommandType.StoredProcedure);
+                return true;
+            }
+            catch (Exception)
+            {
+
                 return false;
             }
         }

@@ -2,6 +2,7 @@
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
+using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,10 +13,12 @@ namespace ICare.Infra.Repository
     public class PatientRepository : IPatientRepository    
     {
         private readonly IDbContext _dbContext;
+        private readonly IUserServices _userServices;
 
-        public PatientRepository(IDbContext dbContext)
+        public PatientRepository(IDbContext dbContext,IUserServices userServices)
         {
             this._dbContext = dbContext;
+            this._userServices = userServices;
         }
         public bool Create(Patient t)
         {

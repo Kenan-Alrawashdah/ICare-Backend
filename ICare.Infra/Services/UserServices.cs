@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace ICare.Infra.Services
         {
             this._userRepository = userRepository;
         }
-        public bool Create(ApplicationUser userModle)
+        public bool Registration(RegistrationApiDTO.Request userModle)
         {
-            return _userRepository.Create(userModle);
+            return _userRepository.Registration(userModle);
         }
 
         public bool Delete(int id)
