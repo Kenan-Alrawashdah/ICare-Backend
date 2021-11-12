@@ -10,6 +10,7 @@ namespace ICare.Core.IServices
 {
     public interface IUserServices 
     {
+        bool AddOrUpdateProfilePicture(string imagePath, int userId);
         bool CheckEmailExist(string Email);
         bool Delete(int id);
         IEnumerable<ApplicationUser> GetAll();

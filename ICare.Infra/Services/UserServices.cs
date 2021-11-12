@@ -51,5 +51,10 @@ namespace ICare.Infra.Services
             return _userRepository.CheckEmailExist(Email);
 
         }
+
+        public bool AddOrUpdateProfilePicture(string imagePath, int userId)
+        {
+            return _userRepository.AddOrUpdateProfilePicture(imagePath, userId);
+        }
     }
 }

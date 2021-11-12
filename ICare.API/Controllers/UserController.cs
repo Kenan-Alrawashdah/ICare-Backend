@@ -50,6 +50,7 @@ namespace ICare.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         [Route("UploadProilePicture")]
         public async Task< ActionResult<ApiResponse>> UploadProilePicture(IFormFile image)
         {
@@ -66,7 +67,8 @@ namespace ICare.API.Controllers
                 return Ok(response);
             }
             var imageName = _fileService.GenerateFileName(image.FileName);
-           await  _fileService.SavePic(image, imageName);
+            await  _fileService.SavePic(image, imageName);
+            _userServices.AddOrUpdateProfilePicture(imageName, user.Id);
             return Ok(response);
         }
 

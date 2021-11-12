@@ -97,6 +97,7 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
         private bool AddPatientRole(UserRoles userRolesModle)
         {
             var p = new DynamicParameters();
@@ -134,6 +135,25 @@ namespace ICare.Infra.Repository
 
                 return false;
             }
+        }
+
+        public bool AddOrUpdateProfilePicture(string imagePath, int userId)
+        {
+
+            var p = new DynamicParameters();
+            p.Add("@imagePath", imagePath, DbType.String, ParameterDirection.Input);
+            p.Add("@userId", userId, DbType.Int32, ParameterDirection.Input);
+           
+            try
+            {
+                var result = _dbContext.Connection.Execute("AddOrUpdateProfilePicture", p, commandType: CommandType.StoredProcedure);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
 
         public bool Delete(int id)

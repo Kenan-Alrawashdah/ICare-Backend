@@ -9,6 +9,7 @@ namespace ICare.Core.IRepository
 {
     public interface IUserRepository 
     {
+        bool AddOrUpdateProfilePicture(string imagePath, int userId);
         bool CheckEmailExist(string Email);
         bool Delete(int id);
         IEnumerable<ApplicationUser> GetAll();
