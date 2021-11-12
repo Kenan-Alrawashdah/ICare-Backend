@@ -1,4 +1,5 @@
-﻿using ICare.Core.DTO;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.DTO;
 using ICare.Core.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,18 +23,21 @@ namespace ICare.API.Controllers
         }
 
         [HttpPost]
-        [Route("Auth")]
-        public IActionResult Auth(RequestLoginDTO requestLoginDTO)
+        [Route("SignIn")]
+        public ActionResult<ApiResponse<LoginApiDTO.Response>> SignIn(LoginApiDTO.Request requestLoginDTO)
         {
+            var response = new ApiResponse<LoginApiDTO.Response>();
             var result = _jWTService.Auth(requestLoginDTO);
             if (result == null)
             {
-                return Unauthorized();
+                response.AddError("Email and password does not match");
+                return Ok(response);
             }
-            else
-            {
-                return Ok(result);
-            }
+            response.Data = new LoginApiDTO.Response();
+            response.Data.Token = result;
+
+            return Ok(response);
+            
         }
     }
 }

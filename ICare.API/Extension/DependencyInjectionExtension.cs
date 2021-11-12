@@ -73,6 +73,7 @@ namespace ICare.API.Extension
             services.AddScoped<IDrugService, DrugService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IPasswordHashingService, PasswordHashingService>();
 
 
 

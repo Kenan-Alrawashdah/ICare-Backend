@@ -1,4 +1,5 @@
-﻿using ICare.Core.DTO;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.DTO;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,7 @@ namespace ICare.Infra.Services
             this._jWTRepository = jWTRepository;
         }
 
-        public string Auth(RequestLoginDTO loginDTO)
+        public string Auth(LoginApiDTO.Request loginDTO)
         {
             var result = _jWTRepository.Authentication(loginDTO);
 
@@ -55,6 +56,10 @@ namespace ICare.Infra.Services
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
 
                 };
+                if(result.RoleName.Count > 1 )
+                {
+                    tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, result.RoleName[1]));
+                }
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 return tokenHandler.WriteToken(token);

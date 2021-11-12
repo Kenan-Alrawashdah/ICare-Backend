@@ -4,13 +4,30 @@
         <name>ICare.Core</name>
     </assembly>
     <members>
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Request.Email">
+            <summary>
+            
+            </summary>
+            <example>Test@test.test</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Request.Password">
+            <summary>
+            
+            </summary>
+            <example>Q!qwe123</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Response.Token">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Email">
             <summary>
             the Email Of the patient
             </summary>
             <example>Test@test.test</example>
         </member>
-        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.PasswordHash">
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Password">
             <summary>
             the password of the patient
             </summary>

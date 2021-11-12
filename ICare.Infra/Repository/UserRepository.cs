@@ -61,7 +61,7 @@ namespace ICare.Infra.Repository
             var p = new DynamicParameters();
             p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
             p.Add("@CreatedOn", DateTime.UtcNow, DbType.Date, ParameterDirection.Input);
-            p.Add("@PasswordHash", userModle.PasswordHash, DbType.String, ParameterDirection.Input);
+            p.Add("@PasswordHash", userModle.Password, DbType.String, ParameterDirection.Input);
             p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);

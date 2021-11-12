@@ -26,7 +26,7 @@ namespace ICare.Core.ApiDTO
             [Required]
             [MaxLength(100)]
             [RegularExpression(@"((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})", ErrorMessage = "Please enter a valid password")]
-            public string PasswordHash { get; set; }
+            public string Password { get; set; }
 
             /// <summary>
             /// 

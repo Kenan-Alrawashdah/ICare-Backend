@@ -18,11 +18,13 @@ namespace ICare.API.Controllers
     {
         private readonly IUserServices _userServices;
         private readonly IFileService _fileService;
+        private readonly IPasswordHashingService _passwordHashingService;
 
-        public UserController(IUserServices userServices,IFileService fileService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService)
         {
             this._userServices = userServices;
             this._fileService = fileService;
+            this._passwordHashingService = passwordHashingService;
         }
 
         /// <summary>
@@ -40,6 +42,8 @@ namespace ICare.API.Controllers
                 response.AddError("The email is already exist");
                 return Ok(response);
             }
+            var hashedPassword = _passwordHashingService.GetHash(request.Password);
+            request.Password = hashedPassword;
             _userServices.Registration(request);
             //TODO: Return the Token 
             return Ok(response);
