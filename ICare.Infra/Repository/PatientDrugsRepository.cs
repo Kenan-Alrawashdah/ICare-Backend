@@ -22,7 +22,6 @@ namespace ICare.Infra.Repository
             var p = new DynamicParameters();
             p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@PatientId", t.PatientId, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            p.Add("@ScheduleId", t.ScheduleId, dbType: DbType.Int32, direction: ParameterDirection.Input);
             p.Add("@StartDate", t.StartDate, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@EndDate", t.EndDate, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@DrugName", t.DrugName, dbType: DbType.String, direction: ParameterDirection.Input);
@@ -60,7 +59,6 @@ namespace ICare.Infra.Repository
             p.Add("@Id", t.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             p.Add("@CreatedOn", t.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@PatientId", t.PatientId, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            p.Add("@ScheduleId", t.ScheduleId, dbType: DbType.Int32, direction: ParameterDirection.Input);
             p.Add("@StartDate", t.StartDate, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@EndDate", t.EndDate, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@DrugName", t.DrugName, dbType: DbType.String, direction: ParameterDirection.Input);

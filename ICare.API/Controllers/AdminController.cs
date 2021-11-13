@@ -155,7 +155,10 @@ namespace ICare.API.Controllers
         {
             var response = new ApiResponse<GetCategoryByIdApiDTO.Response>();
             var category = _drugCategoryService.GetById(id);
-            if(category == null)
+            response.AddError("Error 1");
+            response.AddError("Error 2");
+            return Ok(response);
+            if (category == null)
             {
                 response.AddError("There is no Category with this id");
                 return Ok(response);
@@ -166,7 +169,7 @@ namespace ICare.API.Controllers
                 imagePath = category.PicturePath,
                 name = category.Name
             };
-
+        
             return Ok(response);
         }
         #endregion
