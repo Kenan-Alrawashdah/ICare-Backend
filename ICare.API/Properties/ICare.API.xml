@@ -9,7 +9,7 @@
             SignUp Page for Patient
             </summary>
             <param name="request"></param>
-            <returns></returns>
+            <returns>token</returns>
         </member>
         <member name="M:ICare.API.Controllers.UserController.UploadProilePicture(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>

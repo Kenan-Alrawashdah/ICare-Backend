@@ -33,7 +33,7 @@ namespace ICare.API.Controllers
         /// SignUp Page for Patient
         /// </summary>
         /// <param name="request"></param>
-        /// <returns></returns>
+        /// <returns>token</returns>
         [HttpPost]
         [Route("PatientRegistration")]
         public ActionResult<ApiResponse<RegistrationApiDTO.Response>> PatientRegistration(RegistrationApiDTO.Request request)
