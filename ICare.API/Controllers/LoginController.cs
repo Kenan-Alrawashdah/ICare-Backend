@@ -13,11 +13,11 @@ namespace ICare.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-    public class JWTController : ControllerBase
+    public class LoginController : ControllerBase
     {
         private readonly IJWTService _jWTService;
 
-        public JWTController(IJWTService jWTService)
+        public LoginController(IJWTService jWTService)
         {
             this._jWTService = jWTService;
         }
