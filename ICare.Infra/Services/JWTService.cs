@@ -68,6 +68,14 @@ namespace ICare.Infra.Services
 
             }
         }
+
+        public string Auth(string email, string password)
+        {
+            var loginDTO = new LoginApiDTO.Request();
+            loginDTO.Email = email;
+            loginDTO.Password = password;
+            return Auth(loginDTO);
+        }
     }
 }
 

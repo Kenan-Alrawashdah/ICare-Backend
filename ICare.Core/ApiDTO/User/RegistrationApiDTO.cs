@@ -37,12 +37,12 @@ namespace ICare.Core.ApiDTO
             [Phone]
             public string PhoneNumber { get; set; }
 
-            /// <example>0777777777</example>
+            /// <example>First Name</example>
             [Required]
             [MaxLength(50)]
             public string FirstName { get; set; }
 
-            /// <example>0777777777</example>
+            /// <example>Last Name</example>
             [Required]
             [MaxLength(50)]
             public string LastName { get; set; }
@@ -52,7 +52,7 @@ namespace ICare.Core.ApiDTO
 
         public class Response
         {
-            public int PatientId { get; set; } 
+            public string Token { get; set; }
         }
     }
 }

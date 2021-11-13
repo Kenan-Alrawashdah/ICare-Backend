@@ -13,11 +13,11 @@ namespace ICare.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-    public class JWTController : ControllerBase
+    public class LoginController : ControllerBase
     {
         private readonly IJWTService _jWTService;
 
-        public JWTController(IJWTService jWTService)
+        public LoginController(IJWTService jWTService)
         {
             this._jWTService = jWTService;
         }
@@ -27,14 +27,14 @@ namespace ICare.API.Controllers
         public ActionResult<ApiResponse<LoginApiDTO.Response>> SignIn(LoginApiDTO.Request requestLoginDTO)
         {
             var response = new ApiResponse<LoginApiDTO.Response>();
-            var result = _jWTService.Auth(requestLoginDTO);
-            if (result == null)
+            var token = _jWTService.Auth(requestLoginDTO);
+            if (token == null)
             {
                 response.AddError("Email and password does not match");
                 return Ok(response);
             }
             response.Data = new LoginApiDTO.Response();
-            response.Data.Token = result;
+            response.Data.Token = token;
 
             return Ok(response);
             

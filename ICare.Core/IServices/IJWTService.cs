@@ -9,5 +9,6 @@ namespace ICare.Core.IServices
     public interface IJWTService
     {
         string Auth(LoginApiDTO.Request loginDTO);
+        string Auth(string email,string password);
     }
 }
