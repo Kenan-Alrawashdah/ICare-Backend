@@ -40,10 +40,10 @@
             <example>0777777777</example>
         </member>
         <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.FirstName">
-            <example>0777777777</example>
+            <example>First Name</example>
         </member>
         <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.LastName">
-            <example>0777777777</example>
+            <example>Last Name</example>
         </member>
         <member name="P:ICare.Core.Data.PatientDrugs.ScheduleId">
             <summary>

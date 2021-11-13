@@ -6,14 +6,14 @@
     <members>
         <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
             <summary>
-            SignUp Page
+            SignUp Page for Patient
             </summary>
             <param name="request"></param>
             <returns></returns>
         </member>
         <member name="M:ICare.API.Controllers.UserController.UploadProilePicture(Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
-            Upload profile image 
+            Upload profile image for user
             </summary>
             <returns></returns>
         </member>

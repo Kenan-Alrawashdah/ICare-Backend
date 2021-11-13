@@ -19,38 +19,44 @@ namespace ICare.API.Controllers
         private readonly IUserServices _userServices;
         private readonly IFileService _fileService;
         private readonly IPasswordHashingService _passwordHashingService;
+        private readonly IJWTService _jWTService;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService)
         {
             this._userServices = userServices;
             this._fileService = fileService;
             this._passwordHashingService = passwordHashingService;
+            this._jWTService = jWTService;
         }
 
         /// <summary>
-        /// SignUp Page
+        /// SignUp Page for Patient
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("PatientRegistration")]
-        public ActionResult<ApiResponse> PatientRegistration(RegistrationApiDTO.Request request)
+        public ActionResult<ApiResponse<RegistrationApiDTO.Response>> PatientRegistration(RegistrationApiDTO.Request request)
         {
-            var response = new ApiResponse();
+            var response = new ApiResponse<RegistrationApiDTO.Response>();
             if (_userServices.CheckEmailExist(request.Email))
             {
                 response.AddError("The email is already exist");
                 return Ok(response);
             }
             var hashedPassword = _passwordHashingService.GetHash(request.Password);
+            var passwordForLogin = request.Password;
             request.Password = hashedPassword;
             _userServices.Registration(request);
             //TODO: Return the Token 
+            var token = _jWTService.Auth(request.Email, passwordForLogin);
+            response.Data = new RegistrationApiDTO.Response();
+            response.Data.Token = token;
             return Ok(response);
         }
 
         /// <summary>
-        /// Upload profile image 
+        /// Upload profile image for user
         /// </summary>
         /// <returns></returns>
         [HttpPost]
@@ -76,52 +82,52 @@ namespace ICare.API.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
-        [Route("Update")]
-        [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Update(ApplicationUser UserModel)
-        {
-            return _userServices.Update(UserModel);
-        }
+        //[HttpPut]
+        //[Route("Update")]
+        //[ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public bool Update(ApplicationUser UserModel)
+        //{
+        //    return _userServices.Update(UserModel);
+        //}
 
-        [HttpDelete]
-        [Route("Delete/{id}")]
-        [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Delete(int id)
-        {
-            return _userServices.Delete(id);
-        }
+        //[HttpDelete]
+        //[Route("Delete/{id}")]
+        //[ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public bool Delete(int id)
+        //{
+        //    return _userServices.Delete(id);
+        //}
 
-        [HttpGet]
-        [Route("GetById/{id}")]
-        public ActionResult<ApiResponse<GetUserByIdApiDTO.Response>> GetById(int id)
-        {
-            var response = new ApiResponse<GetUserByIdApiDTO.Response>();
-            var user = _userServices.GetById(id); 
-            if(user == null)
-            {
-                response.AddError("No User With this id");
-                return response; 
-            }
+        //[HttpGet]
+        //[Route("GetById/{id}")]
+        //public ActionResult<ApiResponse<GetUserByIdApiDTO.Response>> GetById(int id)
+        //{
+        //    var response = new ApiResponse<GetUserByIdApiDTO.Response>();
+        //    var user = _userServices.GetById(id); 
+        //    if(user == null)
+        //    {
+        //        response.AddError("No User With this id");
+        //        return response; 
+        //    }
 
-            response.Data = new GetUserByIdApiDTO.Response
-            {
-                User = user
-            };
+        //    response.Data = new GetUserByIdApiDTO.Response
+        //    {
+        //        User = user
+        //    };
             
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
-        [HttpGet]
-        [Route("GetAll")]
-        public ActionResult<ApiResponse<GetAllUserApiDTO.Response>> GetAll()
-        {
-            var response = new ApiResponse<GetAllUserApiDTO.Response>();
+        //[HttpGet]
+        //[Route("GetAll")]
+        //public ActionResult<ApiResponse<GetAllUserApiDTO.Response>> GetAll()
+        //{
+        //    var response = new ApiResponse<GetAllUserApiDTO.Response>();
 
-            return Ok(response);
-        }
+        //    return Ok(response);
+        //}
 
     }
 }
