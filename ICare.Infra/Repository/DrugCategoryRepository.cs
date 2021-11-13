@@ -76,16 +76,22 @@ namespace ICare.Infra.Repository
             {
                 var param = new DynamicParameters();
 
-                param.Add("@Id", drugCategory.Id, dbType: DbType.DateTime, direction: ParameterDirection.Input);
-                param.Add("@CreatedOn", drugCategory.CreatedOn, dbType: DbType.DateTime, direction: ParameterDirection.Input);
+                param.Add("@Id", drugCategory.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
                 param.Add("@Name", drugCategory.Name, dbType: DbType.String, direction: ParameterDirection.Input);
+                if(drugCategory.PicturePath != null)
+                {
                 param.Add("@PicturePath", drugCategory.PicturePath, dbType: DbType.String, direction: ParameterDirection.Input);
+                }
+                else
+                {
+                    param.Add("@PicturePath", "0", dbType: DbType.String, direction: ParameterDirection.Input);
+                }
 
 
                 _dbContext.Connection.Execute("DrugCategoryUpdate", param, commandType: CommandType.StoredProcedure);
                 return true;
             }
-            catch (Exception erorr)
+            catch (Exception e)
             {
                 return false;
             }
