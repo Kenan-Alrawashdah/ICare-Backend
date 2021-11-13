@@ -56,10 +56,7 @@ namespace ICare.Infra.Services
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
 
                 };
-                if(result.RoleName.Count > 1 )
-                {
-                    tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, result.RoleName[1]));
-                }
+
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 return tokenHandler.WriteToken(token);
