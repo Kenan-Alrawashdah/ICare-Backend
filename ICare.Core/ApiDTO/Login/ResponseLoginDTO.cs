@@ -10,8 +10,7 @@ namespace ICare.Core.DTO
 
         public string Email { get; set; }
 
-        public List<string> RoleName { get; set; }
+        public string RoleName { get; set; }
 
-        public int Id { get; set; }
     }
 }

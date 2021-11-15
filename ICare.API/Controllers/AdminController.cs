@@ -15,16 +15,18 @@ namespace ICare.API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IDrugCategoryService _drugCategoryService;
+        private readonly IDrugService _drugService;
         private readonly IFileService _fileService;
 
-        public AdminController(IDrugCategoryService drugCategoryService,IFileService fileService)
+        public AdminController(IDrugCategoryService drugCategoryService,IDrugService drugService,IFileService fileService)
         {
             this._drugCategoryService = drugCategoryService;
+            this._drugService = drugService;
             this._fileService = fileService;
         }
 
 
-        #region Category
+        #region Drug Category
         /// <summary>
         /// get all categories
         /// </summary>
@@ -175,7 +177,38 @@ namespace ICare.API.Controllers
         #endregion
 
 
+        #region Drug
 
+        //public ActionResult<ApiResponse<AddDrugToShopApiDTO.Response>> AddDrugToShop(AddDrugToShopApiDTO.Resqust resqust)
+        //{
+        //    var response = new ApiResponse<AddDrugToShopApiDTO.Response>();
+
+        //    if (resqust.Name == null)
+        //    {
+        //        response.AddError("the drug must have a name");
+        //        return Ok(response);
+        //    }
+
+
+        //    var drug = new Drug
+        //    {
+        //        DrugCategoryId = resqust.DrugCategoryId,
+        //        Name = resqust.Name,
+        //        Price = resqust.Price,
+        //        PicturePath = resqust.PicturePath
+        //    };
+
+
+        //    _drugService.Create(drug);
+        //    response.Data =new AddDrugToShopApiDTO.Response();
+
+
+
+        //    return Ok(response);
+        //}
+
+
+        #endregion
 
 
 

@@ -45,9 +45,9 @@ namespace ICare.Infra.Services
                     Subject = new ClaimsIdentity(new Claim[]
                         {
                     new Claim(ClaimTypes.Name, result.FirstName),
-                    new Claim(ClaimTypes.Role, result.RoleName[0]),
+                    new Claim(ClaimTypes.Role, result.RoleName),
                     new Claim(ClaimTypes.Email , result.Email)
-                         }),
+                       }),
 
                     //expire == session timeout
                     Expires = DateTime.UtcNow.AddHours(1),
@@ -56,10 +56,7 @@ namespace ICare.Infra.Services
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
 
                 };
-                if(result.RoleName.Count > 1 )
-                {
-                    tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, result.RoleName[1]));
-                }
+
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 return tokenHandler.WriteToken(token);

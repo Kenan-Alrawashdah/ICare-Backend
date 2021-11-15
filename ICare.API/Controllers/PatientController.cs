@@ -24,7 +24,7 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("AddPatientDrug")]
-        public async Task< ActionResult<ApiResponse>> AddPatientDrug(AddpatientDrugApiDTO.Request request)
+        public async Task<ActionResult<ApiResponse>> AddPatientDrug(AddpatientDrugApiDTO.Request request)
         {
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
@@ -69,7 +69,11 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-
+            if(drugDoseTimeLsit.Count == 0)
+            {
+                response.AddError("must have at least on dose time");
+                return Ok(response);
+            }
           await  _patientServices.AddPatientDrugs(patientDrug, drugDoseTimeLsit);
 
             return Ok(response);
