@@ -37,10 +37,10 @@ namespace ICare.Infra.Repository
         public async Task<bool> AddPatientDrugs(PatientDrugs patientDrug, List<DrugDoseTime> drugDoseTime)
         {
             var p = new DynamicParameters();
-            p.Add("@CreatedOn", patientDrug.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
+            p.Add("@CreatedOn", patientDrug.CreatedOn, dbType: DbType.DateTime, direction: ParameterDirection.Input);
             p.Add("@PatientId", patientDrug.PatientId, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            p.Add("@StartDate", patientDrug.StartDate, dbType: DbType.Date, direction: ParameterDirection.Input);
-            p.Add("@EndDate", patientDrug.EndDate, dbType: DbType.Date, direction: ParameterDirection.Input);
+            p.Add("@StartDate", patientDrug.StartDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
+            p.Add("@EndDate", patientDrug.EndDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
             p.Add("@DrugName", patientDrug.DrugName, dbType: DbType.String, direction: ParameterDirection.Input);
 
             var result = _dbContext.Connection.ExecuteScalar<int>("PatientDrugsInsert", p, commandType: CommandType.StoredProcedure);

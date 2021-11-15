@@ -4,6 +4,29 @@
         <name>ICare.Core</name>
     </assembly>
     <members>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.DrugCategoryId">
+            <summary>
+            The id of the category 
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.Name">
+            <summary>
+            The name of the drug
+            </summary>
+            <example>test drug name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.Price">
+            <summary>
+            The price of the drug
+            </summary>
+            <example>100.9</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.PicturePath">
+            <summary>
+            The picture of the drug
+            </summary>
+        </member>
         <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Request.Email">
             <summary>
             

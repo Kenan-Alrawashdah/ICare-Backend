@@ -49,9 +49,6 @@ namespace ICare.Core.ApiDTO
         }
 
 
-        public class Response
-        {
-
-        }
+ 
     }
 }

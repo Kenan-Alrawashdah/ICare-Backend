@@ -45,9 +45,9 @@ namespace ICare.Infra.Services
                     Subject = new ClaimsIdentity(new Claim[]
                         {
                     new Claim(ClaimTypes.Name, result.FirstName),
-                    new Claim(ClaimTypes.Role, result.RoleName[0]),
+                    new Claim(ClaimTypes.Role, result.RoleName),
                     new Claim(ClaimTypes.Email , result.Email)
-                         }),
+                       }),
 
                     //expire == session timeout
                     Expires = DateTime.UtcNow.AddHours(1),
