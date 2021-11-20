@@ -4,6 +4,7 @@ using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
 {
@@ -15,9 +16,9 @@ namespace ICare.Infra.Services
         {
             this._userRepository = userRepository;
         }
-        public bool Registration(RegistrationApiDTO.Request userModle)
+        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
         {
-            return _userRepository.Registration(userModle);
+            return await _userRepository.Registration(userModle);
         }
 
         public bool Delete(int id)
@@ -55,6 +56,12 @@ namespace ICare.Infra.Services
         public bool AddOrUpdateProfilePicture(string imagePath, int userId)
         {
             return _userRepository.AddOrUpdateProfilePicture(imagePath, userId);
+        }
+
+        public async Task<bool> AddAdmin(ApplicationUser userModle)
+        {
+            return await _userRepository.AddAdmin(userModle);
+
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Core.IServices
 {
@@ -16,7 +17,9 @@ namespace ICare.Core.IServices
         IEnumerable<ApplicationUser> GetAll();
         ApplicationUser GetById(int id);
         ApplicationUser GetUser(ClaimsPrincipal userClaims);
-        bool Registration(RegistrationApiDTO.Request userModle);
+        Task<bool> Registration(RegistrationApiDTO.Request userModle);
         bool Update(ApplicationUser userModle);
+        Task<bool> AddAdmin(ApplicationUser userModle);
+
     }
 }

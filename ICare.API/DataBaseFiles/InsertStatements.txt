@@ -5,7 +5,7 @@
 	values (GETDATE(),'Admin')
 
 	INSERT INTO [dbo].[Roles] ([CreatedOn], [Name])
-	values (GETDATE(),'Subscribed')
+	values (GETDATE(),'Subscriber')
 
 	INSERT INTO [dbo].[Roles] ([CreatedOn], [Name])
 	values (GETDATE(),'Employee')

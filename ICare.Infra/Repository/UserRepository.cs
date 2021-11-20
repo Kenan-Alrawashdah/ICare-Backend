@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Repository
 {
@@ -54,9 +55,31 @@ namespace ICare.Infra.Repository
                 return null;
             }
         }
+        public async Task<bool> AddAdmin(ApplicationUser userModle)
+        {
+            var e = new DynamicParameters();
+            e.Add("@Name", "Admin", DbType.String, ParameterDirection.Input);
+            var roleId = _dbContext.Connection.ExecuteScalar<int>("GetRoleIdByName", e, commandType: CommandType.StoredProcedure);
+            var p = new DynamicParameters();
+            p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
+            p.Add("@CreatedOn", DateTime.UtcNow, DbType.DateTime, ParameterDirection.Input);
+            p.Add("@PasswordHash", userModle.PasswordHash, DbType.String, ParameterDirection.Input);
+            p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
+            p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
+            p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
+            p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
+            p.Add("@LocationId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
 
 
-        public bool Registration(RegistrationApiDTO.Request userModle)
+            await _dbContext.Connection.ExecuteScalarAsync<int>("UserInsert", p, commandType: CommandType.StoredProcedure);
+            return true; 
+        }
+
+
+        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
         {
             var e = new DynamicParameters();
             e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
@@ -76,12 +99,7 @@ namespace ICare.Infra.Repository
 
             try
             {
-                var userId = _dbContext.Connection.ExecuteScalar<int>("UserInsert", p, commandType: CommandType.StoredProcedure);
-                var userRoleModle = new UserRoles
-                {
-                    UserId = userId
-                };
-               
+                var userId = await _dbContext.Connection.ExecuteScalarAsync<int>("UserInsert", p, commandType: CommandType.StoredProcedure);               
 
                 var patient = new Patient();
                 patient.UserId = userId;
