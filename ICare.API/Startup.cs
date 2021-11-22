@@ -23,26 +23,9 @@ namespace ICare.API
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services )
         {
-            services.AddAuthentication(
-    x =>
-    {
-        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    }
-    ).AddJwtBearer(y =>
-    {
-        y.RequireHttpsMetadata = false;
-        y.SaveToken = true;
-        y.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("[Hello my Name is Anas Ahmad Alfasatleh]")),
-            ValidateIssuer = false,
-            ValidateAudience = false
-        };
-    });
+            services.AddAuth(Configuration);
             // Allow all origins
             services.AddCors(options =>
             {
