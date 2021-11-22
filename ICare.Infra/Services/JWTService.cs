@@ -35,7 +35,7 @@ namespace ICare.Infra.Services
 
 
                 //2- token key : to encode data to token (secure value)
-                var tokenKey = Encoding.ASCII.GetBytes("[Hello my Name is Anas Ahmad Alfasatleh]");
+                var tokenKey = Encoding.ASCII.GetBytes("superSecretKey@345");
 
 
                 //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 

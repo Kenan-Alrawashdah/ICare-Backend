@@ -12,5 +12,7 @@ namespace ICare.Core.DTO
 
         public string RoleName { get; set; }
 
+        public string RoleId { get; set; }
+
     }
 }
