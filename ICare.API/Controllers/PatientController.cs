@@ -1,68 +1,89 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IServices;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Patient")]
     public class PatientController : ControllerBase
     {
         private readonly IPatientServices _patientServices;
+        private readonly IUserServices _userServices;
 
-        public PatientController(IPatientServices patientServices)
+        public PatientController(IPatientServices patientServices, IUserServices userServices)
         {
             this._patientServices = patientServices;
+            this._userServices = userServices;
         }
+
         [HttpPost]
-        [Route("Create")]
-        [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Create(Patient patient)
+        [Route("AddPatientDrug")]
+        public async Task<ActionResult<ApiResponse>> AddPatientDrug(AddpatientDrugApiDTO.Request request)
         {
-            return _patientServices.Create(patient);
+            var user = _userServices.GetUser(User);
+            var patient = _patientServices.GetPatientByUserId(user.Id);
+            var response = new ApiResponse();
+            var patientDrug = new PatientDrugs()
+            {
+                DrugName = request.DrugName,
+                EndDate = request.EndDate,
+                PatientId = patient.Id
+            };
+            List<DrugDoseTime> drugDoseTimeLsit = new List<DrugDoseTime>();
+
+            if (request.drugDoseTime1 != null)
+            {
+                var d = new DrugDoseTime()
+                {
+                    Time = request.drugDoseTime1
+                };
+                drugDoseTimeLsit.Add(d);
+            }
+            if (request.drugDoseTime2 != null)
+            {
+                var d = new DrugDoseTime()
+                {
+                    Time = request.drugDoseTime2
+                };
+                drugDoseTimeLsit.Add(d);
+            }
+            if (request.drugDoseTime3 != null)
+            {
+                var d = new DrugDoseTime()
+                {
+                    Time = request.drugDoseTime3
+                };
+                drugDoseTimeLsit.Add(d);
+            }
+            if (request.drugDoseTime4 != null)
+            {
+                var d = new DrugDoseTime()
+                {
+                    Time = request.drugDoseTime4
+                };
+                drugDoseTimeLsit.Add(d);
+            }
+            if(drugDoseTimeLsit.Count == 0)
+            {
+                response.AddError("must have at least on dose time");
+                return Ok(response);
+            }
+          await  _patientServices.AddPatientDrugs(patientDrug, drugDoseTimeLsit);
+
+            return Ok(response);
         }
 
-        [HttpPut]
-        [Route("Update")]
-        [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Update(Patient patient)
-        {
-            return _patientServices.Update(patient);
-        }
 
-        [HttpDelete]
-        [Route("Delete/{id}")]
-        [ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public bool Delete(int id)
-        {
-            return _patientServices.Delete(id);
-        }
 
-        [HttpGet]
-        [Route("GetById/{id}")]
-        [ProducesResponseType(type: typeof(Patient), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public Patient GetById(int id)
-        {
-            return _patientServices.GetById(id);
-        }
 
-        [HttpGet]
-        [Route("GetAll")]
-        [ProducesResponseType(type: typeof(IEnumerable<Patient>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IEnumerable<Patient> GetAll()
-        {
-            return _patientServices.GetAll();
-        }
+
+
 
     }
 }

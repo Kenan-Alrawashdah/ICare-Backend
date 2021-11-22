@@ -2,19 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Core.IServices
 {
     public interface IPatientServices
     {
-        bool Create(Patient patient);
-
-        bool Update(Patient patient);
-
-        bool Delete(int id);
-
-        Patient GetById(int id);
-
-        IEnumerable<Patient> GetAll();
+       Task<bool> AddPatientDrugs(PatientDrugs t, List<DrugDoseTime> drugDoseTime);
+        Patient GetPatientByUserId(int id);
     }
 }

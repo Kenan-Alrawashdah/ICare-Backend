@@ -1,4 +1,5 @@
-﻿using ICare.Core.DTO;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.DTO;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using Microsoft.IdentityModel.Tokens;
@@ -19,7 +20,7 @@ namespace ICare.Infra.Services
             this._jWTRepository = jWTRepository;
         }
 
-        public string Auth(RequestLoginDTO loginDTO)
+        public string Auth(LoginApiDTO.Request loginDTO)
         {
             var result = _jWTRepository.Authentication(loginDTO);
 
@@ -43,11 +44,10 @@ namespace ICare.Infra.Services
                     //userName, roleName
                     Subject = new ClaimsIdentity(new Claim[]
                         {
-                    new Claim(ClaimTypes.Name, result.UserName)
-                    ,
-                    new Claim(ClaimTypes.Role, result.RoleName[0])
-               
-                        }),
+                    new Claim(ClaimTypes.Name, result.FirstName),
+                    new Claim(ClaimTypes.Role, result.RoleName),
+                    new Claim(ClaimTypes.Email , result.Email)
+                       }),
 
                     //expire == session timeout
                     Expires = DateTime.UtcNow.AddHours(1),
@@ -57,12 +57,21 @@ namespace ICare.Infra.Services
 
                 };
 
+
                 var token = tokenHandler.CreateToken(tokenDescriptor);
                 return tokenHandler.WriteToken(token);
 
 
 
             }
+        }
+
+        public string Auth(string email, string password)
+        {
+            var loginDTO = new LoginApiDTO.Request();
+            loginDTO.Email = email;
+            loginDTO.Password = password;
+            return Auth(loginDTO);
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
 {
@@ -13,9 +16,9 @@ namespace ICare.Infra.Services
         {
             this._userRepository = userRepository;
         }
-        public bool Create(ApplicationUser userModle)
+        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
         {
-            return _userRepository.Create(userModle);
+            return await _userRepository.Registration(userModle);
         }
 
         public bool Delete(int id)
@@ -38,6 +41,26 @@ namespace ICare.Infra.Services
         public bool Update(ApplicationUser userModle)
         {
             return _userRepository.Update(userModle);
+
+        }
+        public ApplicationUser GetUser(ClaimsPrincipal userClaims)
+        {
+            return _userRepository.GetUser(userClaims);
+        }
+        public bool CheckEmailExist(string Email)
+        {
+            return _userRepository.CheckEmailExist(Email);
+
+        }
+
+        public bool AddOrUpdateProfilePicture(string imagePath, int userId)
+        {
+            return _userRepository.AddOrUpdateProfilePicture(imagePath, userId);
+        }
+
+        public async Task<bool> AddAdmin(ApplicationUser userModle)
+        {
+            return await _userRepository.AddAdmin(userModle);
 
         }
     }

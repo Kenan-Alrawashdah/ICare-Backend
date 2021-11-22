@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ICare.Core</name>
+    </assembly>
+    <members>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.DrugCategoryId">
+            <summary>
+            The id of the category 
+            </summary>
+            <example>1</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.Name">
+            <summary>
+            The name of the drug
+            </summary>
+            <example>test drug name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.Price">
+            <summary>
+            The price of the drug
+            </summary>
+            <example>100.9</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.PicturePath">
+            <summary>
+            The picture of the drug
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Request.Email">
+            <summary>
+            
+            </summary>
+            <example>Test@test.test</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Request.Password">
+            <summary>
+            
+            </summary>
+            <example>Q!qwe123</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Response.Token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddpatientDrugApiDTO.Request.StartDate">
+            <summary>
+            The started date of taking the drug
+            "if needed to be not in the same time of adding the drug"
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddpatientDrugApiDTO.Request.drugDoseTime1">
+            <summary>
+            first
+            </summary>
+            <example>"08:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddpatientDrugApiDTO.Request.drugDoseTime2">
+            <summary>
+            second
+            </summary>
+            <example>"12:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddpatientDrugApiDTO.Request.drugDoseTime3">
+            <summary>
+            third 
+            </summary>
+            <example>"06:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.AddpatientDrugApiDTO.Request.drugDoseTime4">
+            <summary>
+            fourth 
+            </summary>
+            <example>"023:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Email">
+            <summary>
+            the Email Of the patient
+            </summary>
+            <example>Test@test.test</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Password">
+            <summary>
+            the password of the patient
+            </summary>
+            <example>Q!qwe123</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.PhoneNumber">
+            <summary>
+            
+            </summary>
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.FirstName">
+            <example>First Name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.LastName">
+            <example>Last Name</example>
+        </member>
+        <member name="P:ICare.Core.Data.PatientDrugs.StartDate">
+            <summary>
+            The started date of taking the drug
+            "if needed to be not in the same time of adding the drug"
+            </summary>
+        </member>
+    </members>
+</doc>

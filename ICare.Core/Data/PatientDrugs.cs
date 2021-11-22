@@ -23,14 +23,6 @@ namespace ICare.Core.Data
 
         public Patient Patient { get; set; }
 
-        /// <summary>
-        /// Use ScheduleEnum  class
-        /// </summary>
-        [Required]
-        [ForeignKey(nameof(ScheduleId))]
-        public int ScheduleId { get; set; }
-
-        public ScheduleEnum Schedule { get; set; }
 
         /// <summary>
         /// The started date of taking the drug

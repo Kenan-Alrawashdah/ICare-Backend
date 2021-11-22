@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ICare.API</name>
+    </assembly>
+    <members>
+        <member name="M:ICare.API.Controllers.AdminController.GetAllDrugCategory">
+            <summary>
+            get all categories
+            </summary>
+            <returns>List of Categories</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.AdminController.AddCategory(Microsoft.AspNetCore.Http.IFormFile,System.String)">
+            <summary>
+            Add new category
+            </summary>
+            <param name="image">The image of the category</param>
+            <param name="name">The name of the category</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.AdminController.DeleteDrugCategory(System.Int32)">
+            <summary>
+            Delete category by id
+            </summary>
+            <param name="id"></param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.AdminController.UpdateDrugCategory(System.Int32,Microsoft.AspNetCore.Http.IFormFile,System.String)">
+            <summary>
+            Update Category
+            </summary>
+            <param name="id">The id of the category</param>
+            <param name="image">the image of the category</param>
+            <param name="name">the name of the category</param>
+            <returns>bool</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.AdminController.GetDrugCategoryById(System.Int32)">
+            <summary>
+            Get category by id
+            </summary>
+            <param name="id">The id of the category</param>
+            <returns>Category</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
+            <summary>
+            SignUp Page for Patient
+            </summary>
+            <param name="request"></param>
+            <returns>token</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.UploadProilePicture(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Upload profile image for user
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

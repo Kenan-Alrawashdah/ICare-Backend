@@ -19,6 +19,9 @@ namespace ICare.API.Extension
                 // Adding swagger document
                 options.SwaggerDoc("v1.0", new OpenApiInfo() { Title = "Main API v1.0", Version = "v1.0" });
 
+                // Include the comments that we wrote in the documentation
+                options.IncludeXmlComments("Properties/ICare.API.xml");
+                options.IncludeXmlComments("Properties/ICare.Core.xml");
 
                 // To use unique names with the requests and responses
                 options.CustomSchemaIds(x => x.FullName);

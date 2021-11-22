@@ -4,6 +4,7 @@ using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
 {
@@ -15,29 +16,39 @@ namespace ICare.Infra.Services
         {
             this._patientRepository = patientRepository;
         }
-        public bool Create(Patient patient)
+        public async Task<bool> AddPatientDrugs(PatientDrugs t, List<DrugDoseTime> drugDoseTime)
         {
-            return _patientRepository.Create(patient);
+             return await _patientRepository.AddPatientDrugs(t, drugDoseTime);
+
         }
 
-        public bool Delete(int id)
+        public Patient GetPatientByUserId(int id)
         {
-            return _patientRepository.Delete(id);
+            return _patientRepository.GetPatientByUserId(id);
         }
+        //public bool Create(Patient patient)
+        //{
+        //    return _patientRepository.Create(patient);
+        //}
 
-        public IEnumerable<Patient> GetAll()
-        {
-            return _patientRepository.GetAll();
-        }
+        //public bool Delete(int id)
+        //{
+        //    return _patientRepository.Delete(id);
+        //}
 
-        public Patient GetById(int id)
-        {
-            return _patientRepository.GetById(id);
-        }
+        //public IEnumerable<Patient> GetAll()
+        //{
+        //    return _patientRepository.GetAll();
+        //}
 
-        public bool Update(Patient patient)
-        {
-            return _patientRepository.Update(patient);
-        }
+        //public Patient GetById(int id)
+        //{
+        //    return _patientRepository.GetById(id);
+        //}
+
+        //public bool Update(Patient patient)
+        //{
+        //    return _patientRepository.Update(patient);
+        //}
     }
 }
