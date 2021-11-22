@@ -42,7 +42,10 @@ namespace ICare.Infra.Repository
             p.Add("@Email", loginDTO.Email, dbType: DbType.String, ParameterDirection.Input);
             var result = _dbContext.Connection.QueryFirstOrDefault<ResponseLoginDTO>("AuthLogin", p, commandType: CommandType.StoredProcedure);
 
-            result.RoleName = "Patient";
+            var e = new DynamicParameters();
+            e.Add("@Id", result.RoleId, dbType: DbType.Int32, ParameterDirection.Input);
+            result.RoleName = _dbContext.Connection.QueryFirstOrDefault<string>("GetRoleyNameById", e, commandType: CommandType.StoredProcedure);
+
           
 
             return result;
