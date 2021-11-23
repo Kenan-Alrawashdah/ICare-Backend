@@ -74,6 +74,36 @@
             </summary>
             <example>"023:30:00" </example>
         </member>
+        <member name="P:ICare.Core.ApiDTO.EditDrugApiDTO.Request.StartDate">
+            <summary>
+            The started date of taking the drug
+            "if needed to be not in the same time of adding the drug"
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.EditDrugApiDTO.Request.drugDoseTime1">
+            <summary>
+            first
+            </summary>
+            <example>"08:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.EditDrugApiDTO.Request.drugDoseTime2">
+            <summary>
+            second
+            </summary>
+            <example>"12:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.EditDrugApiDTO.Request.drugDoseTime3">
+            <summary>
+            third 
+            </summary>
+            <example>"06:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.EditDrugApiDTO.Request.drugDoseTime4">
+            <summary>
+            fourth 
+            </summary>
+            <example>"023:30:00" </example>
+        </member>
         <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Email">
             <summary>
             the Email Of the patient

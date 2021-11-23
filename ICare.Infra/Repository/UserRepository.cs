@@ -68,7 +68,6 @@ namespace ICare.Infra.Repository
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
             p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
@@ -92,7 +91,6 @@ namespace ICare.Infra.Repository
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
             p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
@@ -186,20 +184,14 @@ namespace ICare.Infra.Repository
             return result;
         }
 
-        public bool Update(ApplicationUser userModle)
+        public bool Update(int userId,MyAccountApiDTO.Request Modle)
         {
             var p = new DynamicParameters();
-            p.Add("@Id", userModle.Id, DbType.Int32, ParameterDirection.Input);
-            p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
-            p.Add("@CreatedOn", userModle.CreatedOn, DbType.DateTime, ParameterDirection.Input);
-            p.Add("@PasswordHash", userModle.PasswordHash, DbType.String, ParameterDirection.Input);
-            p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
-            p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
-            p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
-            p.Add("@ProfilePicturePath", userModle.ProfilePicturePath, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", userModle.LocationId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@EmployeeId", userModle.EmployeeId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@PatientId", userModle.PatientId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Id", userId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Email", Modle.Email, DbType.String, ParameterDirection.Input);
+            p.Add("@PhoneNumber", Modle.PhoneNumber, DbType.String, ParameterDirection.Input);
+            p.Add("@FirstName", Modle.FirstName, DbType.String, ParameterDirection.Input);
+            p.Add("@LastName", Modle.LastName, DbType.String, ParameterDirection.Input);
 
             try
             {

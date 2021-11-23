@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
@@ -25,6 +26,19 @@ namespace ICare.Infra.Services
         public Patient GetPatientByUserId(int id)
         {
             return _patientRepository.GetPatientByUserId(id);
+        }
+
+        public async Task<IEnumerable<MyDrugsApiDto.Drug>> GetMyDrugs(int patientId)
+        {
+            return await _patientRepository.GetMyDrugs(patientId);
+        }
+        public async Task<EditDrugApiDTO.Response> GetDrug(int id)
+        {
+            return await _patientRepository.GetDrug(id);
+        }
+        public async Task<bool> EditPatientDrugs(PatientDrugs patientDrug, List<DrugDoseTime> drugDoseTime)
+        {
+            return await _patientRepository.EditPatientDrugs(patientDrug, drugDoseTime);
         }
         //public bool Create(Patient patient)
         //{
