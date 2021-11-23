@@ -38,9 +38,9 @@ namespace ICare.Infra.Services
 
         }
 
-        public bool Update(ApplicationUser userModle)
+        public bool Update(int userId, MyAccountApiDTO.Request Modle)
         {
-            return _userRepository.Update(userModle);
+            return _userRepository.Update( userId,  Modle);
 
         }
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)

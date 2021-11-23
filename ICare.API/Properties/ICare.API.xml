@@ -41,6 +41,20 @@
             <param name="id">The id of the category</param>
             <returns>Category</returns>
         </member>
+        <member name="M:ICare.API.Controllers.PatientController.EditDrug(System.Int32)">
+            <summary>
+            Edit drug get page 
+            </summary>
+            <param name="id">the id of the drug</param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.EditDrug(ICare.Core.ApiDTO.EditDrugApiDTO.Request)">
+            <summary>
+            Edit drug post method 
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
             <summary>
             SignUp Page for Patient
@@ -52,6 +66,19 @@
             <summary>
             Upload profile image for user
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.MyAccount">
+            <summary>
+            Get for my account page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.MyAccount(ICare.Core.ApiDTO.MyAccountApiDTO.Request)">
+            <summary>
+            Post for my account page 
+            </summary>
+            <param name="request"></param>
             <returns></returns>
         </member>
     </members>

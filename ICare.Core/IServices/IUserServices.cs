@@ -18,7 +18,7 @@ namespace ICare.Core.IServices
         ApplicationUser GetById(int id);
         ApplicationUser GetUser(ClaimsPrincipal userClaims);
         Task<bool> Registration(RegistrationApiDTO.Request userModle);
-        bool Update(ApplicationUser userModle);
+        bool Update(int userId, MyAccountApiDTO.Request Modle);
         Task<bool> AddAdmin(ApplicationUser userModle);
 
     }
