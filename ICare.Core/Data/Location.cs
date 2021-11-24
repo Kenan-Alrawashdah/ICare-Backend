@@ -1,8 +1,29 @@
-﻿namespace ICare.Core.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ICare.Core.Data
 {
     public class Location : BaseDataModel
     {
-        //TODO: add location properties
-        public string location { get; set; }
+
+        [MaxLength(50)]
+        public string AddressName { get; set; }
+
+        public int UserId { get; set; }
+
+
+        [MaxLength(50)]
+        public string PhoneNumber { get; set; }
+
+
+        [MaxLength(50)]
+        public string City { get; set; }
+
+        public int ZipCode { get; set; }
+
+        [MaxLength(50)]
+        public string Details { get; set; }
+
+        [MaxLength(50)]
+        public string Street { get; set; }
     }
 }

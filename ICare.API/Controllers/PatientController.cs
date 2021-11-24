@@ -15,11 +15,15 @@ namespace ICare.API.Controllers
     {
         private readonly IPatientServices _patientServices;
         private readonly IUserServices _userServices;
+        private readonly ILocationSevices _locationSevices;
+        private readonly IWaterServices _waterServices;
 
-        public PatientController(IPatientServices patientServices, IUserServices userServices)
+        public PatientController(IPatientServices patientServices, IUserServices userServices, ILocationSevices locationSevices,IWaterServices waterServices)
         {
             this._patientServices = patientServices;
             this._userServices = userServices;
+            this._locationSevices = locationSevices;
+            this._waterServices = waterServices;
         }
 
         [Authorize]
@@ -70,12 +74,12 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if(drugDoseTimeLsit.Count == 0)
+            if (drugDoseTimeLsit.Count == 0)
             {
                 response.AddError("must have at least on dose time");
                 return Ok(response);
             }
-          await  _patientServices.AddPatientDrugs(patientDrug, drugDoseTimeLsit);
+            await _patientServices.AddPatientDrugs(patientDrug, drugDoseTimeLsit);
 
             return Ok(response);
         }
@@ -86,10 +90,10 @@ namespace ICare.API.Controllers
         public async Task<ActionResult<ApiResponse<MyDrugsApiDto.Response>>> MyDrugs()
         {
             var user = _userServices.GetUser(User);
-            var patient = _patientServices.GetPatientByUserId(user.Id); 
+            var patient = _patientServices.GetPatientByUserId(user.Id);
 
             var response = new ApiResponse<MyDrugsApiDto.Response>();
-            response.Data =new MyDrugsApiDto.Response();
+            response.Data = new MyDrugsApiDto.Response();
             response.Data.MyDrugs = await _patientServices.GetMyDrugs(patient.Id);
 
             return Ok(response);
@@ -108,7 +112,7 @@ namespace ICare.API.Controllers
             var response = new ApiResponse<EditDrugApiDTO.Response>();
             response.Data = new EditDrugApiDTO.Response();
 
-            response.Data =await _patientServices.GetDrug(id);
+            response.Data = await _patientServices.GetDrug(id);
 
             return Ok(response);
         }
@@ -179,5 +183,211 @@ namespace ICare.API.Controllers
 
         }
 
+
+        /// <summary>
+        /// Add Location page
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [Route("AddLocation")]
+        public ActionResult<ApiResponse> AddLocation(AddLocationApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+            var user = _userServices.GetUser(User);
+            var location = new Location
+            {
+                AddressName = request.AddressName,
+                City = request.AddressName,
+                PhoneNumber = request.PhoneNumber,
+                Street = request.Street,
+                Details = request.Details,
+                ZipCode = request.ZipCode,
+                UserId = user.Id
+            };
+            _locationSevices.AddLocation(location);
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// Get All locations for the user 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Route("GetUserLocations")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<Location>>>> GetUserLocations()
+        {
+            var user = _userServices.GetUser(User);
+            var response = new ApiResponse<IEnumerable<Location>>();
+
+            response.Data = await _locationSevices.GetUserLocations(user.Id);
+            return Ok(response);
+        }
+
+
+        /// <summary>
+        /// Get Location for Edit page 
+        /// </summary>
+        /// <param name="id">the id of the location</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Route("GetLocationById/{id:int}")]
+        public async Task<ActionResult<ApiResponse<Location>>> GetLocationById(int id)
+        {
+            var response = new ApiResponse<Location>();
+            response.Data = await _locationSevices.GetLocationById(id);
+            return Ok(response);
+
+        }
+
+        /// <summary>
+        /// Edit location post
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut]
+        [Route("EditLocation")]
+        public ActionResult<ApiResponse> EditLocation(EditLocationApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+            var user = _userServices.GetUser(User);
+            var location = new Location
+            {
+                Id = request.Id,
+                AddressName = request.AddressName,
+                City = request.AddressName,
+                PhoneNumber = request.PhoneNumber,
+                Street = request.Street,
+                Details = request.Details,
+                ZipCode = request.ZipCode,
+            };
+            _locationSevices.EditLocation(location);
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Delete Location by id
+        /// </summary>
+        /// <param name="id">the id of the location</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteLocation/{id:int}")]
+        public ActionResult<ApiResponse> DeleteLocation(int id) 
+        {
+            var response = new ApiResponse();
+           if( _locationSevices.DeleteLocation(id))
+            {
+                return Ok(response);
+            }
+            else
+            {
+                response.AddError("There is something error");
+                return Ok(response); 
+            }
+
+        }
+
+
+        /// <summary>
+        /// Water Add page ""check the if "From" before "To" else set error
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost]
+        [Route("AddWater")]
+        public ActionResult<ApiResponse> AddWater(AddWaterApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+            var user = _userServices.GetUser(User);
+            var patient = _patientServices.GetPatientByUserId(user.Id);
+
+            if (_waterServices.AddWater(request,patient.Id))
+            {
+                return Ok(response);
+            }
+            else
+            {
+                response.AddError("There is something error");
+                return Ok(response);
+            }
+        }
+
+        /// <summary>
+        /// Edit water page 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPut]
+        [Route("EditWater")]
+        public ActionResult<ApiResponse> EditWater(EditWaterApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+
+            if (_waterServices.EditWater(request))
+            {
+                return Ok(response);
+            }
+            else
+            {
+                response.AddError("There is something error");
+                return Ok(response);
+            }
+
+        }
+
+
+        /// <summary>
+        /// Delete Water page
+        /// </summary>
+        /// <param name="id">id of the water recored water to delete</param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpDelete]
+        [Route("DeleteWater/{id:int}")]
+        public ActionResult<ApiResponse> DeleteWater(int id)
+        {
+            var response = new ApiResponse(); 
+            if(_waterServices.DeleteWater(id))
+            {
+                return Ok(response);
+            }
+            else
+            {
+                response.AddError("There is something error"); 
+                return Ok(response);
+            }
+
+        }
+
+        /// <summary>
+        /// Get Water page 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]
+        [Route("GetWater")]
+        public async Task<ActionResult<ApiResponse<Water>>> GetWater()
+        {
+            var respnse = new ApiResponse<Water>();
+            var user = _userServices.GetUser(User);
+
+            var water = await _waterServices.GetWaterByUserId(user.Id);
+            respnse.Data = water;
+            return Ok(respnse); 
+
+        }
+
+        
+
+        
     }
+
+    
 }
