@@ -24,7 +24,6 @@ namespace ICare.Infra.Repository
             {
                 var param = new DynamicParameters();
 
-                param.Add("@CreatedOn", drug.CreatedOn, dbType: DbType.DateTime, direction: ParameterDirection.Input);
                 param.Add("@DrugCategoryId", drug.DrugCategoryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
                 param.Add("@Price", drug.Price, dbType: DbType.Double, direction: ParameterDirection.Input);
                 param.Add("@PicturePath", drug.PicturePath, dbType: DbType.String, direction: ParameterDirection.Input);
