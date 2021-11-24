@@ -16,7 +16,7 @@ namespace ICare.Infra.Services
 
         public  string _imagesFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images");
 
-        public  string _fielsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files");
+        public string _fielsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Files");
 
         public  bool IsPicture(string fileName)
         {

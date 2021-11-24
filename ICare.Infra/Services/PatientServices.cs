@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
@@ -25,6 +26,11 @@ namespace ICare.Infra.Services
         public Patient GetPatientByUserId(int id)
         {
             return _patientRepository.GetPatientByUserId(id);
+        }
+
+        public Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request)
+        {
+            return _patientRepository.InsertPDFData(request);
         }
         //public bool Create(Patient patient)
         //{
