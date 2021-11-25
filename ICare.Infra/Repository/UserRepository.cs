@@ -232,13 +232,12 @@ namespace ICare.Infra.Repository
             }
         }
 
-        public async Task<bool> ForgotPassword(ChangeUserPasswordDTO.Request request)
+        public async Task<bool> SetNewPassword(string email , string password)
         {
-            if (CheckEmailExist(request.Email))
-            {
+            
                 var p = new DynamicParameters();
-                p.Add("@Email", request.Email, DbType.String, ParameterDirection.Input);
-                p.Add("@NewPasswordHash", SendPasswrodLinkEmail(request.Email), DbType.String, ParameterDirection.Input);
+                p.Add("@Email", email, DbType.String, ParameterDirection.Input);
+                p.Add("@NewPasswordHash", password, DbType.String, ParameterDirection.Input);
                 try
                 {
                     var PasswordChanged = await _dbContext.Connection.ExecuteScalarAsync<string>("ChangeUserPassword", p, commandType: CommandType.StoredProcedure);
@@ -249,47 +248,11 @@ namespace ICare.Infra.Repository
                 {
                     return false;
                 }
-            }
-            else
-            {
-                return false;
-            }
+           
            
         }
 
-        private string SendPasswrodLinkEmail(string email)
-        {
-            var password = CreateRandomPassword(9);
-
-
-            MailMessage mm = new MailMessage();
-            mm.To.Add("muradshaltaf123@gmail.com");
-            mm.Subject = "password chanded successfully.";
-            mm.Body = "We are excited to tell you that your password chanded successfully.\n" + "Your New Password : " + password;
-            mm.From = new MailAddress("thetopwebsite12@gmail.com");
-
-            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
-            smtp.Port = 587;
-            smtp.UseDefaultCredentials = false;
-            smtp.EnableSsl = true;
-            smtp.Credentials = new System.Net.NetworkCredential("thetopwebsite12@gmail.com", "8974563120");
-            smtp.Send(mm);
-
-            return _passwordHashingService.GetHash(password);
-
-        }
-        private string CreateRandomPassword(int PasswordLength)
-        {
-            string _allowedChars = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ";
-            Random randNum = new Random();
-            char[] chars = new char[PasswordLength];
-            int allowedCharCount = _allowedChars.Length;
-            for (int i = 0; i < PasswordLength; i++)
-            {
-                chars[i] = _allowedChars[(int)((_allowedChars.Length) * randNum.NextDouble())];
-            }
-            return new string(chars);
-        }
+        
 
     }
 }
