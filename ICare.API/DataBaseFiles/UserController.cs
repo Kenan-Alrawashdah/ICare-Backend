@@ -20,13 +20,15 @@ namespace ICare.API.Controllers
         private readonly IFileService _fileService;
         private readonly IPasswordHashingService _passwordHashingService;
         private readonly IJWTService _jWTService;
+        private readonly IResetPasswordServices _resetPasswordServices;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService,IResetPasswordServices resetPasswordServices)
         {
             this._userServices = userServices;
             this._fileService = fileService;
             this._passwordHashingService = passwordHashingService;
             this._jWTService = jWTService;
+            this._resetPasswordServices = resetPasswordServices;
         }
 
         /// <summary>
@@ -104,8 +106,8 @@ namespace ICare.API.Controllers
         {
 
             var response = new ApiResponse();
-            var drugList = _userServices.ForgotPassword(request);
-            if (drugList == null)
+            var result = _resetPasswordServices.ForgotPassword(request);
+            if (result == false)
             {
                 response.AddError("This Email Not Exist");
                 return Ok(response);

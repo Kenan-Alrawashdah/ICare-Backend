@@ -69,9 +69,9 @@ namespace ICare.Infra.Services
             return  _userRepository.GetDrugByNameSearch(request);
         }
 
-        public Task<bool> ForgotPassword(ChangeUserPasswordDTO.Request request)
+       public async Task<bool> SetNewPassword(string email, string password)
         {
-            return _userRepository.ForgotPassword(request);
+            return await _userRepository.SetNewPassword(email, password);
         }
     }
 }
