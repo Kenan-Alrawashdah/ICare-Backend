@@ -13,13 +13,10 @@ namespace ICare.Core.Data
         public Patient Patient { get; set; }
 
         [Required]
-        [ForeignKey(nameof(TypeId))]
-        public int TypeId { get; set; }
-
-        public HealthReportTypes Type { get; set; }
+        public string Type { get; set; }
 
         //TODO: double or string
         [Required]
-        public double Value { get; set; }
+        public string Value { get; set; }
     }
 }

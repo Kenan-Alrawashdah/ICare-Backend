@@ -38,9 +38,9 @@ namespace ICare.Infra.Services
 
         }
 
-        public bool Update(ApplicationUser userModle)
+        public bool Update(int userId, MyAccountApiDTO.Request Modle)
         {
-            return _userRepository.Update(userModle);
+            return _userRepository.Update( userId,  Modle);
 
         }
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)
@@ -62,6 +62,16 @@ namespace ICare.Infra.Services
         {
             return await _userRepository.AddAdmin(userModle);
 
+        }
+
+        public IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request)
+        {
+            return  _userRepository.GetDrugByNameSearch(request);
+        }
+
+       public async Task<bool> SetNewPassword(string email, string password)
+        {
+            return await _userRepository.SetNewPassword(email, password);
         }
     }
 }

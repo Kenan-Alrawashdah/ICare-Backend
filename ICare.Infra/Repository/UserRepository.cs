@@ -3,23 +3,28 @@ using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
+using ICare.Core.IServices;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 
 namespace ICare.Infra.Repository
 {
     public class UserRepository : IUserRepository
     {
+        
         private readonly IDbContext _dbContext;
-
-        public UserRepository(IDbContext dbContext)
+        private  IPasswordHashingService _passwordHashingService;
+        public UserRepository(IDbContext dbContext, IPasswordHashingService passwordHashingService)
         {
             this._dbContext = dbContext;
+            this._passwordHashingService = passwordHashingService;
         }
         public bool CheckEmailExist(string Email)
         {
@@ -68,7 +73,6 @@ namespace ICare.Infra.Repository
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
             p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
@@ -92,7 +96,6 @@ namespace ICare.Infra.Repository
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
             p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
@@ -186,20 +189,14 @@ namespace ICare.Infra.Repository
             return result;
         }
 
-        public bool Update(ApplicationUser userModle)
+        public bool Update(int userId,MyAccountApiDTO.Request Modle)
         {
             var p = new DynamicParameters();
-            p.Add("@Id", userModle.Id, DbType.Int32, ParameterDirection.Input);
-            p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
-            p.Add("@CreatedOn", userModle.CreatedOn, DbType.DateTime, ParameterDirection.Input);
-            p.Add("@PasswordHash", userModle.PasswordHash, DbType.String, ParameterDirection.Input);
-            p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
-            p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
-            p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
-            p.Add("@ProfilePicturePath", userModle.ProfilePicturePath, DbType.String, ParameterDirection.Input);
-            p.Add("@LocationId", userModle.LocationId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@EmployeeId", userModle.EmployeeId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@PatientId", userModle.PatientId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Id", userId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Email", Modle.Email, DbType.String, ParameterDirection.Input);
+            p.Add("@PhoneNumber", Modle.PhoneNumber, DbType.String, ParameterDirection.Input);
+            p.Add("@FirstName", Modle.FirstName, DbType.String, ParameterDirection.Input);
+            p.Add("@LastName", Modle.LastName, DbType.String, ParameterDirection.Input);
 
             try
             {
@@ -211,5 +208,43 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
+        public IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@Search", request.Search, dbType: DbType.String, ParameterDirection.Input);
+                var DrugList = _dbContext.Connection.Query<GetBySearchDTO.Response>("GetBySearch", p, commandType: CommandType.StoredProcedure);
+                return DrugList;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> SetNewPassword(string email , string password)
+        {
+            
+                var p = new DynamicParameters();
+                p.Add("@Email", email, DbType.String, ParameterDirection.Input);
+                p.Add("@NewPasswordHash", password, DbType.String, ParameterDirection.Input);
+                try
+                {
+                    var PasswordChanged = await _dbContext.Connection.ExecuteScalarAsync<string>("ChangeUserPassword", p, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+                catch (Exception ee)
+                {
+                    return false;
+                }
+           
+           
+        }
+
+        
+
     }
 }
