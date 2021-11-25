@@ -28,6 +28,7 @@ namespace ICare.Infra.Services
             return _patientRepository.GetPatientByUserId(id);
         }
 
+
         public async Task<IEnumerable<MyDrugsApiDto.Drug>> GetMyDrugs(int patientId)
         {
             return await _patientRepository.GetMyDrugs(patientId);
@@ -39,6 +40,12 @@ namespace ICare.Infra.Services
         public async Task<bool> EditPatientDrugs(PatientDrugs patientDrug, List<DrugDoseTime> drugDoseTime)
         {
             return await _patientRepository.EditPatientDrugs(patientDrug, drugDoseTime);
+            }
+
+        public Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request)
+        {
+            return _patientRepository.InsertPDFData(request);
+
         }
         //public bool Create(Patient patient)
         //{

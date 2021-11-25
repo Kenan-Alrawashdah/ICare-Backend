@@ -3,23 +3,28 @@ using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
+using ICare.Core.IServices;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
+
 
 namespace ICare.Infra.Repository
 {
     public class UserRepository : IUserRepository
     {
+        
         private readonly IDbContext _dbContext;
-
-        public UserRepository(IDbContext dbContext)
+        private  IPasswordHashingService _passwordHashingService;
+        public UserRepository(IDbContext dbContext, IPasswordHashingService passwordHashingService)
         {
             this._dbContext = dbContext;
+            this._passwordHashingService = passwordHashingService;
         }
         public bool CheckEmailExist(string Email)
         {
@@ -203,5 +208,43 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
+        public IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@Search", request.Search, dbType: DbType.String, ParameterDirection.Input);
+                var DrugList = _dbContext.Connection.Query<GetBySearchDTO.Response>("GetBySearch", p, commandType: CommandType.StoredProcedure);
+                return DrugList;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> SetNewPassword(string email , string password)
+        {
+            
+                var p = new DynamicParameters();
+                p.Add("@Email", email, DbType.String, ParameterDirection.Input);
+                p.Add("@NewPasswordHash", password, DbType.String, ParameterDirection.Input);
+                try
+                {
+                    var PasswordChanged = await _dbContext.Connection.ExecuteScalarAsync<string>("ChangeUserPassword", p, commandType: CommandType.StoredProcedure);
+
+                    return true;
+                }
+                catch (Exception ee)
+                {
+                    return false;
+                }
+           
+           
+        }
+
+        
+
     }
 }

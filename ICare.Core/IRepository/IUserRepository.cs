@@ -19,5 +19,8 @@ namespace ICare.Core.IRepository
         ApplicationUser GetUser(ClaimsPrincipal userClaims);
         Task<bool> Registration(RegistrationApiDTO.Request userModle);
         bool Update(int userId, MyAccountApiDTO.Request Modle);
+        IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
+        Task<bool> SetNewPassword(string email, string password);
+
     }
 }

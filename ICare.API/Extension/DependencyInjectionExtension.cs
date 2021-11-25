@@ -78,6 +78,9 @@ namespace ICare.API.Extension
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
             services.AddScoped<ILocationSevices, LocationSevices>();
             services.AddScoped<IWaterServices, WaterServices>();
+            services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
+
 
 
 

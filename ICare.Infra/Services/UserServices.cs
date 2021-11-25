@@ -63,5 +63,15 @@ namespace ICare.Infra.Services
             return await _userRepository.AddAdmin(userModle);
 
         }
+
+        public IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request)
+        {
+            return  _userRepository.GetDrugByNameSearch(request);
+        }
+
+       public async Task<bool> SetNewPassword(string email, string password)
+        {
+            return await _userRepository.SetNewPassword(email, password);
+        }
     }
 }

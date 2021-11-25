@@ -2,8 +2,12 @@
 using ICare.Core.Data;
 using ICare.Core.IServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Syncfusion.Pdf.Parsing;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace ICare.API.Controllers
@@ -15,15 +19,18 @@ namespace ICare.API.Controllers
     {
         private readonly IPatientServices _patientServices;
         private readonly IUserServices _userServices;
+
         private readonly ILocationSevices _locationSevices;
         private readonly IWaterServices _waterServices;
 
-        public PatientController(IPatientServices patientServices, IUserServices userServices, ILocationSevices locationSevices,IWaterServices waterServices)
+        public PatientController(IPatientServices patientServices, IUserServices userServices, IFileService fileService, ILocationSevices locationSevices,IWaterServices waterServices)
         {
             this._patientServices = patientServices;
             this._userServices = userServices;
             this._locationSevices = locationSevices;
             this._waterServices = waterServices;
+            this._fileService = fileService;
+
         }
 
         [Authorize]
@@ -84,14 +91,15 @@ namespace ICare.API.Controllers
             return Ok(response);
         }
 
+
         [Authorize]
         [HttpGet]
         [Route("MyDrugs")]
         public async Task<ActionResult<ApiResponse<MyDrugsApiDto.Response>>> MyDrugs()
+
         {
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
-
             var response = new ApiResponse<MyDrugsApiDto.Response>();
             response.Data = new MyDrugsApiDto.Response();
             response.Data.MyDrugs = await _patientServices.GetMyDrugs(patient.Id);
@@ -180,8 +188,50 @@ namespace ICare.API.Controllers
             await _patientServices.EditPatientDrugs(patientDrug, drugDoseTimeLsit);
 
             return Ok(response);
-
         }
+
+        [HttpPost]
+        [Route("InsertPDFData")]
+        public async Task<ActionResult<ApiResponse>> InsertPDFData(IFormFile PdfFile)
+        {
+            var fileName = DateTime.Now.ToFileTime().ToString() + ".pdf";
+            await _fileService.SaveFile(PdfFile, fileName, "PatientPDFFiles");
+
+
+
+            FileStream docStream = new FileStream("wwwroot/Files/PatientPDFFiles/"+ fileName, FileMode.Open, FileAccess.Read);
+
+            PdfLoadedDocument loadedDocument = new PdfLoadedDocument(docStream);
+
+            PdfLoadedForm form = loadedDocument.Form;
+
+            var request =new InsertPDFDataHealthReportDTO.Request();
+
+            request.CheckUpName = (form.Fields[0] as PdfLoadedTextBoxField).Text;
+            request.BloodType = (form.Fields[1] as PdfLoadedTextBoxField).Text ;
+            request.BloodSugarLevel = (form.Fields[2] as PdfLoadedTextBoxField).Text ;
+
+            request.CheckUpDate = (form.Fields[3] as PdfLoadedTextBoxField).Text ;
+
+
+            loadedDocument.Close(true);
+
+
+            request.PatientId = patient.Id;
+            //TODO: change check 
+            var response = new ApiResponse();
+            var result = _patientServices.InsertPDFData(request);
+            if (result == null)
+            {
+                response.AddError("No Data In Pdf File");
+                return Ok(response);
+            }
+
+            return Ok(response);
+        }
+
+
+       
 
 
         /// <summary>
