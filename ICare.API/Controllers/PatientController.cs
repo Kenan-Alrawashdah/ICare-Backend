@@ -92,12 +92,9 @@ namespace ICare.API.Controllers
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
 
-            // var fileName = PdfFile.Name+ DateTime.Now.ToString("MM/dd/yyyy")+ "patientId="+ patient.Id+".pdf";
             var fileName = DateTime.Now.ToFileTime().ToString() + ".pdf";
             await _fileService.SaveFile(PdfFile, fileName, "PatientPDFFiles");
 
-            //var x = PdfFile.FileName;//.pdf
-            //var y = PdfFile.Name;//without .pdf
 
 
             FileStream docStream = new FileStream("wwwroot/Files/PatientPDFFiles/"+ fileName, FileMode.Open, FileAccess.Read);
