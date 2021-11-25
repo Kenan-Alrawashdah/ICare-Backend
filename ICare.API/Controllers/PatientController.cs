@@ -19,7 +19,7 @@ namespace ICare.API.Controllers
     {
         private readonly IPatientServices _patientServices;
         private readonly IUserServices _userServices;
-
+        private readonly IFileService _fileService;
         private readonly ILocationSevices _locationSevices;
         private readonly IWaterServices _waterServices;
 
@@ -190,10 +190,13 @@ namespace ICare.API.Controllers
             return Ok(response);
         }
 
+        [Authorize]
         [HttpPost]
         [Route("InsertPDFData")]
         public async Task<ActionResult<ApiResponse>> InsertPDFData(IFormFile PdfFile)
         {
+            var user = _userServices.GetUser(User);
+            var patient = _patientServices.GetPatientByUserId(user.Id);
             var fileName = DateTime.Now.ToFileTime().ToString() + ".pdf";
             await _fileService.SaveFile(PdfFile, fileName, "PatientPDFFiles");
 
