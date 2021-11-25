@@ -119,7 +119,7 @@ namespace ICare.API.Controllers
 
 
             request.PatientId = patient.Id;
-
+            //TODO: change check 
             var response = new ApiResponse();
             var result = _patientServices.InsertPDFData(request);
             if (result == null)
