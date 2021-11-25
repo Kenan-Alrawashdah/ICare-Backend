@@ -40,6 +40,8 @@ namespace ICare.API.Controllers
         [Route("PatientRegistration")]
         public ActionResult<ApiResponse<RegistrationApiDTO.Response>> PatientRegistration(RegistrationApiDTO.Request request)
         {
+
+
             var response = new ApiResponse<RegistrationApiDTO.Response>();
             if (_userServices.CheckEmailExist(request.Email))
             {
@@ -84,6 +86,59 @@ namespace ICare.API.Controllers
             return Ok(response);
         }
 
+
+        /// <summary>
+        /// Get for my account page
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("MyAccount")]
+        [Authorize]
+        public ActionResult<ApiResponse<MyAccountApiDTO.Response>> MyAccount()
+        {
+            var user = _userServices.GetUser(User);
+            if (user == null)
+            {
+                return NoContent();
+            }
+
+            var response = new ApiResponse<MyAccountApiDTO.Response>();
+            response.Data = new MyAccountApiDTO.Response();
+
+            response.Data.Email = user.Email;
+            response.Data.FirstName = user.FirstName;
+            response.Data.LastName = user.LastName;
+            response.Data.PhoneNumber = user.PhoneNumber;
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Post for my account page 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("MyAccount")]
+        [Authorize]
+        public ActionResult<ApiResponse> MyAccount(MyAccountApiDTO.Request request)
+        {
+            //TODO: Set a new Token 
+            var user = _userServices.GetUser(User);
+            var response = new ApiResponse();
+            if (user == null)
+            {
+                response.AddError("There is something error");
+                return Ok(response);
+            }
+            if (_userServices.CheckEmailExist(request.Email))
+            {
+                response.AddError("The email is already exist please try another one ");
+                return Ok(response);
+            }
+                 return Ok(response);
+        }
+
         [HttpPost]
         [Route("GetDrugByNameSearch")]
         public ActionResult<ApiResponse<GetBySearchDTO.Response>> GetDrugByNameSearch(GetBySearchDTO.Request request)
@@ -113,6 +168,7 @@ namespace ICare.API.Controllers
                 return Ok(response);
             }
            
+
             return Ok(response);
         }
 

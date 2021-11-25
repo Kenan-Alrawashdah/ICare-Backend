@@ -41,6 +41,80 @@
             <param name="id">The id of the category</param>
             <returns>Category</returns>
         </member>
+        <member name="M:ICare.API.Controllers.PatientController.EditDrug(System.Int32)">
+            <summary>
+            Edit drug get page 
+            </summary>
+            <param name="id">the id of the drug</param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.EditDrug(ICare.Core.ApiDTO.EditDrugApiDTO.Request)">
+            <summary>
+            Edit drug post method 
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.AddLocation(ICare.Core.ApiDTO.AddLocationApiDTO.Request)">
+            <summary>
+            Add Location page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.GetUserLocations">
+            <summary>
+            Get All locations for the user 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.GetLocationById(System.Int32)">
+            <summary>
+            Get Location for Edit page 
+            </summary>
+            <param name="id">the id of the location</param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.EditLocation(ICare.Core.ApiDTO.EditLocationApiDTO.Request)">
+            <summary>
+            Edit location post
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.DeleteLocation(System.Int32)">
+            <summary>
+            Delete Location by id
+            </summary>
+            <param name="id">the id of the location</param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.AddWater(ICare.Core.ApiDTO.AddWaterApiDTO.Request)">
+            <summary>
+            Water Add page ""check the if "From" before "To" else set error
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.EditWater(ICare.Core.ApiDTO.EditWaterApiDTO.Request)">
+            <summary>
+            Edit water page 
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.DeleteWater(System.Int32)">
+            <summary>
+            Delete Water page
+            </summary>
+            <param name="id">id of the water recored water to delete</param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.PatientController.GetWater">
+            <summary>
+            Get Water page 
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
             <summary>
             SignUp Page for Patient
@@ -52,6 +126,19 @@
             <summary>
             Upload profile image for user
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.MyAccount">
+            <summary>
+            Get for my account page
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.MyAccount(ICare.Core.ApiDTO.MyAccountApiDTO.Request)">
+            <summary>
+            Post for my account page 
+            </summary>
+            <param name="request"></param>
             <returns></returns>
         </member>
     </members>
