@@ -20,13 +20,15 @@ namespace ICare.API.Controllers
         private readonly IFileService _fileService;
         private readonly IPasswordHashingService _passwordHashingService;
         private readonly IJWTService _jWTService;
+        private readonly IResetPasswordServices _resetPasswordServices;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService,IResetPasswordServices resetPasswordServices)
         {
             this._userServices = userServices;
             this._fileService = fileService;
             this._passwordHashingService = passwordHashingService;
             this._jWTService = jWTService;
+            this._resetPasswordServices = resetPasswordServices;
         }
 
         /// <summary>
@@ -82,6 +84,38 @@ namespace ICare.API.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("GetDrugByNameSearch")]
+        public ActionResult<ApiResponse<GetBySearchDTO.Response>> GetDrugByNameSearch(GetBySearchDTO.Request request)
+        {
+            var response = new ApiResponse<IEnumerable<GetBySearchDTO.Response>>();
+            var drugList = _userServices.GetDrugByNameSearch(request);
+            if (drugList == null)
+            {
+                response.AddError("No medicine left for sale");
+                return Ok(response);
+            }
+            response.Data = new List<GetBySearchDTO.Response>();
+            response.Data = drugList;
+            return Ok(response);
+
+        }
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public async Task<ActionResult<ApiResponse>> ForgotPassword(ChangeUserPasswordDTO.Request request)
+        {
+
+            var response = new ApiResponse();
+            var result = _resetPasswordServices.ForgotPassword(request);
+            if (result == false)
+            {
+                response.AddError("This Email Not Exist");
+                return Ok(response);
+            }
+           
+            return Ok(response);
+        }
+
         //[HttpPut]
         //[Route("Update")]
         //[ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
@@ -116,7 +150,7 @@ namespace ICare.API.Controllers
         //    {
         //        User = user
         //    };
-            
+
         //    return Ok(response);
         //}
 

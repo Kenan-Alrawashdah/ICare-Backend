@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,5 +11,7 @@ namespace ICare.Core.IServices
     {
        Task<bool> AddPatientDrugs(PatientDrugs t, List<DrugDoseTime> drugDoseTime);
         Patient GetPatientByUserId(int id);
+        Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request);
+
     }
 }

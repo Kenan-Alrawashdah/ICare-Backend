@@ -74,6 +74,8 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
+            services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
 
 
 

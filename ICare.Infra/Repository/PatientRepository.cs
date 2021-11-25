@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
@@ -69,6 +70,27 @@ namespace ICare.Infra.Repository
             {
                 return false;
             }
+        }
+
+        public async Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request)
+        {
+            var p = new DynamicParameters();
+            p.Add("@PatientId", request.PatientId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            p.Add("@CreatedOn", request.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
+            p.Add("@CheckUpName", request.CheckUpName, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@BloodType", request.BloodType, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@BloodSugarLevel", request.BloodSugarLevel, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@CheckUpDate", request.CheckUpDate, dbType: DbType.String, direction: ParameterDirection.Input);
+            try
+            {
+                var result = await _dbContext.Connection.ExecuteAsync("InsertPDFData", p, commandType: CommandType.StoredProcedure);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
         //public bool Create(Patient t)
