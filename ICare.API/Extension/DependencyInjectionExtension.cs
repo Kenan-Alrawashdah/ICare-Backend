@@ -20,14 +20,14 @@ namespace ICare.API.Extension
         {
 
             //DbContext
-            services.AddScoped<IDbContext, DbContext>();
+            services.AddTransient<IDbContext, DbContext>();
 
 
 
             //Repository
             services.AddScoped<IHealthReportRepository, HealthReportRepository>();
             services.AddScoped<IHealthReportTypesRepository, HealthReportTypesRepository>();
-            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddSingleton<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationTypesRepository, NotificationTypesRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
@@ -52,7 +52,7 @@ namespace ICare.API.Extension
             //Services
             services.AddScoped<IHealthReportServices, HealthReportServices>();
             services.AddScoped<IHealthReportTypesServices, HealthReportTypesServices>();
-            services.AddScoped<INotificationServices, NotificationServices>();
+            services.AddSingleton<INotificationServices, NotificationServices>();
             services.AddScoped<INotificationTypesServices, NotificationTypesServices>();
             services.AddScoped<IPatientServices, PatientServices>();
             services.AddScoped<ISubscriptionServices, SubscriptionServices>();
@@ -74,8 +74,8 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
-
-
+            services.AddSingleton<IProcessBackground, ProcessBackground>();
+            services.AddSingleton<IMailingService, MailingService>();
 
         }
     }

@@ -18,10 +18,6 @@ namespace ICare.Core.Data
 
         public virtual Patient Patient { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(NotificationTypeId))]
-        public int NotificationTypeId { get; set; }
-
-        public virtual NotificationTypes NotificationType { get; set; }
+       
     }
 }
