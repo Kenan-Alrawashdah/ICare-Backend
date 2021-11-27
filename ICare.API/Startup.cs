@@ -1,5 +1,8 @@
 using ICare.API.Extension;
 using ICare.API.Factories;
+using ICare.Core;
+using ICare.Core.IServices;
+using ICare.Infra.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,10 +41,11 @@ namespace ICare.API
                     });
             });
             services.AddOpenAPI();
-
+           
             services.AddControllers();
 
             services.DependencyInjection();
+            services.AddHostedService<Background>();
 
         }
 
