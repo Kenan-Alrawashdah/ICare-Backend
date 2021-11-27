@@ -64,7 +64,7 @@ namespace ICare.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        //[Authorize]
+        [Authorize]
         [Route("UploadProilePicture")]
         public async Task< ActionResult<ApiResponse>> UploadProilePicture(IFormFile image)
         {

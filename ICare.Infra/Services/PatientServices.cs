@@ -47,6 +47,8 @@ namespace ICare.Infra.Services
             return _patientRepository.InsertPDFData(request);
 
         }
+
+
         //public bool Create(Patient patient)
         //{
         //    return _patientRepository.Create(patient);
