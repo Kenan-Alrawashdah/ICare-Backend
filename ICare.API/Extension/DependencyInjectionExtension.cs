@@ -46,8 +46,8 @@ namespace ICare.API.Extension
             services.AddScoped<IDrugCategoryRepository, DrugCategoryRepository>();
             services.AddScoped<IDrugRepository, DrugRepository>();
             services.AddScoped<IOrderDrugsRepository, OrderDrugsRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-
+            services.AddScoped<IOrderRepository, OrderRepository>();//
+            services.AddSingleton<IWorkRepository, WorkRepository>();
 
             //Services
             services.AddScoped<IHealthReportServices, HealthReportServices>();
@@ -75,8 +75,8 @@ namespace ICare.API.Extension
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
             services.AddSingleton<IProcessBackground, ProcessBackground>();
-            services.AddSingleton<IMailingService, MailingService>();
-
+            services.AddSingleton<IMailingService, MailingService>();//
+            services.AddSingleton<IWorkService, WorkService>();
         }
     }
 }
