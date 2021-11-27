@@ -167,6 +167,9 @@ namespace ICare.Infra.Repository
 
         }
 
+
+
+       
         //public bool Create(Patient t)
         //{
         //    var p = new DynamicParameters();

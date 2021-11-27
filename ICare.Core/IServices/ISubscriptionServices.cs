@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ICare.Core.IRepository
+namespace ICare.Core.IServices
 {
-    public interface ISubscriptionRepository 
+    public interface ISubscriptionServices
     {
         Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request);
         Task<bool> DeletePatientSubscription(int id);
