@@ -66,5 +66,7 @@ namespace ICare.Infra.Repository
             var result = _DbContext.Connection.ExecuteAsync("PatientDrugsUpdate", p, commandType: CommandType.StoredProcedure);
             return true;
         }
+
+
     }
 }

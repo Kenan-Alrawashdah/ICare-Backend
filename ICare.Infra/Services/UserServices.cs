@@ -35,13 +35,11 @@ namespace ICare.Infra.Services
         public ApplicationUser GetById(int id)
         {
             return _userRepository.GetById(id);
-
         }
 
         public bool Update(int userId, MyAccountApiDTO.Request Modle)
         {
             return _userRepository.Update( userId,  Modle);
-
         }
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)
         {
@@ -50,7 +48,6 @@ namespace ICare.Infra.Services
         public bool CheckEmailExist(string Email)
         {
             return _userRepository.CheckEmailExist(Email);
-
         }
 
         public bool AddOrUpdateProfilePicture(string imagePath, int userId)
@@ -61,7 +58,6 @@ namespace ICare.Infra.Services
         public async Task<bool> AddAdmin(ApplicationUser userModle)
         {
             return await _userRepository.AddAdmin(userModle);
-
         }
 
         public IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request)

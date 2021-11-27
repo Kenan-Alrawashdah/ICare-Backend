@@ -21,9 +21,8 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@CreatedOn"          , t.CreatedOn           , DbType.DateTime   , ParameterDirection.Input);
-            p.Add("@Message"            , t.Message             , DbType.String     , ParameterDirection.Input);
+            p.Add("@Massage", t.Message             , DbType.String     , ParameterDirection.Input);
             p.Add("@PatientId"          , t.PatientId           , DbType.Int32      , ParameterDirection.Input);
-            p.Add("@NotificationTypeId" , t.NotificationTypeId  , DbType.Int32      , ParameterDirection.Input);
 
 
             try
@@ -31,9 +30,9 @@ namespace ICare.Infra.Repository
                 var result = _dbContext.Connection.Execute("NotificationInsert", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
                 return false;
             }
         }
@@ -76,7 +75,6 @@ namespace ICare.Infra.Repository
             p.Add("@CreatedOn"          , t.CreatedOn           , DbType.DateTime       , ParameterDirection.Input);
             p.Add("@Message"            , t.Message             , DbType.String         , ParameterDirection.Input);
             p.Add("@PatientId"          , t.PatientId           , DbType.Int32          , ParameterDirection.Input);
-            p.Add("@NotificationTypeId" , t.NotificationTypeId  , DbType.Int32          , ParameterDirection.Input);
 
 
 

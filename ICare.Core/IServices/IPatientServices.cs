@@ -16,5 +16,8 @@ namespace ICare.Core.IServices
         Patient GetPatientByUserId(int id);
         Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request);
 
+
+
+
     }
 }

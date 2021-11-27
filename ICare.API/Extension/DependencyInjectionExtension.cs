@@ -20,14 +20,14 @@ namespace ICare.API.Extension
         {
 
             //DbContext
-            services.AddScoped<IDbContext, DbContext>();
+            services.AddTransient<IDbContext, DbContext>();
 
 
 
             //Repository
             services.AddScoped<IHealthReportRepository, HealthReportRepository>();
             services.AddScoped<IHealthReportTypesRepository, HealthReportTypesRepository>();
-            services.AddScoped<INotificationRepository, NotificationRepository>();
+            services.AddSingleton<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationTypesRepository, NotificationTypesRepository>();
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
@@ -46,15 +46,18 @@ namespace ICare.API.Extension
             services.AddScoped<IDrugCategoryRepository, DrugCategoryRepository>();
             services.AddScoped<IDrugRepository, DrugRepository>();
             services.AddScoped<IOrderDrugsRepository, OrderDrugsRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();//
+            services.AddSingleton<IWorkRepository, WorkRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IWaterRepository, WaterRepository>();
 
 
+
             //Services
             services.AddScoped<IHealthReportServices, HealthReportServices>();
             services.AddScoped<IHealthReportTypesServices, HealthReportTypesServices>();
-            services.AddScoped<INotificationServices, NotificationServices>();
+            services.AddSingleton<INotificationServices, NotificationServices>();
             services.AddScoped<INotificationTypesServices, NotificationTypesServices>();
             services.AddScoped<IPatientServices, PatientServices>();
             services.AddScoped<ISubscriptionServices, SubscriptionServices>();
@@ -76,13 +79,13 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
+            services.AddSingleton<IProcessBackground, ProcessBackground>();
+            services.AddSingleton<IMailingService, MailingService>();//
+            services.AddSingleton<IWorkService, WorkService>();
             services.AddScoped<ILocationSevices, LocationSevices>();
             services.AddScoped<IWaterServices, WaterServices>();
             services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
             services.AddScoped<IEmailServices, EmailServices>();
-
-
-
 
         }
     }
