@@ -48,6 +48,11 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderDrugsRepository, OrderDrugsRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();//
             services.AddSingleton<IWorkRepository, WorkRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<IWaterRepository, WaterRepository>();
+
+
 
             //Services
             services.AddScoped<IHealthReportServices, HealthReportServices>();
@@ -77,6 +82,11 @@ namespace ICare.API.Extension
             services.AddSingleton<IProcessBackground, ProcessBackground>();
             services.AddSingleton<IMailingService, MailingService>();//
             services.AddSingleton<IWorkService, WorkService>();
+            services.AddScoped<ILocationSevices, LocationSevices>();
+            services.AddScoped<IWaterServices, WaterServices>();
+            services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
+
         }
     }
 }

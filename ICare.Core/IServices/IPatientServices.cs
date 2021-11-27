@@ -14,5 +14,7 @@ namespace ICare.Core.IServices
         Task<EditDrugApiDTO.Response> GetDrug(int id);
         Task<IEnumerable<MyDrugsApiDto.Drug>> GetMyDrugs(int patientId);
         Patient GetPatientByUserId(int id);
+        Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request);
+
     }
 }
