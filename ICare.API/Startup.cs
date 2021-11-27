@@ -57,6 +57,8 @@ namespace ICare.API
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStaticFiles();
+
             app.ConfigureOpenAPI();
 
             app.UseHttpsRedirection();
