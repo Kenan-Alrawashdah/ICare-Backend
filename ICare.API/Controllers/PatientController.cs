@@ -442,7 +442,7 @@ namespace ICare.API.Controllers
 
 
         [Authorize]
-        [HttpGet]
+        [HttpPost]
         [Route("AddPatientSubscription")]
         public async Task<ActionResult<ApiResponse>> AddPatientSubscription(int subscribeTypeId)
         {
@@ -487,7 +487,7 @@ namespace ICare.API.Controllers
         /// <param name="id">id of the patient recored to Get</param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete]
+        [HttpGet]
         [Route("GetByPatientId/{id:int}")]
         public async Task<ActionResult<ApiResponse>> GetByPatientId(int id)
         {
@@ -531,7 +531,7 @@ namespace ICare.API.Controllers
         }
 
         [Authorize]
-        [HttpPut]
+        [HttpGet]
         [Route("GetAllPatientSubscription")]
         public async Task<ActionResult<ApiResponse>> GetAllPatientSubscription()
         {
@@ -550,7 +550,7 @@ namespace ICare.API.Controllers
 
         }
         [Authorize]
-        [HttpPut]
+        [HttpPost]
         [Route("SubscriptionPayment")]
         public async Task<ActionResult<ApiResponse>> SubscriptionPayment(int subscribeTypeId, SubscriptionPaymentDTO.Request request)
         {
