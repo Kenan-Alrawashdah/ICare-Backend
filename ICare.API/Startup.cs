@@ -68,7 +68,7 @@ namespace ICare.API
 
             app.ConfigureOpenAPI();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
