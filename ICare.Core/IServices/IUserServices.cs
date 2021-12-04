@@ -1,6 +1,7 @@
 ﻿using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.IRepository;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -22,5 +23,7 @@ namespace ICare.Core.IServices
         Task<bool> AddAdmin(ApplicationUser userModle);
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
         Task<bool> SetNewPassword(string email, string password);
+
+        Task<LoginApiDTO.Response> LoginWithFacebookAsync(string accessToken);
     }
 }

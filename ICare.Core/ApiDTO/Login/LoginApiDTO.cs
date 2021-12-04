@@ -33,10 +33,7 @@ namespace ICare.Core.ApiDTO
             /// </summary>
             public string Token { get; set; }
 
-            public static implicit operator Response(GetBySearchDTO.Response v)
-            {
-                throw new NotImplementedException();
-            }
+
         }
     }
 }
