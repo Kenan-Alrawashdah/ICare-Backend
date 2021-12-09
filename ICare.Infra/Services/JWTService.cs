@@ -73,6 +73,8 @@ namespace ICare.Infra.Services
             loginDTO.Password = password;
             return Auth(loginDTO);
         }
+
+
     }
 }
 

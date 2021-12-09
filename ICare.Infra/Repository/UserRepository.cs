@@ -257,7 +257,10 @@ namespace ICare.Infra.Repository
            
         }
 
-        
-
+        public IEnumerable<getAllEmployeeDTO> getAllEmployee()
+        {
+            var result = _dbContext.Connection.Query<getAllEmployeeDTO>("getAllEmployee", commandType: CommandType.StoredProcedure);
+            return result;
+        }
     }
 }

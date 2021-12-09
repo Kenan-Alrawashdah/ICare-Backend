@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Repository
 {
@@ -67,7 +69,17 @@ namespace ICare.Infra.Repository
             var param = new DynamicParameters();
             param.Add("@Id", deliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
-            var delivery = _dbContext.Connection.QueryFirstOrDefault<Delivery>("DeliverySelect", param,  commandType: CommandType.StoredProcedure);
+            var delivery = _dbContext.Connection.QueryFirstOrDefault<Delivery>("GetDeliveryByUserId", param,  commandType: CommandType.StoredProcedure);
+
+            return delivery;
+        }
+
+        public async Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(getAllOrdersForDeliveryDTO.Request request)
+        {
+            var param = new DynamicParameters();
+            param.Add("@DeliveryId", request.DeliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var delivery =await _dbContext.Connection.QueryAsync<getAllOrdersForDeliveryDTO.Response>("getAllOrdersForDelivery", param, commandType: CommandType.StoredProcedure);
 
             return delivery;
         }
@@ -91,6 +103,52 @@ namespace ICare.Infra.Repository
                 return false;
             }
 
+        }
+
+        public async Task<getNumberOfOrdersForDeliveryDTO.Response> getNumberOfOrdersForDelivery(getNumberOfOrdersForDeliveryDTO.Request request)
+        {
+            var param = new DynamicParameters();
+            param.Add("@DeliveryId", request.DeliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var delivery = await _dbContext.Connection.QueryFirstOrDefaultAsync<getNumberOfOrdersForDeliveryDTO.Response>("getNumberOfOrdersForDelivery", param, commandType: CommandType.StoredProcedure);
+
+            return delivery;
+        }
+
+        public bool TakeOrder(int id)
+        {
+            try
+            {
+                var param = new DynamicParameters();
+
+                param.Add("@id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+                _dbContext.Connection.Execute("TakeOrder", param, commandType: CommandType.StoredProcedure);
+
+                return true;
+            }
+            catch (Exception erorr)
+            {
+                return false;
+            }
+        }
+
+        public bool OrderDeliverd(int id)
+        {
+            try
+            {
+                var param = new DynamicParameters();
+
+                param.Add("@id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+                _dbContext.Connection.Execute("OrderDeliverd", param, commandType: CommandType.StoredProcedure);
+
+                return true;
+            }
+            catch (Exception erorr)
+            {
+                return false;
+            }
         }
     }
 }
