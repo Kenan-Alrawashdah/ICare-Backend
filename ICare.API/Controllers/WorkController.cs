@@ -30,7 +30,7 @@ namespace ICare.API.Controllers
             var user = _userServices.GetUser(User);
             Work work = new Work { 
               StartDate = DateTime.Now,
-              EmployeeId = 1,             
+              EmployeeId = (int)user.EmployeeId,             
             };
             _workService.StartWork(work);
         }

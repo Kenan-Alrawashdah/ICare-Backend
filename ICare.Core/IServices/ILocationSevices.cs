@@ -13,5 +13,7 @@ namespace ICare.Core.IServices
         bool EditLocation(Location location);
         Task<Location> GetLocationById(int id);
         Task<IEnumerable<Location>> GetUserLocations(int userId);
+        Task<Location> GetLocationByOrderId(int orderId);
+
     }
 }

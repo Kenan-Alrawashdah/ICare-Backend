@@ -39,7 +39,7 @@ namespace ICare.Infra.Services
         }
 
        
-        private string CreateRandomPassword(int PasswordLength)
+        public string CreateRandomPassword(int PasswordLength)
         {
             string _allowedChars = "0123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ";
             Random randNum = new Random();

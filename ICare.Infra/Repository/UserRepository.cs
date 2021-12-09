@@ -44,12 +44,25 @@ namespace ICare.Infra.Repository
             }
         }
 
-        [Authorize]
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)
         {
             try
             {
                 var email = userClaims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                var p = new DynamicParameters();
+                p.Add("@Email", email, dbType: DbType.String, ParameterDirection.Input);
+                var user = _dbContext.Connection.QueryFirstOrDefault<ApplicationUser>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);
+                return user;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        } 
+        public ApplicationUser GetUserByEmail(string email)
+        {
+            try
+            {
                 var p = new DynamicParameters();
                 p.Add("@Email", email, dbType: DbType.String, ParameterDirection.Input);
                 var user = _dbContext.Connection.QueryFirstOrDefault<ApplicationUser>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);
@@ -95,10 +108,12 @@ namespace ICare.Infra.Repository
             p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
+            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
+            //TODO
             p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
             p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
-            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
+           
 
             try
             {
@@ -244,7 +259,47 @@ namespace ICare.Infra.Repository
            
         }
 
-        
+        public IEnumerable<getAllEmployeeDTO> getAllEmployee()
+        {
+            var result = _dbContext.Connection.Query<getAllEmployeeDTO>("getAllEmployee", commandType: CommandType.StoredProcedure);
+            return result;
+        }
 
+        public async Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle)
+        {
+            var e = new DynamicParameters();
+            e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
+            var roleId = _dbContext.Connection.ExecuteScalar<int>("GetRoleIdByName", e, commandType: CommandType.StoredProcedure);
+            var p = new DynamicParameters();
+            p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
+            p.Add("@CreatedOn", DateTime.UtcNow, DbType.DateTime, ParameterDirection.Input);
+            p.Add("@PasswordHash", userModle.Password, DbType.String, ParameterDirection.Input);
+            p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
+            p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
+            p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
+            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
+            //TODO
+            p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
+            p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
+
+
+            try
+            {
+                var userId = await _dbContext.Connection.ExecuteScalarAsync<int>("UserInsert", p, commandType: CommandType.StoredProcedure);
+
+                var patient = new Patient();
+                patient.UserId = userId;
+                if (!CreatePatient(patient))
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ee)
+            {
+                return false;
+            }
+        }
     }
 }

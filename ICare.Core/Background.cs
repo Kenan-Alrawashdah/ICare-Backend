@@ -30,7 +30,7 @@ namespace ICare.Core
             },
             null,
             TimeSpan.Zero,
-            TimeSpan.FromSeconds(59)
+            TimeSpan.FromSeconds(5)
             );
            
 

@@ -7,6 +7,7 @@ namespace ICare.Core.IServices
 {
     public interface IResetPasswordServices
     {
+        string CreateRandomPassword(int PasswordLength);
         bool ForgotPassword(ChangeUserPasswordDTO.Request request);
     }
 }

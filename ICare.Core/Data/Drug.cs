@@ -30,8 +30,18 @@ namespace ICare.Core.Data
         [Range(minimum: 0.01, maximum: 9999.99)]
         public double Price { get; set; }
 
+        [Required]
         [MaxLength(250)]
         public string PicturePath { get; set; }
+
+        [Required]
+        [MaxLength(150)]
+        public string Brand { get; set; }
+
+        [Required]
+        public int AvailableQuantity { get; set; }
+
+        public string Description { get; set; }
 
         public virtual ICollection<Cart> Cart { get; set; }
         public virtual ICollection<OrderDrugs> OrderDrugs { get; set; }

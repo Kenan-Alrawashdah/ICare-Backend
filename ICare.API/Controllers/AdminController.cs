@@ -1,4 +1,5 @@
 ﻿using ICare.Core.ApiDTO;
+using ICare.Core.ApiDTO.Admin.Role;
 using ICare.Core.Data;
 using ICare.Core.IServices;
 using Microsoft.AspNetCore.Http;
@@ -17,12 +18,16 @@ namespace ICare.API.Controllers
         private readonly IDrugCategoryService _drugCategoryService;
         private readonly IDrugService _drugService;
         private readonly IFileService _fileService;
-
-        public AdminController(IDrugCategoryService drugCategoryService,IDrugService drugService,IFileService fileService)
+        private readonly IEmployessServices _employessServices;
+        public AdminController(IDrugCategoryService drugCategoryService,
+                               IDrugService drugService,
+                               IFileService fileService,
+                               IEmployessServices employessServices)
         {
             this._drugCategoryService = drugCategoryService;
             this._drugService = drugService;
             this._fileService = fileService;
+            this._employessServices = employessServices;
         }
 
 
@@ -172,6 +177,24 @@ namespace ICare.API.Controllers
                 name = category.Name
             };
         
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("Role/GetAllRoles")]
+        public ActionResult<ApiResponse<GetRolesDTO.Response>> GetAllRoles()
+        {
+            var response = new ApiResponse<List<GetRolesDTO.Response>>();
+           // response.Data = new GetRolesDTO.Response();
+
+            response.Data = _employessServices.GetAllRoles()
+                .Select(dc => new GetRolesDTO.Response
+                {
+                    Id = dc.Id,
+                    Name = dc.Name,
+                   
+                }).ToList();
+
             return Ok(response);
         }
         #endregion

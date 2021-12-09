@@ -28,7 +28,7 @@ namespace ICare.Infra.Services
         }
 
 
-        public Task<IEnumerable<Subscription>> GetAllPatientSubscription()
+        public Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
         {
             return _SubscriptionRepository.GetAllPatientSubscription();
         }

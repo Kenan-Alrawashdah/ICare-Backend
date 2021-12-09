@@ -50,7 +50,7 @@ namespace ICare.Infra.Services
                        }),
 
                     //expire == session timeout
-                    Expires = DateTime.UtcNow.AddHours(1),
+                    Expires = DateTime.UtcNow.AddSeconds(20),
 
                     //signcredintial ==(to assgin which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
@@ -73,6 +73,8 @@ namespace ICare.Infra.Services
             loginDTO.Password = password;
             return Auth(loginDTO);
         }
+
+
     }
 }
 

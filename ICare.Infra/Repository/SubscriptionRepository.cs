@@ -54,9 +54,9 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
-        public async Task<IEnumerable<Subscription>> GetAllPatientSubscription()
+        public async Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
         {
-            var result = _dbContext.Connection.Query<Subscription>("SubscriptionGetAll", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<GetAllPatientSubscriptionDTO>("SubscriptionGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 

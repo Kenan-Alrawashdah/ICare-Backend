@@ -21,14 +21,16 @@ namespace ICare.API.Controllers
         private readonly IPasswordHashingService _passwordHashingService;
         private readonly IJWTService _jWTService;
         private readonly IResetPasswordServices _resetPasswordServices;
+        private readonly IFacebookAuthService _facebookAuthService;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService,IResetPasswordServices resetPasswordServices)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService,IResetPasswordServices resetPasswordServices, IFacebookAuthService facebookAuthService)
         {
             this._userServices = userServices;
             this._fileService = fileService;
             this._passwordHashingService = passwordHashingService;
             this._jWTService = jWTService;
             this._resetPasswordServices = resetPasswordServices;
+            this._facebookAuthService = facebookAuthService;
         }
 
         /// <summary>
@@ -50,19 +52,36 @@ namespace ICare.API.Controllers
             }
             var hashedPassword = _passwordHashingService.GetHash(request.Password);
             var passwordForLogin = request.Password;
-            request.Password = hashedPassword;
+                request.Password = hashedPassword;
             _userServices.Registration(request);
             //TODO: Return the Token 
             var token = _jWTService.Auth(request.Email, passwordForLogin);
+
             response.Data = new RegistrationApiDTO.Response();
-            response.Data.Token = token;
+            response.Data.AccessToken = token;
+
             return Ok(response);
         }
+        [HttpPost]
+        [Route("FacebookLogin")]
+        public async Task<ActionResult<ApiResponse>> FacebookLogin(string accessToken )
+        {
+            var response = new ApiResponse<RegistrationApiDTO.Response>();
 
-        /// <summary>
-        /// Upload profile image for user
-        /// </summary>
-        /// <returns></returns>
+            var authResponse = await _userServices.LoginWithFacebookAsync(accessToken);
+
+            var userInfo = await  _facebookAuthService.GetUserInfoAsync(accessToken);
+             
+            response.Data = new RegistrationApiDTO.Response();
+            response.Data.AccessToken =authResponse.AccessToken;
+            return Ok(response);
+
+        }
+
+            /// <summary>
+            /// Upload profile image for user
+            /// </summary>
+            /// <returns></returns>
         [HttpPost]
         [Authorize]
         [Route("UploadProilePicture")]
@@ -131,11 +150,13 @@ namespace ICare.API.Controllers
                 response.AddError("There is something error");
                 return Ok(response);
             }
-            if (_userServices.CheckEmailExist(request.Email))
-            {
-                response.AddError("The email is already exist please try another one ");
-                return Ok(response);
-            }
+            //if (_userServices.CheckEmailExist(request.Email))
+            //{
+            //    response.AddError("The email is already exist please try another one ");
+            //    return Ok(response);
+            //}
+
+            _userServices.Update(user.Id, request);
                  return Ok(response);
         }
 
@@ -155,6 +176,24 @@ namespace ICare.API.Controllers
             return Ok(response);
 
         }
+        [HttpGet]
+        [Route("getAllEmployees")]
+        
+        public ActionResult<ApiResponse<getAllEmployeeDTO>> getAllEmployee()
+        {
+            var users = _userServices.getAllEmployee();
+            var response = new ApiResponse<IEnumerable<getAllEmployeeDTO>>();
+
+            if (users == null)
+            {
+                return NoContent();
+            }
+
+            response.Data = users;
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("ForgotPassword")]
         public async Task<ActionResult<ApiResponse>> ForgotPassword(ChangeUserPasswordDTO.Request request)
