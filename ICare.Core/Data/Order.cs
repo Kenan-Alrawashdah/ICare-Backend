@@ -32,6 +32,12 @@ namespace ICare.Core.Data
 
         public Patient Patient { get; set; }
 
+        [ForeignKey(nameof(LocationId))]
+        public int LocationId { get; set; }
+
+        public Location Location { get; set; }
+
+
         public ICollection<OrderDrugs> OrderDrugs { get; set; }
     }
 }

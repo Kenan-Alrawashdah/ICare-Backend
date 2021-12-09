@@ -42,5 +42,9 @@ namespace ICare.Infra.Services
 
         }
 
+        public Task<Location> GetLocationByOrderId(int orderId)
+        {
+            return  _locationRepository.GetLocationByOrderId(orderId);
+        }
     }
 }

@@ -53,6 +53,7 @@ namespace ICare.API.Extension
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IWaterRepository, WaterRepository>();
             services.AddScoped<ITestimonialRepository, TestimonialRepository>();
+            services.AddScoped<IAccountantRepository, AccountantRepository>();
 
 
 
@@ -89,6 +90,7 @@ namespace ICare.API.Extension
             services.AddTransient<IResetPasswordServices, ResetPasswordServices>();
             services.AddSingleton<IEmailServices, EmailServices>();
             services.AddScoped<ITestimonialService, TestimonialService>();
+            services.AddScoped<IAccountantService, AccountantService>();
 
 
 

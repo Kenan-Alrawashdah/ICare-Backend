@@ -14,7 +14,6 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Patient")]
     public class PatientController : ControllerBase
     {
         private readonly IPatientServices _patientServices;
@@ -530,12 +529,11 @@ namespace ICare.API.Controllers
 
         }
 
-        [Authorize]
         [HttpGet]
         [Route("GetAllPatientSubscription")]
         public async Task<ActionResult<ApiResponse>> GetAllPatientSubscription()
         {
-            var response = new ApiResponse<IEnumerable<Subscription>>();
+            var response = new ApiResponse<IEnumerable<GetAllPatientSubscriptionDTO>>();
             var result = await _subscriptionServices.GetAllPatientSubscription();
             response.Data = result;
             if (result != null)

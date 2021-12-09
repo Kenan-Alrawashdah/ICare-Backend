@@ -25,5 +25,7 @@ namespace ICare.Core.IServices
         Task<bool> SetNewPassword(string email, string password);
 
         Task<LoginApiDTO.Response> LoginWithFacebookAsync(string accessToken);
+        IEnumerable<getAllEmployeeDTO> getAllEmployee();
+
     }
 }

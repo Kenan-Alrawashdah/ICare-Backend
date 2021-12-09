@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
@@ -47,6 +48,14 @@ namespace ICare.Infra.Repository
             return result;
 
         }
+        public async Task<Location> GetLocationByOrderId(int orderId)
+        {
+            var p = new DynamicParameters();
+            p.Add("@OrderId", orderId, dbType: DbType.Int32, ParameterDirection.Input);
+            var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<Location>("GetLocationByOrderId", p, commandType: CommandType.StoredProcedure);
+            return result;
+
+        }
 
         public async Task<Location> GetLocationById(int id)
         {
@@ -91,6 +100,7 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
 
     }
 }

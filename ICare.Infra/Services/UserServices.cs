@@ -122,5 +122,10 @@ namespace ICare.Infra.Services
             }
             return new string(chars);
         }
+
+        public IEnumerable<getAllEmployeeDTO> getAllEmployee()
+        {
+            return _userRepository.getAllEmployee();
+        }
     }
 }

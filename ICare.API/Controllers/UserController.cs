@@ -172,6 +172,24 @@ namespace ICare.API.Controllers
             return Ok(response);
 
         }
+        [HttpGet]
+        [Route("getAllEmployees")]
+        
+        public ActionResult<ApiResponse<getAllEmployeeDTO>> getAllEmployee()
+        {
+            var users = _userServices.getAllEmployee();
+            var response = new ApiResponse<IEnumerable<getAllEmployeeDTO>>();
+
+            if (users == null)
+            {
+                return NoContent();
+            }
+
+            response.Data = users;
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Route("ForgotPassword")]
         public async Task<ActionResult<ApiResponse>> ForgotPassword(ChangeUserPasswordDTO.Request request)
