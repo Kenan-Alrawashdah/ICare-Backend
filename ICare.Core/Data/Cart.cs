@@ -17,5 +17,7 @@ namespace ICare.Core.Data
         public int DrugId { get; set; }
 
         public Drug Drugs { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

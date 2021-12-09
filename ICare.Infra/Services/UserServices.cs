@@ -16,6 +16,11 @@ namespace ICare.Infra.Services
         {
             this._userRepository = userRepository;
         }
+        public ApplicationUser GetUserByEmail(string email)
+        {
+            return  _userRepository.GetUserByEmail(email);
+
+        }
         public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
         {
             return await _userRepository.Registration(userModle);

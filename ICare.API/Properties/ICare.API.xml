@@ -41,6 +41,13 @@
             <param name="id">The id of the category</param>
             <returns>Category</returns>
         </member>
+        <member name="M:ICare.API.Controllers.AuthController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
+            <summary>
+            SignUp Page for Patient
+            </summary>
+            <param name="request"></param>
+            <returns>token</returns>
+        </member>
         <member name="M:ICare.API.Controllers.PatientController.EditDrug(System.Int32)">
             <summary>
             Edit drug get page 
@@ -134,6 +141,19 @@
             Update Patient Subscription 
             </summary>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.TokenController.Refresh(ICare.Core.ApiDTO.TokenApiModel.Request)">
+            <summary>
+            Issue a new access token
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICare.API.Controllers.TokenController.Revoke">
+            <summary>
+            Delete the current refresh token of the current user
+            </summary>
             <returns></returns>
         </member>
         <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">

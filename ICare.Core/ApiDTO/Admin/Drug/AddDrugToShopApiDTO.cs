@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace ICare.Core.ApiDTO
 {
@@ -10,7 +8,7 @@ namespace ICare.Core.ApiDTO
         public class Resqust
         {
             /// <summary>
-            /// The id of the category 
+            /// The id of the category
             /// </summary>
             /// <example>1</example>
             [Required]
@@ -38,6 +36,7 @@ namespace ICare.Core.ApiDTO
             [MaxLength(250)]
             public string PicturePath { get; set; }
         }
+
         public class Response
         {
             public int i { get; set; }

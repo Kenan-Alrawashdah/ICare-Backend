@@ -6,9 +6,12 @@ namespace ICare.Core.Data
 {
     public class JwtOptions
     {
+        public string Issuer { get; set; } = "a";
 
-        public string Key { get; set; }
+        public string Audience { get; set; } = "a";
 
-        public int Lifetime { get; set; }
+        public string Key { get; set; } = "superSecretKey@345";
+
+        public int Lifetime { get; set; } = 1;
     }
 }
