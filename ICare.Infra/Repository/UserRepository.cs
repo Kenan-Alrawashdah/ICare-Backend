@@ -44,12 +44,25 @@ namespace ICare.Infra.Repository
             }
         }
 
-        [Authorize]
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)
         {
             try
             {
                 var email = userClaims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+                var p = new DynamicParameters();
+                p.Add("@Email", email, dbType: DbType.String, ParameterDirection.Input);
+                var user = _dbContext.Connection.QueryFirstOrDefault<ApplicationUser>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);
+                return user;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        } 
+        public ApplicationUser GetUserByEmail(string email)
+        {
+            try
+            {
                 var p = new DynamicParameters();
                 p.Add("@Email", email, dbType: DbType.String, ParameterDirection.Input);
                 var user = _dbContext.Connection.QueryFirstOrDefault<ApplicationUser>("GetUserByEmail", p, commandType: CommandType.StoredProcedure);

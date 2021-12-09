@@ -22,7 +22,6 @@ namespace ICare.Core.IRepository
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
         Task<bool> SetNewPassword(string email, string password);
         IEnumerable<getAllEmployeeDTO> getAllEmployee();
-
-
+        ApplicationUser GetUserByEmail(string email);
     }
 }

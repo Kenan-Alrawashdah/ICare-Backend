@@ -57,7 +57,7 @@ namespace ICare.API.Controllers
             //TODO: Return the Token 
             var token = _jWTService.Auth(request.Email, passwordForLogin);
             response.Data = new RegistrationApiDTO.Response();
-            response.Data.Token = token;
+            response.Data.AccessToken = token;
             return Ok(response);
         }
         [HttpPost]
@@ -148,11 +148,13 @@ namespace ICare.API.Controllers
                 response.AddError("There is something error");
                 return Ok(response);
             }
-            if (_userServices.CheckEmailExist(request.Email))
-            {
-                response.AddError("The email is already exist please try another one ");
-                return Ok(response);
-            }
+            //if (_userServices.CheckEmailExist(request.Email))
+            //{
+            //    response.AddError("The email is already exist please try another one ");
+            //    return Ok(response);
+            //}
+
+            _userServices.Update(user.Id, request);
                  return Ok(response);
         }
 

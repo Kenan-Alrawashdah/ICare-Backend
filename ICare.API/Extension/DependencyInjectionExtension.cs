@@ -54,6 +54,8 @@ namespace ICare.API.Extension
             services.AddScoped<IWaterRepository, WaterRepository>();
             services.AddScoped<ITestimonialRepository, TestimonialRepository>();
             services.AddScoped<IAccountantRepository, AccountantRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
 
 
 
@@ -91,12 +93,12 @@ namespace ICare.API.Extension
             services.AddSingleton<IEmailServices, EmailServices>();
             services.AddScoped<ITestimonialService, TestimonialService>();
             services.AddScoped<IAccountantService, AccountantService>();
-
-
-
-
             services.AddHttpClient();
             services.AddScoped<IFacebookAuthService, FacebookAuthService>();
+            services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
+            services.AddScoped<IEmailServices, EmailServices>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRefreshTokenServices, RefreshTokenServices>();
 
         }
     }
