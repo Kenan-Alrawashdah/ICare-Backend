@@ -16,7 +16,7 @@ namespace ICare.Infra.Services
         {
             this._userRepository = userRepository;
         }
-        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
+        public async Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle)
         {
             return await _userRepository.Registration(userModle);
         }

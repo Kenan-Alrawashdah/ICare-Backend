@@ -83,7 +83,7 @@ namespace ICare.Infra.Repository
         }
 
 
-        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
+        public async Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle)
         {
             var e = new DynamicParameters();
             e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
@@ -95,10 +95,12 @@ namespace ICare.Infra.Repository
             p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
+            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
+            //TODO
             p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
             p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
             p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
-            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
+           
 
             try
             {

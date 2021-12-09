@@ -41,6 +41,13 @@
             <param name="id">The id of the category</param>
             <returns>Category</returns>
         </member>
+        <member name="M:ICare.API.Controllers.EmployeeController.EmployeeRegistration(ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request)">
+            <summary>
+            SignUp Page for Employee
+            </summary>
+            <param name="request"></param>
+            <returns>token</returns>
+        </member>
         <member name="M:ICare.API.Controllers.PatientController.EditDrug(System.Int32)">
             <summary>
             Edit drug get page 
@@ -136,7 +143,7 @@
             <param name="request"></param>
             <returns></returns>
         </member>
-        <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
+        <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request)">
             <summary>
             SignUp Page for Patient
             </summary>

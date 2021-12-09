@@ -27,6 +27,42 @@
             The picture of the drug
             </summary>
         </member>
+        <member name="P:ICare.Core.ApiDTO.EditEmployeeApiDTO.Request.PhoneNumber">
+            <summary>
+            
+            </summary>
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.EditEmployeeApiDTO.Request.FirstName">
+            <example>First Name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.EditEmployeeApiDTO.Request.LastName">
+            <example>Last Name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request.Email">
+            <summary>
+            the Email Of the Employee
+            </summary>
+            <example>Test@test.test</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request.Password">
+            <summary>
+            the password of the Employee
+            </summary>
+            <example>Q!qwe123</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request.PhoneNumber">
+            <summary>
+            
+            </summary>
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request.FirstName">
+            <example>First Name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.RegistrationEmployeeApiDTO.Request.LastName">
+            <example>Last Name</example>
+        </member>
         <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Request.Email">
             <summary>
             
