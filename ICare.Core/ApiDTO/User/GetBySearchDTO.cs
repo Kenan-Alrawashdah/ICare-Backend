@@ -14,6 +14,7 @@ namespace ICare.Core.ApiDTO
 
         public class Response
         {
+            public int Id { get; set; }
             public string DrugName { get; set; }
             public double DrugPrice { get; set; }
             public string DrugPicturePath { get; set; }

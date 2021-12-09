@@ -34,9 +34,12 @@ namespace ICare.API.Factories
                           ValidateIssuerSigningKey = true,
                           IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.Key)),
                           ValidateIssuer = false,
-                          ValidateAudience = false
+                          ValidateAudience = false,
+                          ValidateLifetime = true,
+                          ClockSkew = TimeSpan.Zero
                       };
                   });
         }
+
     }
 }

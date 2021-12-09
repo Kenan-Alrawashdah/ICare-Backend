@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,10 @@ namespace ICare.Core.IRepository
         bool AddLocation(Location location);
         bool DeleteLocation(int id);
         bool EditLocation(Location location);
-        Task<Location> GetLocationById(int id);
+        Task<Location> GetLocationById(int id); 
+        Task<Location> GetLocationByOrderId(int orderId);
+
         Task<IEnumerable<Location>> GetUserLocations(int userId);
+
     }
 }

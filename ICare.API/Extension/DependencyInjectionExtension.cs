@@ -5,6 +5,7 @@ using ICare.Core.IServices;
 using ICare.Infra.Common;
 using ICare.Infra.Repository;
 using ICare.Infra.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace ICare.API.Extension
     public static class DependencyInjectionExtension
     {
 
-        public static void DependencyInjection(this IServiceCollection services)
+        public static void DependencyInjection(this IServiceCollection services /*,IConfiguration configuration*/)
         {
 
             //DbContext
@@ -51,6 +52,10 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ILocationRepository, LocationRepository>();
             services.AddScoped<IWaterRepository, WaterRepository>();
+            services.AddScoped<ITestimonialRepository, TestimonialRepository>();
+            services.AddScoped<IAccountantRepository, AccountantRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+
 
 
 
@@ -84,8 +89,16 @@ namespace ICare.API.Extension
             services.AddSingleton<IWorkService, WorkService>();
             services.AddScoped<ILocationSevices, LocationSevices>();
             services.AddScoped<IWaterServices, WaterServices>();
+            services.AddTransient<IResetPasswordServices, ResetPasswordServices>();
+            services.AddSingleton<IEmailServices, EmailServices>();
+            services.AddScoped<ITestimonialService, TestimonialService>();
+            services.AddScoped<IAccountantService, AccountantService>();
+            services.AddHttpClient();
+            services.AddScoped<IFacebookAuthService, FacebookAuthService>();
             services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
             services.AddScoped<IEmailServices, EmailServices>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRefreshTokenServices, RefreshTokenServices>();
 
         }
     }

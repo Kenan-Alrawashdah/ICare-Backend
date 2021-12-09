@@ -13,7 +13,7 @@ namespace ICare.Core.IServices
         Task<bool> DeletePatientSubscription(int id);
         Task<Subscription> GetByPatientId(int id);
         Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request);
-        Task<IEnumerable<Subscription>> GetAllPatientSubscription();
+        Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription();
         Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request);
 
     }

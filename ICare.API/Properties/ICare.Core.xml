@@ -6,7 +6,7 @@
     <members>
         <member name="P:ICare.Core.ApiDTO.AddDrugToShopApiDTO.Resqust.DrugCategoryId">
             <summary>
-            The id of the category 
+            The id of the category
             </summary>
             <example>1</example>
         </member>
@@ -75,7 +75,7 @@
             </summary>
             <example>Q!qwe123</example>
         </member>
-        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Response.Token">
+        <member name="P:ICare.Core.ApiDTO.LoginApiDTO.Response.AccessToken">
             <summary>
             
             </summary>
@@ -139,6 +139,26 @@
             fourth 
             </summary>
             <example>"023:30:00" </example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.TokenApiModel.Request.AccessToken">
+            <summary>
+            The expired access token
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.TokenApiModel.Request.RefreshToken">
+            <summary>
+            The refresh token to be used to renew the access token
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.TokenApiModel.Response.AccessToken">
+            <summary>
+            The new access token
+            </summary>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.TokenApiModel.Response.RefreshToken">
+            <summary>
+            New one time use refresh token
+            </summary>
         </member>
         <member name="P:ICare.Core.ApiDTO.RegistrationApiDTO.Request.Email">
             <summary>

@@ -31,12 +31,11 @@ namespace ICare.Core.ApiDTO
             /// <summary>
             /// 
             /// </summary>
-            public string Token { get; set; }
+            public string AccessToken { get; set; }
 
-            public static implicit operator Response(GetBySearchDTO.Response v)
-            {
-                throw new NotImplementedException();
-            }
+
+            public string RefreshToken { get; set; }
+
         }
     }
 }

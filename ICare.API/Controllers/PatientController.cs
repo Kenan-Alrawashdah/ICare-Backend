@@ -14,7 +14,6 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Patient")]
     public class PatientController : ControllerBase
     {
         private readonly IPatientServices _patientServices;
@@ -51,7 +50,7 @@ namespace ICare.API.Controllers
             };
             List<DrugDoseTime> drugDoseTimeLsit = new List<DrugDoseTime>();
 
-            if (request.drugDoseTime1 != null)
+            if (request.drugDoseTime1 != null && request.drugDoseTime1 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -59,7 +58,7 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if (request.drugDoseTime2 != null)
+            if (request.drugDoseTime2 != null && request.drugDoseTime2 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -67,7 +66,7 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if (request.drugDoseTime3 != null)
+            if (request.drugDoseTime3 != null && request.drugDoseTime3 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -75,7 +74,7 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if (request.drugDoseTime4 != null)
+            if (request.drugDoseTime4 != null && request.drugDoseTime4 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -98,7 +97,6 @@ namespace ICare.API.Controllers
         [HttpGet]
         [Route("MyDrugs")]
         public async Task<ActionResult<ApiResponse<MyDrugsApiDto.Response>>> MyDrugs()
-
         {
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
@@ -442,7 +440,7 @@ namespace ICare.API.Controllers
 
 
         [Authorize]
-        [HttpGet]
+        [HttpPost]
         [Route("AddPatientSubscription")]
         public async Task<ActionResult<ApiResponse>> AddPatientSubscription(int subscribeTypeId)
         {
@@ -487,7 +485,7 @@ namespace ICare.API.Controllers
         /// <param name="id">id of the patient recored to Get</param>
         /// <returns></returns>
         [Authorize]
-        [HttpDelete]
+        [HttpGet]
         [Route("GetByPatientId/{id:int}")]
         public async Task<ActionResult<ApiResponse>> GetByPatientId(int id)
         {
@@ -530,12 +528,11 @@ namespace ICare.API.Controllers
 
         }
 
-        [Authorize]
-        [HttpPut]
+        [HttpGet]
         [Route("GetAllPatientSubscription")]
         public async Task<ActionResult<ApiResponse>> GetAllPatientSubscription()
         {
-            var response = new ApiResponse<IEnumerable<Subscription>>();
+            var response = new ApiResponse<IEnumerable<GetAllPatientSubscriptionDTO>>();
             var result = await _subscriptionServices.GetAllPatientSubscription();
             response.Data = result;
             if (result != null)
@@ -550,7 +547,7 @@ namespace ICare.API.Controllers
 
         }
         [Authorize]
-        [HttpPut]
+        [HttpPost]
         [Route("SubscriptionPayment")]
         public async Task<ActionResult<ApiResponse>> SubscriptionPayment(int subscribeTypeId, SubscriptionPaymentDTO.Request request)
         {
