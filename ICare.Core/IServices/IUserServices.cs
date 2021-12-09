@@ -18,7 +18,7 @@ namespace ICare.Core.IServices
         IEnumerable<ApplicationUser> GetAll();
         ApplicationUser GetById(int id);
         ApplicationUser GetUser(ClaimsPrincipal userClaims);
-        Task<bool> Registration(RegistrationApiDTO.Request userModle);
+        Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle);
         bool Update(int userId, MyAccountApiDTO.Request Modle);
         Task<bool> AddAdmin(ApplicationUser userModle);
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);

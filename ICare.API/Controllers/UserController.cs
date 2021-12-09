@@ -40,11 +40,11 @@ namespace ICare.API.Controllers
         /// <returns>token</returns>
         [HttpPost]
         [Route("PatientRegistration")]
-        public ActionResult<ApiResponse<RegistrationApiDTO.Response>> PatientRegistration(RegistrationApiDTO.Request request)
+        public ActionResult<ApiResponse<RegistrationEmployeeApiDTO.Response>> PatientRegistration(RegistrationEmployeeApiDTO.Request request)
         {
 
 
-            var response = new ApiResponse<RegistrationApiDTO.Response>();
+            var response = new ApiResponse<RegistrationEmployeeApiDTO.Response>();
             if (_userServices.CheckEmailExist(request.Email))
             {
                 response.AddError("The email is already exist");
@@ -52,12 +52,14 @@ namespace ICare.API.Controllers
             }
             var hashedPassword = _passwordHashingService.GetHash(request.Password);
             var passwordForLogin = request.Password;
-            request.Password = hashedPassword;
+                request.Password = hashedPassword;
             _userServices.Registration(request);
             //TODO: Return the Token 
             var token = _jWTService.Auth(request.Email, passwordForLogin);
+
             response.Data = new RegistrationApiDTO.Response();
             response.Data.AccessToken = token;
+
             return Ok(response);
         }
         [HttpPost]

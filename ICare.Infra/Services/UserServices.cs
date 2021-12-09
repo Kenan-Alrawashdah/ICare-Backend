@@ -30,7 +30,7 @@ namespace ICare.Infra.Services
             return  _userRepository.GetUserByEmail(email);
 
         }
-        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
+        public async Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle)
         {
             return await _userRepository.Registration(userModle);
         }
