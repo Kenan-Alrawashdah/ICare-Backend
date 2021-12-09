@@ -40,11 +40,11 @@ namespace ICare.API.Controllers
         /// <returns>token</returns>
         [HttpPost]
         [Route("PatientRegistration")]
-        public ActionResult<ApiResponse<RegistrationEmployeeApiDTO.Response>> PatientRegistration(RegistrationEmployeeApiDTO.Request request)
+        public ActionResult<ApiResponse<RegistrationApiDTO.Response>> PatientRegistration(RegistrationApiDTO.Request request)
         {
 
 
-            var response = new ApiResponse<RegistrationEmployeeApiDTO.Response>();
+            var response = new ApiResponse<RegistrationApiDTO.Response>();
             if (_userServices.CheckEmailExist(request.Email))
             {
                 response.AddError("The email is already exist");
@@ -73,7 +73,7 @@ namespace ICare.API.Controllers
             var userInfo = await  _facebookAuthService.GetUserInfoAsync(accessToken);
              
             response.Data = new RegistrationApiDTO.Response();
-            response.Data.Token =authResponse.Token;
+            response.Data.AccessToken =authResponse.AccessToken;
             return Ok(response);
 
         }

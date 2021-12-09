@@ -96,7 +96,7 @@ namespace ICare.Infra.Repository
         }
 
 
-        public async Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle)
+        public async Task<bool> Registration(RegistrationApiDTO.Request userModle)
         {
             var e = new DynamicParameters();
             e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
@@ -263,6 +263,43 @@ namespace ICare.Infra.Repository
         {
             var result = _dbContext.Connection.Query<getAllEmployeeDTO>("getAllEmployee", commandType: CommandType.StoredProcedure);
             return result;
+        }
+
+        public async Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle)
+        {
+            var e = new DynamicParameters();
+            e.Add("@Name", "Patient", DbType.String, ParameterDirection.Input);
+            var roleId = _dbContext.Connection.ExecuteScalar<int>("GetRoleIdByName", e, commandType: CommandType.StoredProcedure);
+            var p = new DynamicParameters();
+            p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
+            p.Add("@CreatedOn", DateTime.UtcNow, DbType.DateTime, ParameterDirection.Input);
+            p.Add("@PasswordHash", userModle.Password, DbType.String, ParameterDirection.Input);
+            p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
+            p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
+            p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
+            p.Add("@RoleId", roleId, DbType.Int32, ParameterDirection.Input);
+            //TODO
+            p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
+            p.Add("@EmployeeId", null, DbType.Int32, ParameterDirection.Input);
+            p.Add("@PatientId", null, DbType.Int32, ParameterDirection.Input);
+
+
+            try
+            {
+                var userId = await _dbContext.Connection.ExecuteScalarAsync<int>("UserInsert", p, commandType: CommandType.StoredProcedure);
+
+                var patient = new Patient();
+                patient.UserId = userId;
+                if (!CreatePatient(patient))
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ee)
+            {
+                return false;
+            }
         }
     }
 }

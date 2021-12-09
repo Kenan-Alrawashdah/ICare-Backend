@@ -17,11 +17,13 @@ namespace ICare.Core.IRepository
         IEnumerable<ApplicationUser> GetAll();
         ApplicationUser GetById(int id);
         ApplicationUser GetUser(ClaimsPrincipal userClaims);
-        Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle);
+        Task<bool> Registration(RegistrationApiDTO.Request userModle);
         bool Update(int userId, MyAccountApiDTO.Request Modle);
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
         Task<bool> SetNewPassword(string email, string password);
         IEnumerable<getAllEmployeeDTO> getAllEmployee();
         ApplicationUser GetUserByEmail(string email);
+        Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle);
+
     }
 }

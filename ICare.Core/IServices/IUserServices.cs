@@ -26,6 +26,8 @@ namespace ICare.Core.IServices
         Task<LoginApiDTO.Response> LoginWithFacebookAsync(string accessToken);
         IEnumerable<getAllEmployeeDTO> getAllEmployee();
         ApplicationUser GetUserByEmail(string email);
+        Task<bool> Registration(RegistrationApiDTO.Request userModle);
+
 
     }
 }

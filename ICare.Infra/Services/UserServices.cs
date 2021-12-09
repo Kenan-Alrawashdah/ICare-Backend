@@ -112,7 +112,7 @@ namespace ICare.Infra.Services
             }
 
             var result = new LoginApiDTO.Response();
-            result.Token = _jWTService.Auth(userInfo.Id + "@facebook.com", password);
+            result.AccessToken = _jWTService.Auth(userInfo.Id + "@facebook.com", password);
             return result;
         }
         public string CreateRandomPassword(int PasswordLength)
@@ -131,6 +131,11 @@ namespace ICare.Infra.Services
         public IEnumerable<getAllEmployeeDTO> getAllEmployee()
         {
             return _userRepository.getAllEmployee();
+        }
+
+        public Task<bool> Registration(RegistrationApiDTO.Request userModle)
+        {
+            return _userRepository.Registration(userModle);
         }
     }
 }
