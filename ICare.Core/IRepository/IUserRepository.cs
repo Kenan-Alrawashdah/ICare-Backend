@@ -21,6 +21,6 @@ namespace ICare.Core.IRepository
         bool Update(int userId, MyAccountApiDTO.Request Modle);
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
         Task<bool> SetNewPassword(string email, string password);
-
+        ApplicationUser GetUserByEmail(string email);
     }
 }

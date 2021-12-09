@@ -15,11 +15,13 @@ namespace ICare.API.Controllers
     
     public class LoginController : ControllerBase
     {
-        private readonly IJWTService _jWTService;
+        private readonly ITokenService _tokenService;
+        private readonly IUserServices _userServices;
 
-        public LoginController(IJWTService jWTService)
+        public LoginController(ITokenService tokenService,IUserServices userServices)
         {
-            this._jWTService = jWTService;
+            this._tokenService = tokenService;
+            this._userServices = userServices;
         }
 
         [HttpPost]
@@ -27,14 +29,16 @@ namespace ICare.API.Controllers
         public ActionResult<ApiResponse<LoginApiDTO.Response>> SignIn(LoginApiDTO.Request requestLoginDTO)
         {
             var response = new ApiResponse<LoginApiDTO.Response>();
-            var token = _jWTService.Auth(requestLoginDTO);
+            string refreshToken;
+            var token = _tokenService.GenerateAccessToken(requestLoginDTO, out refreshToken);
             if (token == null)
             {
                 response.AddError("Email and password does not match");
                 return Ok(response);
             }
             response.Data = new LoginApiDTO.Response();
-            response.Data.Token = token;
+            response.Data.AccessToken = token;
+            response.Data.RefreshToken = refreshToken;
 
             return Ok(response);
             

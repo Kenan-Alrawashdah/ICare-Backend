@@ -1,9 +1,11 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
 {
@@ -21,24 +23,21 @@ namespace ICare.Infra.Services
             return _drugRepository.Create(drug);
         }
 
-        public bool Delete(int drugId)
+      
+
+        public async Task<GetDrugByIdApiDTO.Response> GetById(int drugId)
         {
-            return _drugRepository.Delete(drugId);
+            return await _drugRepository.GetById(drugId);
+
         }
 
-        public IEnumerable<Drug> GetAll()
+        public async Task<IEnumerable<GetCategoryDrugsApiDTO.Response>> GetCategoryDrugs(int drugId)
         {
-            return _drugRepository.GetAll();
+            return await _drugRepository.GetCategoryDrugs(drugId);
+
         }
 
-        public Drug GetById(int drugId)
-        {
-            return _drugRepository.GetById(drugId);
-        }
 
-        public bool Update(Drug drug)
-        {
-            return _drugRepository.Update(drug);
-        }
+
     }
 }

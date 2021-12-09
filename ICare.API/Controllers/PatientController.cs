@@ -51,7 +51,7 @@ namespace ICare.API.Controllers
             };
             List<DrugDoseTime> drugDoseTimeLsit = new List<DrugDoseTime>();
 
-            if (request.drugDoseTime1 != null)
+            if (request.drugDoseTime1 != null && request.drugDoseTime1 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -59,7 +59,7 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if (request.drugDoseTime2 != null)
+            if (request.drugDoseTime2 != null && request.drugDoseTime2 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -67,7 +67,7 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if (request.drugDoseTime3 != null)
+            if (request.drugDoseTime3 != null && request.drugDoseTime3 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -75,7 +75,7 @@ namespace ICare.API.Controllers
                 };
                 drugDoseTimeLsit.Add(d);
             }
-            if (request.drugDoseTime4 != null)
+            if (request.drugDoseTime4 != null && request.drugDoseTime4 != "")
             {
                 var d = new DrugDoseTime()
                 {
@@ -98,7 +98,6 @@ namespace ICare.API.Controllers
         [HttpGet]
         [Route("MyDrugs")]
         public async Task<ActionResult<ApiResponse<MyDrugsApiDto.Response>>> MyDrugs()
-
         {
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);

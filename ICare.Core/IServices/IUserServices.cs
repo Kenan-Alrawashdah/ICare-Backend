@@ -22,5 +22,6 @@ namespace ICare.Core.IServices
         Task<bool> AddAdmin(ApplicationUser userModle);
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
         Task<bool> SetNewPassword(string email, string password);
+        ApplicationUser GetUserByEmail(string email);
     }
 }
