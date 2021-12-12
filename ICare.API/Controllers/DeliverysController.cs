@@ -35,14 +35,30 @@ namespace ICare.API.Controllers
             //var Delivery = _deliveryService.GetById(user.Id);
 
             request.DeliveryId = 1;
-            var AllOrdersForDelivery =await _deliveryService.getAllOrdersForDelivery(request);
-            if (AllOrdersForDelivery == null)
+             response.Data = await _deliveryService.getAllOrdersForDelivery(request);
+            if (response.Data == null)
             {
                 response.AddError("No Orders For Display");
                 return Ok(response);
             }
-            response.Data = new List<getAllOrdersForDeliveryDTO.Response>();
-            response.Data = AllOrdersForDelivery;
+
+            return Ok(response);
+
+
+        }
+        [HttpGet]
+        [Route("getAllOrdersAvailableForDelivery")]
+        public async Task<ActionResult<ApiResponse<getAllOrdersForDeliveryDTO.Response>>> getAllOrdersAvailableForDelivery()
+        {
+
+            var response = new ApiResponse<IEnumerable<getAllOrdersForDeliveryDTO.Response>>();
+            response.Data = await _deliveryService.getAllOrdersAvailableForDelivery();
+
+            if (response.Data == null)
+            {
+                response.AddError("No Orders For Display");
+                return Ok(response);
+            }
             return Ok(response);
 
 
@@ -98,6 +114,19 @@ namespace ICare.API.Controllers
             return Ok(response);
 
         }
+        [HttpGet]
+        [Route("ReservationAvailableCount")]
+        public async Task<ActionResult<ApiResponse<getReservationAvailableCountDTO>>> ReservationAvailableCount()
+        {
+            var request = new getReservationAvailableCountDTO();
+
+            var response = new ApiResponse<getReservationAvailableCountDTO>();
+            var NumberOfOrdersForDelivery = await _deliveryService.ReservationAvailableCount();
+            response.Data = new getReservationAvailableCountDTO();
+            response.Data = NumberOfOrdersForDelivery;
+            return Ok(response);
+
+        }
         [HttpPatch]
         [Route("TakeOrder")]
 
@@ -119,6 +148,21 @@ namespace ICare.API.Controllers
         {
             var response = new ApiResponse();
             var result = _deliveryService.OrderDeliverd(id);
+            if (result == false)
+            {
+                response.AddError("Something Wrong");
+                return Ok(response);
+            }
+            return Ok(response);
+
+        }
+        [HttpPatch]
+        [Route("ReservationAvailable")]
+
+        public ActionResult<ApiResponse> ReservationAvailable(int id)
+        {
+            var response = new ApiResponse();
+            var result = _deliveryService.ReservationAvailable(id);
             if (result == false)
             {
                 response.AddError("Something Wrong");

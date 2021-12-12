@@ -150,5 +150,39 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
+        public async Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersAvailableForDelivery()
+        {
+
+            var result = await _dbContext.Connection.QueryAsync<getAllOrdersForDeliveryDTO.Response>("getAllOrdersAvailableForDelivery", commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        public bool ReservationAvailable(int id)
+        {
+
+            try
+            {
+                var param = new DynamicParameters();
+
+                param.Add("@id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+                _dbContext.Connection.Execute("ReservationAvailable", param, commandType: CommandType.StoredProcedure);
+
+                return true;
+            }
+            catch (Exception erorr)
+            {
+                return false;
+            }
+        }
+
+        public async Task<getReservationAvailableCountDTO> ReservationAvailableCount()
+        {
+            var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<getReservationAvailableCountDTO>("ReservationAvailableCount", commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
     }
 }

@@ -34,6 +34,11 @@ namespace ICare.Infra.Services
             return _deliveryRepository.GetAll();
         }
 
+        public Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersAvailableForDelivery()
+        {
+            return _deliveryRepository.getAllOrdersAvailableForDelivery();
+        }
+
         public Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(getAllOrdersForDeliveryDTO.Request request)
         {
             return _deliveryRepository.getAllOrdersForDelivery(request);
@@ -49,9 +54,19 @@ namespace ICare.Infra.Services
             return _deliveryRepository.getNumberOfOrdersForDelivery(request);
         }
 
+        public Task<getReservationAvailableCountDTO> ReservationAvailableCount()
+        {
+            return _deliveryRepository.ReservationAvailableCount();
+        }
+
         public bool OrderDeliverd(int id)
         {
             return _deliveryRepository.OrderDeliverd(id);
+        }
+
+        public bool ReservationAvailable(int id)
+        {
+            return _deliveryRepository.ReservationAvailable(id);
         }
 
         public bool TakeOrder(int id)

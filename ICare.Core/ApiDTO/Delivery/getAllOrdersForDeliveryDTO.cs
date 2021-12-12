@@ -23,6 +23,9 @@ namespace ICare.Core.ApiDTO
             public string CustomerName { get; set; }
 
             public double Amount { get; set; }
+            public double lat { get; set; }
+            public double lng { get; set; }
+
             public string Status { get; set; }
 
 

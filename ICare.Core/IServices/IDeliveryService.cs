@@ -10,9 +10,15 @@ namespace ICare.Core.IServices
 {
     public interface IDeliveryService : ICRUDRepository<Delivery>
     {
+        Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersAvailableForDelivery();
+
         Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(getAllOrdersForDeliveryDTO.Request request);
         Task<getNumberOfOrdersForDeliveryDTO.Response> getNumberOfOrdersForDelivery(getNumberOfOrdersForDeliveryDTO.Request request);
+        Task<getReservationAvailableCountDTO> ReservationAvailableCount();
+
         bool TakeOrder(int id);
         bool OrderDeliverd(int id);
+        bool ReservationAvailable(int id);
+
     }
 }
