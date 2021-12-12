@@ -15,7 +15,6 @@ namespace ICare.Core.ApiDTO
 
                 public string PhoneNumber { get; set; }
 
-                public string Email { get; set; }
             }
 
             public class Response

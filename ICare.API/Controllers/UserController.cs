@@ -19,11 +19,11 @@ namespace ICare.API.Controllers
         private readonly IUserServices _userServices;
         private readonly IFileService _fileService;
         private readonly IPasswordHashingService _passwordHashingService;
-        private readonly IJWTService _jWTService;
+        private readonly ITokenService _jWTService;
         private readonly IResetPasswordServices _resetPasswordServices;
         private readonly IFacebookAuthService _facebookAuthService;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService,IResetPasswordServices resetPasswordServices, IFacebookAuthService facebookAuthService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, ITokenService jWTService,IResetPasswordServices resetPasswordServices, IFacebookAuthService facebookAuthService)
         {
             this._userServices = userServices;
             this._fileService = fileService;
@@ -54,11 +54,18 @@ namespace ICare.API.Controllers
             var passwordForLogin = request.Password;
                 request.Password = hashedPassword;
             _userServices.Registration(request);
+            var login = new LoginApiDTO.Request()
+            {
+                Email = request.Email,
+                Password = passwordForLogin
+            };
+            string refreshToken;
             //TODO: Return the Token 
-            var token = _jWTService.Auth(request.Email, passwordForLogin);
+            var token = _jWTService.GenerateAccessToken(login,out refreshToken);
 
             response.Data = new RegistrationApiDTO.Response();
             response.Data.AccessToken = token;
+            response.Data.RefreshToken = refreshToken;
 
             return Ok(response);
         }
