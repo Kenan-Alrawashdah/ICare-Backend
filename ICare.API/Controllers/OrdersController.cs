@@ -13,7 +13,6 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -54,6 +53,51 @@ namespace ICare.API.Controllers
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
             response.Data =await _orderService.GetPatientOrders(patient.Id);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("GetOpenOrders")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<GetAllOpenOredersApiDTO.Response>>>> GetOpenOrders()
+        {
+            var response = new ApiResponse<IEnumerable<GetAllOpenOredersApiDTO.Response>>();
+
+            response.Data = await _orderService.GetAllOpenOrders();
+            
+            return Ok(response);
+
+        }
+
+        [HttpGet]
+        [Route("GetOrderDrugs/{id:int}")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<OrderDrugsApiDTO.Response>>>> GetOrderDrugs(int id)
+        {
+            var response = new ApiResponse<IEnumerable<OrderDrugsApiDTO.Response>>();
+
+            response.Data = await _orderService.GetOrderDrugs(id);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("SetOrderAsCanceled/{id:int}")]
+        public ActionResult<ApiResponse> SetOrderAsCanceled(int id)
+        {
+            var response = new ApiResponse();
+
+            _orderService.SetOrderAsCanceled(id);
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("SetOrderAsPlaced/{id:int}")]
+        public ActionResult<ApiResponse> SetOrderAsPlaced(int id)
+        {
+            var response = new ApiResponse();
+
+            _orderService.SetOrderAsPlaced(id);
 
             return Ok(response);
         }

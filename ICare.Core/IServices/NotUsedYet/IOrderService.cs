@@ -11,6 +11,10 @@ namespace ICare.Core.IServices
     public interface IOrderService
     {
         Task<bool> Create(Order order, List<int> orderDrugs);
+        Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders();
+        Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId);
         Task<IEnumerable<PaitentOrderApiDTO.Response>> GetPatientOrders(int patientID);
+        bool SetOrderAsCanceled(int orderId);
+        bool SetOrderAsPlaced(int orderId);
     }
 }

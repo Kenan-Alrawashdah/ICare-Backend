@@ -80,6 +80,38 @@ namespace ICare.Infra.Repository
             }
         }
 
+        public async Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders()
+        {
+            var result = await _dbContext.Connection.QueryAsync<GetAllOpenOredersApiDTO.Response>("GetOpenOrders", commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        public async Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId)
+        {
+            var param = new DynamicParameters();
+            param.Add("@Id", orderId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var result = await _dbContext.Connection.QueryAsync<OrderDrugsApiDTO.Response>("GetOrderDrugs", param, commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
+
+        public bool SetOrderAsCanceled(int orderId)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", orderId, DbType.Int32, ParameterDirection.Input);
+            _dbContext.Connection.ExecuteAsync("SetOrderAsCanceled", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+        public bool SetOrderAsPlaced(int orderId)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", orderId, DbType.Int32, ParameterDirection.Input);
+            _dbContext.Connection.ExecuteAsync("SetOrderAsPlaced", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+
         //public bool Delete(int orderId)
         //{
         //    try

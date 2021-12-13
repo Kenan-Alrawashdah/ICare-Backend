@@ -10,6 +10,10 @@ namespace ICare.Core.IRepository
     public interface IOrderRepository
     {
         Task<bool> Create(Order order, List<int> cartIds);
+        Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders();
+        Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId);
         Task<IEnumerable<PaitentOrderApiDTO.Response>> GetPatientOrders(int patientID);
+        bool SetOrderAsCanceled(int orderId);
+        bool SetOrderAsPlaced(int orderId);
     }
 }

@@ -29,5 +29,26 @@ namespace ICare.Infra.Services
 
         }
 
+        public async Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders()
+        {
+            return await _orderRepository.GetAllOpenOrders();
+
+        }
+
+        public async Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId)
+        {
+            return await _orderRepository.GetOrderDrugs(orderId);
+
+        }
+        public bool SetOrderAsPlaced(int orderId)
+        {
+            return  _orderRepository.SetOrderAsPlaced(orderId);
+
+        }
+        public bool SetOrderAsCanceled(int orderId)
+        {
+            return _orderRepository.SetOrderAsCanceled(orderId);
+        }
+
     }
 }

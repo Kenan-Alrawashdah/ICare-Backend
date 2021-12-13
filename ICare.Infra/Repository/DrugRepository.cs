@@ -65,6 +65,38 @@ namespace ICare.Infra.Repository
             return drug;
         }
 
+
+        public async Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetAll()
+        {
+            var drugs =await _dbContext.Connection.QueryAsync<GetAllDrugsApiDTO.Response>("DrugGetAll", commandType: CommandType.StoredProcedure);
+
+            return drugs;
+        }
+
+        public bool AddToQuantity(int drugId , int quantity)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", drugId, DbType.Int32, ParameterDirection.Input); 
+            p.Add("@Quantity", quantity, DbType.Int32, ParameterDirection.Input);
+            _dbContext.Connection.ExecuteAsync("AddToQuantity", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+
+        public bool EditDrug(Drug drug)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", drug.Id, DbType.Int32, ParameterDirection.Input);
+            p.Add("@DrugCategoryId", drug.DrugCategoryId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Name", drug.Name, DbType.String, ParameterDirection.Input);
+            p.Add("@Price", drug.Price, DbType.Double, ParameterDirection.Input);
+            p.Add("@PicturePath", drug.PicturePath, DbType.String, ParameterDirection.Input);
+            p.Add("@Brand", drug.Brand, DbType.String, ParameterDirection.Input);
+            p.Add("@AvailableQuantity", drug.AvailableQuantity, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Description", drug.Description, DbType.String, ParameterDirection.Input);
+            _dbContext.Connection.ExecuteAsync("DrugUpdate", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+
         //public IEnumerable<Drug> GetAll()
         //{
         //    var drugs = _dbContext.Connection.Query<Drug>("DrugGetAll", commandType: CommandType.StoredProcedure);
