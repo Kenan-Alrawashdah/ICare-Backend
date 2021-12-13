@@ -24,14 +24,12 @@ namespace ICare.Infra.Services
         private readonly IJWTRepository _jWTRepository;
         private readonly IRefreshTokenServices _refreshTokenServices;
         private readonly IUserServices _userServices;
-        private readonly IResetPasswordServices resetPasswordServices;
 
-        public TokenService(IJWTRepository jWTRepository,IRefreshTokenServices refreshTokenServices,IUserServices userServices,IResetPasswordServices resetPasswordServices)
+        public TokenService(IJWTRepository jWTRepository,IRefreshTokenServices refreshTokenServices,IUserServices userServices)
         {
             this._jWTRepository = jWTRepository;
             this._refreshTokenServices = refreshTokenServices;
             this._userServices = userServices;
-            this.resetPasswordServices = resetPasswordServices;
         }
 
 
@@ -63,7 +61,7 @@ namespace ICare.Infra.Services
                    }),
 
                 //expire == session timeout
-                Expires = DateTime.UtcNow.AddSeconds(20),
+                Expires = DateTime.UtcNow.AddMinutes(10),
 
                 //signcredintial ==(to assgin which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
@@ -84,7 +82,7 @@ namespace ICare.Infra.Services
                 FirstName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value,
                 RoleName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value,
                
-        };
+            };
             if (result.Email == null)
             {
                 refreshToken = null;
@@ -116,7 +114,7 @@ namespace ICare.Infra.Services
                        }),
 
                     //expire == session timeout
-                    Expires = DateTime.UtcNow.AddSeconds(20),
+                    Expires = DateTime.UtcNow.AddMinutes(10),
 
                     //signcredintial ==(to assgin which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)

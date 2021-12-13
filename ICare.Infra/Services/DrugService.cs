@@ -36,6 +36,21 @@ namespace ICare.Infra.Services
             return await _drugRepository.GetCategoryDrugs(drugId);
 
         }
+        public async Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetAll()
+        {
+            return await _drugRepository.GetAll();
+        }
+        public bool AddToQuantity(int drugId, int quantity)
+        {
+            return  _drugRepository.AddToQuantity(drugId, quantity);
+
+        }
+
+        public bool EditDrug(Drug drug)
+        {
+            return _drugRepository.EditDrug(drug);
+
+        }
 
 
 

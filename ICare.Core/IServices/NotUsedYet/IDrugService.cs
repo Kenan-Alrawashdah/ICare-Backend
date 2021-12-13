@@ -10,7 +10,10 @@ namespace ICare.Core.IServices
 {
     public interface IDrugService
     {
+        bool AddToQuantity(int drugId, int quantity);
         bool Create(Drug drug);
+        bool EditDrug(Drug drug);
+        Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetAll();
         Task<GetDrugByIdApiDTO.Response> GetById(int drugId);
         Task<IEnumerable<GetCategoryDrugsApiDTO.Response>> GetCategoryDrugs(int drugId);
     }
