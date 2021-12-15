@@ -6,9 +6,8 @@ using System.Text;
 
 namespace ICare.Core.IServices
 {
-    public interface IJWTService
+    public interface IAuthService
     {
-        string Auth(LoginApiDTO.Request loginDTO);
-        string Auth(string email,string password);
+        ResponseLoginDTO Authentication(LoginApiDTO.Request loginDTO);
     }
 }

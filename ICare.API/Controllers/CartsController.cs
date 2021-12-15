@@ -52,6 +52,7 @@ namespace ICare.API.Controllers
         public async Task<ActionResult<ApiResponse<IEnumerable<GetCartItemsApiDTO.Response>>>> GetCartItems()
         {
             var response = new ApiResponse<IEnumerable<GetCartItemsApiDTO.Response>>();
+            var a = User;
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
 

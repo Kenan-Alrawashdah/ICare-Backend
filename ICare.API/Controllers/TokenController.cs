@@ -54,7 +54,7 @@ namespace ICare.API.Controllers
 
             string refToken; 
             response.Data = new TokenApiModel.Response();
-            response.Data.AccessToken = _tokenService.GenerateAccessTokenWithClaims(princibles,out refToken);
+            response.Data.AccessToken = _tokenService.GenerateAccessTokenUsingClaims(princibles,out refToken);
             response.Data.RefreshToken = refToken;
 
 

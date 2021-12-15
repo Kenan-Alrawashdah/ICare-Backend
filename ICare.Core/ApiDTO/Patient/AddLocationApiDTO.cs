@@ -19,6 +19,10 @@ namespace ICare.Core.ApiDTO
             public string Details { get; set; }
 
             public int ZipCode { get; set; }
+
+            public double Lat { get; set; }
+
+            public double Lng { get; set; }
         }
 
         

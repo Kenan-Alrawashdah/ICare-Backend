@@ -38,7 +38,7 @@ namespace ICare.API.Extension
             services.AddScoped<IUserTokensRepository, UserTokensRepository>();
             services.AddScoped<IUserLoginsRepository, UserLoginsRepository>();
             services.AddScoped<IEmployessRepository, EmployessRepository>();
-            services.AddScoped<IJWTRepository, JWTRepository>();
+            services.AddScoped<IAuthRespository, AuthRespository>();
             services.AddScoped<IPatientDrugsRepository, PatientDrugsRepository>(); 
             services.AddScoped<IScheduleEnumRepository, ScheduleEnumRepository>(); 
             services.AddScoped<IDrugDoseTimeRepository, DrugDoseTimeRepository>();
@@ -72,7 +72,7 @@ namespace ICare.API.Extension
             services.AddScoped<IUserTokensServices, UserTokensServices>();
             services.AddScoped<IUserLoginsServices, UserLoginsServices>();
             services.AddScoped<IEmployessServices, EmployessServices>();
-            services.AddScoped<IJWTService, JWTService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IDrugDoseTimeServices, DrugDoseTimeServices>();
             services.AddScoped<IPatientDrugsServices, PatientDrugsServices>();
             services.AddScoped<IScheduleEnumServices, ScheduleEnumServices>();
@@ -95,10 +95,10 @@ namespace ICare.API.Extension
             services.AddScoped<IAccountantService, AccountantService>();
             services.AddHttpClient();
             services.AddScoped<IFacebookAuthService, FacebookAuthService>();
-            services.AddScoped<IResetPasswordServices, ResetPasswordServices>();
             services.AddScoped<IEmailServices, EmailServices>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenServices, RefreshTokenServices>();
+            services.AddScoped<IFacebookService, FacebookService>();
 
         }
     }

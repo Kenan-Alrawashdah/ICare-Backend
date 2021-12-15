@@ -52,5 +52,8 @@ namespace ICare.Infra.Services
             return new string(chars);
         }
 
+        
+       
+
     }
 }

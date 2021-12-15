@@ -43,6 +43,7 @@ namespace ICare.Infra.Repository
 
             }
         }
+  
 
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)
         {
@@ -299,6 +300,16 @@ namespace ICare.Infra.Repository
             {
                 return false;
             }
+        }
+
+        public bool ChangPassword(int userId,string newPassword)
+        {
+            var newPass = _passwordHashingService.GetHash(newPassword);
+            var p = new DynamicParameters();
+            p.Add("@Id", userId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@PasswordHash",newPass, DbType.String, ParameterDirection.Input);
+            _dbContext.Connection.ExecuteAsync("UpdateUserPassword", p, commandType: CommandType.StoredProcedure);
+            return true; 
         }
     }
 }

@@ -30,7 +30,7 @@ namespace ICare.API.Controllers
         {
             var response = new ApiResponse<LoginApiDTO.Response>();
             string refreshToken;
-            var token = _tokenService.GenerateAccessToken(requestLoginDTO, out refreshToken);
+            var token = _tokenService.AuthAndGetToken(requestLoginDTO, out refreshToken);
             if (token == null)
             {
                 response.AddError("Email and password does not match");
