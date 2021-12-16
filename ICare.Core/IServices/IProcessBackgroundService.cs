@@ -5,8 +5,9 @@ using System.Text;
 
 namespace ICare.Core.IServices
 {
-    public interface IProcessBackground
+    public interface IProcessBackgroundService
     {
         void BringDrugsOnTime();
+        void CheckWaterOnTime();
     }
 }

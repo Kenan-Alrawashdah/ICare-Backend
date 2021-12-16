@@ -55,6 +55,7 @@ namespace ICare.API.Extension
             services.AddScoped<ITestimonialRepository, TestimonialRepository>();
             services.AddScoped<IAccountantRepository, AccountantRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddSingleton<IProcessBackgroundRepository, ProcessBackgroundRepository>();
 
 
 
@@ -84,7 +85,7 @@ namespace ICare.API.Extension
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IPasswordHashingService, PasswordHashingService>();
-            services.AddSingleton<IProcessBackground, ProcessBackground>();
+            services.AddSingleton<IProcessBackgroundService, ProcessBackgroundService>();
             services.AddSingleton<IMailingService, MailingService>();//
             services.AddSingleton<IWorkService, WorkService>();
             services.AddScoped<ILocationSevices, LocationSevices>();
