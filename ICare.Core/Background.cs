@@ -31,7 +31,7 @@ namespace ICare.Core
             },
             null,
             TimeSpan.Zero,
-            TimeSpan.FromSeconds(40)
+            TimeSpan.FromSeconds(60)
             );
 
             timerWater = new Timer(async o =>

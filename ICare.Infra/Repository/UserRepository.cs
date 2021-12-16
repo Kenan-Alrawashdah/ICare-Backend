@@ -208,7 +208,6 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@Id", userId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@Email", Modle.Email, DbType.String, ParameterDirection.Input);
             p.Add("@PhoneNumber", Modle.PhoneNumber, DbType.String, ParameterDirection.Input);
             p.Add("@FirstName", Modle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", Modle.LastName, DbType.String, ParameterDirection.Input);

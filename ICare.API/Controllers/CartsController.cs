@@ -83,7 +83,7 @@ namespace ICare.API.Controllers
 
             if( await _cartService.CheckItemExist(patient.Id,id))
             {
-                response.AddError("Item is already in your account");
+                response.AddError("Item is already in your cart");
                 return Ok(response);
             }
             else
