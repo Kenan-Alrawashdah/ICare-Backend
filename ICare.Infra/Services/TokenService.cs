@@ -100,7 +100,7 @@ namespace ICare.Infra.Services
                    }),
 
                 //expire == session timeout
-                Expires = DateTime.UtcNow.AddSeconds(10),
+                Expires = DateTime.UtcNow.AddMinutes(10),
 
                 //sign credential ==(to assign which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
