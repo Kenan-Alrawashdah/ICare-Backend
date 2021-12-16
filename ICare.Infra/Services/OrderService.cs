@@ -50,5 +50,10 @@ namespace ICare.Infra.Services
             return _orderRepository.SetOrderAsCanceled(orderId);
         }
 
+        public async Task<IEnumerable<PlacedOrdersApiDTO.Response>> GetPlacedOrders()
+        {
+            return await _orderRepository.GetPlacedOrders();
+        }
+
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ICare.Core.IRepository
 {
-    public interface IJWTRepository
+    public interface IAuthRespository
     {
         ResponseLoginDTO Authentication(LoginApiDTO.Request login);
 

@@ -6,7 +6,6 @@ using ICare.Core.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ICare.Infra.Repository
@@ -66,7 +65,7 @@ namespace ICare.Infra.Repository
             p.Add("@PatientId", id, DbType.Int32, ParameterDirection.Input);
 
             var result = _dbContext.Connection.QueryFirstOrDefault<Subscription>("SubscriptionSelect", p, commandType: CommandType.StoredProcedure);
-           
+
             return result;
         }
 
@@ -80,20 +79,19 @@ namespace ICare.Infra.Repository
 
             var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<Payment>("SubscriptionSelect", p, commandType: CommandType.StoredProcedure);
             return result;
-       
+
 
         }
 
         public async Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request)
         {
             var p = new DynamicParameters();
-            p.Add("@PatientId"          , request.PatientId       , DbType.Int32          , ParameterDirection.Input);
-            p.Add("@SubscribeTypeId"    , request.SubscribeTypeId , DbType.Int32          , ParameterDirection.Input);
-
+            p.Add("@PatientId", request.PatientId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@SubscribeTypeId", request.SubscribeTypeId, DbType.Int32, ParameterDirection.Input);
 
             try
             {
-                var result =await _dbContext.Connection.ExecuteAsync("SubscriptionUpdate", p, commandType: CommandType.StoredProcedure);
+                var result = await _dbContext.Connection.ExecuteAsync("SubscriptionUpdate", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
 

@@ -251,12 +251,14 @@ namespace ICare.API.Controllers
             var location = new Location
             {
                 AddressName = request.AddressName,
-                City = request.AddressName,
+                City = request.City,
                 PhoneNumber = request.PhoneNumber,
                 Street = request.Street,
                 Details = request.Details,
                 ZipCode = request.ZipCode,
-                UserId = user.Id
+                UserId = user.Id,
+                lat = request.Lat,
+                lng = request.Lng
             };
             _locationSevices.AddLocation(location);
             return Ok(response);
@@ -317,6 +319,8 @@ namespace ICare.API.Controllers
                 Street = request.Street,
                 Details = request.Details,
                 ZipCode = request.ZipCode,
+                lng = request.lng, 
+                lat = request.lat
             };
             _locationSevices.EditLocation(location);
             return Ok(response);
@@ -370,6 +374,8 @@ namespace ICare.API.Controllers
                 return Ok(response);
             }
         }
+
+        
 
         /// <summary>
         /// Edit water page 
@@ -426,14 +432,23 @@ namespace ICare.API.Controllers
         [Authorize]
         [HttpGet]
         [Route("GetWater")]
-        public async Task<ActionResult<ApiResponse<Water>>> GetWater()
+        public async Task<ActionResult<ApiResponse<GetWaterApiDTO.Response>>> GetWater()
         {
-            var respnse = new ApiResponse<Water>();
+            var response = new ApiResponse<GetWaterApiDTO.Response>();
             var user = _userServices.GetUser(User);
-
-            var water = await _waterServices.GetWaterByUserId(user.Id);
-            respnse.Data = water;
-            return Ok(respnse); 
+            var patient = _patientServices.GetPatientByUserId(user.Id);
+            var water = await _waterServices.GetPatientWater(patient.Id);
+            if(water == null)
+            {
+                response.AddError("The patient Don't have water notification");
+                return Ok(response);
+            }
+            response.Data = new GetWaterApiDTO.Response();
+            response.Data.Id = water.Id;
+            response.Data.From = water.From.ToString();
+            response.Data.To = water.To.ToString();
+            response.Data.Every = water.Every;
+            return Ok(response); 
 
         }
 

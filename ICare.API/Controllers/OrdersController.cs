@@ -101,5 +101,16 @@ namespace ICare.API.Controllers
 
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("GetPlacedOrders")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<PlacedOrdersApiDTO.Response>>>> GetPlacedOrders()
+        {
+            var response = new ApiResponse<IEnumerable<PlacedOrdersApiDTO.Response>>();
+
+            response.Data = await _orderService.GetPlacedOrders();
+
+            return Ok(response); 
+        }
     }
 }

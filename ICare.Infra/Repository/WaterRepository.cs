@@ -24,7 +24,7 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@PatientId", patientId, DbType.Int32, ParameterDirection.Input); 
-            p.Add("@Evry", water.Every, DbType.Int32, ParameterDirection.Input); 
+            p.Add("@Every", water.Every, DbType.Int32, ParameterDirection.Input); 
             p.Add("@From", water.From, DbType.Time, ParameterDirection.Input); 
             p.Add("@To", water.To, DbType.Time, ParameterDirection.Input);
             try
@@ -78,6 +78,23 @@ namespace ICare.Infra.Repository
             
            return await _dbContext.Connection.QueryFirstOrDefaultAsync<Water>("GetWaterByUserId", p, commandType: CommandType.StoredProcedure);
            
+        }
+
+        public async Task<Water> GetPatientWater(int patientId)
+        {
+            var p = new DynamicParameters();
+            p.Add("@PatientId", patientId, DbType.Int32, ParameterDirection.Input);
+
+            try
+            {
+                var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<Water>("GetPatientWater", p, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception e )
+            {
+
+                return null;
+            }
         }
     }
 }

@@ -112,6 +112,15 @@ namespace ICare.Infra.Repository
             return true;
         }
 
+        public async Task<IEnumerable<PlacedOrdersApiDTO.Response>> GetPlacedOrders()
+        {
+            var result = await _dbContext.Connection.QueryAsync<PlacedOrdersApiDTO.Response>("GetPlacedOrders", commandType: CommandType.StoredProcedure);
+            return result; 
+        }
+
+
+         
+
         //public bool Delete(int orderId)
         //{
         //    try

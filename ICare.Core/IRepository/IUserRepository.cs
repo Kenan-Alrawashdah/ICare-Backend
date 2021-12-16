@@ -24,6 +24,6 @@ namespace ICare.Core.IRepository
         IEnumerable<getAllEmployeeDTO> getAllEmployee();
         ApplicationUser GetUserByEmail(string email);
         Task<bool> Registration(RegistrationEmployeeApiDTO.Request userModle);
-
+        bool ChangPassword(int userId, string newPassword);
     }
 }

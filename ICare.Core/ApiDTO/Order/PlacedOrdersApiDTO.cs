@@ -4,11 +4,10 @@ using System.Text;
 
 namespace ICare.Core.ApiDTO
 {
-    public class getAllOrdersForDeliveryDTO
+    public class PlacedOrdersApiDTO
     {
         public class Response
         {
-
             public int OrderId { get; set; }
 
             public int Id { get; set; }
@@ -31,12 +30,6 @@ namespace ICare.Core.ApiDTO
             public double lat { get; set; }
 
             public double lng { get; set; }
-
-            public string FirstName { get; set; }
-
-            public string LastName { get; set; }
-
-
         }
     }
 }
