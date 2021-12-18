@@ -10,6 +10,7 @@ namespace ICare.Core.IServices
 {
     public interface IDeliveryService : ICRUDRepository<Delivery>
     {
+
         Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(int deliveryId);
         Delivery GetDeliveryByUserId(int userId);
         Task<getNumberOfOrdersForDeliveryDTO.Response> getNumberOfOrdersForDelivery(getNumberOfOrdersForDeliveryDTO.Request request);

@@ -302,6 +302,13 @@ namespace ICare.Infra.Repository
             }
         }
 
+
+        public IEnumerable<GetPatientStatsLast5YearDTO> GetPatientStatsLast5Year()
+        {
+            var result = _dbContext.Connection.Query<GetPatientStatsLast5YearDTO>("GetPatientStatsLast5Year", commandType: CommandType.StoredProcedure);
+            return result;
+            }
+
         public bool ChangPassword(int userId,string newPassword)
         {
             var newPass = _passwordHashingService.GetHash(newPassword);
@@ -310,6 +317,7 @@ namespace ICare.Infra.Repository
             p.Add("@PasswordHash",newPass, DbType.String, ParameterDirection.Input);
             _dbContext.Connection.ExecuteAsync("UpdateUserPassword", p, commandType: CommandType.StoredProcedure);
             return true; 
-        }
+            }
+
     }
 }

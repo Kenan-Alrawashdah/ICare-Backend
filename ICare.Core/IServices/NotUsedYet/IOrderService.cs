@@ -10,6 +10,10 @@ namespace ICare.Core.IServices
 {
     public interface IOrderService
     {
+
+        IEnumerable<GetPaymentOrdersDTO.Response> GetPaymentOrders();
+        IEnumerable<GetPaymentOrdersDTO.Response> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust);
+        IEnumerable<GetSalesStatsLast5YearDTO> GetSalesStatsLast5Year();
         Task<bool> Create(Order order, List<int> orderDrugs);
         Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders();
         Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId);
@@ -17,5 +21,6 @@ namespace ICare.Core.IServices
         Task<IEnumerable<PlacedOrdersApiDTO.Response>> GetPlacedOrders();
         bool SetOrderAsCanceled(int orderId);
         bool SetOrderAsPlaced(int orderId);
+
     }
 }

@@ -32,6 +32,7 @@ namespace ICare.Infra.Services
             return _deliveryRepository.GetAll();
         }
 
+
         public Delivery GetById(int id)
         {
             return _deliveryRepository.GetById(id);
@@ -40,6 +41,11 @@ namespace ICare.Infra.Services
         public Task<getNumberOfOrdersForDeliveryDTO.Response> getNumberOfOrdersForDelivery(getNumberOfOrdersForDeliveryDTO.Request request)
         {
             return _deliveryRepository.getNumberOfOrdersForDelivery(request);
+        }
+
+        public Task<getReservationAvailableCountDTO> ReservationAvailableCount()
+        {
+            return _deliveryRepository.ReservationAvailableCount();
         }
 
         public bool OrderDeliverd(int id)
