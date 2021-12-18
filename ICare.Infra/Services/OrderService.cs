@@ -55,5 +55,11 @@ namespace ICare.Infra.Services
             return await _orderRepository.GetPlacedOrders();
         }
 
+        public async Task<OrderDetailsApiDTO.Response> GetOrderDetails(int orderId)
+        {
+            return await _orderRepository.GetOrderDetails(orderId);
+
+        }
+
     }
 }

@@ -121,6 +121,7 @@ namespace ICare.API.Controllers
             response.Data = new EditDrugApiDTO.Response();
 
             response.Data = await _patientServices.GetDrug(id);
+            response.Data.EndDate2 = response.Data.EndDate?.ToString("yyyy-MM-dd");
 
             return Ok(response);
         }

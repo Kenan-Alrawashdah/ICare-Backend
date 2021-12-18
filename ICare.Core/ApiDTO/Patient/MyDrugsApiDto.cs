@@ -20,6 +20,8 @@ namespace ICare.Core.ApiDTO
             public string DrugName { get; set; }
 
             public string ExpireDate { get; set; }
+
+            public List<string> Times { get; set; } 
         }
     }
 }

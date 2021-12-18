@@ -6,6 +6,7 @@ using ICare.Core.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,6 +42,28 @@ namespace ICare.Infra.Repository
             {
                 return false;
             }
+        }
+
+        public async Task<OrderDetailsApiDTO.Response> GetOrderDetails(int orderId)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", orderId, DbType.Int32, ParameterDirection.Input);
+                var result =await  _dbContext.Connection.QuerySingleAsync<OrderDetailsApiDTO.Response>("GetOrderAndLocation", p, commandType: CommandType.StoredProcedure);
+                var e = new DynamicParameters();
+                e.Add("@Id", orderId, DbType.Int32, ParameterDirection.Input);
+                result.OrderDrugs = await  _dbContext.Connection.QueryAsync<OrderDetailsApiDTO.OrderDrugs>("GetOrderDrugsDetails", e, commandType: CommandType.StoredProcedure);
+                return result;
+            }
+            catch (Exception e )
+            {
+
+                return null;   
+            }
+           
+           
+
         }
 
         private bool CreateOrderDrugs(int cartId,int orderId)

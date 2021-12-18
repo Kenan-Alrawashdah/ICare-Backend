@@ -2,19 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Core.IServices
 {
     public interface ISubscriptionTypeServices
     {
-        bool Create(SubscribeType subscribeType);
-
-        bool Update(SubscribeType subscribeType);
-
-        bool Delete(int id);
-
-        SubscribeType GetById(int id);
-
-        IEnumerable<SubscribeType> GetAll();
+        Task<IEnumerable<SubscribeType>> GetAll();
+        Task<SubscribeType> GetById(int id);
     }
 }

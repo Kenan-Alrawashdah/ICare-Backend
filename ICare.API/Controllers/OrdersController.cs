@@ -112,5 +112,19 @@ namespace ICare.API.Controllers
 
             return Ok(response); 
         }
+
+
+        [HttpGet]
+        [Route("GetOrderDetails/{id:int}")]
+        public async Task<ActionResult<ApiResponse<OrderDetailsApiDTO.Response>>> GetOrderDetails(int id)
+        {
+            var response = new ApiResponse<OrderDetailsApiDTO.Response>();
+
+            response.Data = await _orderService.GetOrderDetails(id); 
+
+
+            return Ok(response); 
+
+        }
     }
 }
