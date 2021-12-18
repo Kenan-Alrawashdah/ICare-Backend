@@ -5,6 +5,7 @@ using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
 {
@@ -17,44 +18,41 @@ namespace ICare.Infra.Services
             _orderRepository = orderRepository;
         }
 
-        public bool Create(Order order)
+        public async Task<bool> Create(Order order, List<int> orderDrugs)
         {
-            return _orderRepository.Create(order);
+          return await _orderRepository.Create(order, orderDrugs);
         }
 
-        public bool Delete(int orderId)
+        public async Task<IEnumerable<PaitentOrderApiDTO.Response>> GetPatientOrders(int patientID)
         {
-            return _orderRepository.Delete(orderId);
+            return await _orderRepository.GetPatientOrders(patientID);
+
         }
 
-        public IEnumerable<Order> GetAll()
+        public async Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders()
         {
-            return _orderRepository.GetAll();
+            return await _orderRepository.GetAllOpenOrders();
+
         }
 
-        public Order GetById(int orderId)
+        public async Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId)
         {
-            return _orderRepository.GetById(orderId);
+            return await _orderRepository.GetOrderDrugs(orderId);
+
+        }
+        public bool SetOrderAsPlaced(int orderId)
+        {
+            return  _orderRepository.SetOrderAsPlaced(orderId);
+
+        }
+        public bool SetOrderAsCanceled(int orderId)
+        {
+            return _orderRepository.SetOrderAsCanceled(orderId);
         }
 
-        public IEnumerable<GetPaymentOrdersDTO.Response> GetPaymentOrders()
+        public async Task<IEnumerable<PlacedOrdersApiDTO.Response>> GetPlacedOrders()
         {
-            return _orderRepository.GetPaymentOrders();
-        }
-
-        public IEnumerable<GetSalesStatsLast5YearDTO> GetSalesStatsLast5Year()
-        {
-            return _orderRepository.GetSalesStatsLast5Year();
-        }
-
-        public IEnumerable<GetPaymentOrdersDTO.Response> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust)
-        {
-            return _orderRepository.SearchInByDatePaymentOrders(resqust);
-        }
-
-        public bool Update(Order order)
-        {
-            return _orderRepository.Update(order);
+            return await _orderRepository.GetPlacedOrders();
         }
 
     }

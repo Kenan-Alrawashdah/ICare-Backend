@@ -19,11 +19,13 @@ namespace ICare.API.Controllers
         private readonly IUserServices _userServices;
         private readonly IFileService _fileService;
         private readonly IPasswordHashingService _passwordHashingService;
-        private readonly IJWTService _jWTService;
+        private readonly ITokenService _jWTService;
         private readonly IResetPasswordServices _resetPasswordServices;
         private readonly IFacebookAuthService _facebookAuthService;
+        private readonly IAuthService _authService;
+        private readonly IFacebookService _facebookService;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, IJWTService jWTService,IResetPasswordServices resetPasswordServices, IFacebookAuthService facebookAuthService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, ITokenService jWTService,IResetPasswordServices resetPasswordServices, IFacebookAuthService facebookAuthService,IAuthService authService, IFacebookService facebookService)
         {
             this._userServices = userServices;
             this._fileService = fileService;
@@ -31,6 +33,8 @@ namespace ICare.API.Controllers
             this._jWTService = jWTService;
             this._resetPasswordServices = resetPasswordServices;
             this._facebookAuthService = facebookAuthService;
+            this._authService = authService;
+            this._facebookService = facebookService;
         }
 
         /// <summary>
@@ -54,11 +58,18 @@ namespace ICare.API.Controllers
             var passwordForLogin = request.Password;
                 request.Password = hashedPassword;
             _userServices.Registration(request);
+            var login = new LoginApiDTO.Request()
+            {
+                Email = request.Email,
+                Password = passwordForLogin
+            };
+            string refreshToken;
             //TODO: Return the Token 
-            var token = _jWTService.Auth(request.Email, passwordForLogin);
+            var token = _jWTService.AuthAndGetToken(login,out refreshToken);
 
             response.Data = new RegistrationApiDTO.Response();
             response.Data.AccessToken = token;
+            response.Data.RefreshToken = refreshToken;
 
             return Ok(response);
         }
@@ -68,12 +79,13 @@ namespace ICare.API.Controllers
         {
             var response = new ApiResponse<RegistrationApiDTO.Response>();
 
-            var authResponse = await _userServices.LoginWithFacebookAsync(accessToken);
+            var authResponse = await _facebookService.LoginWithFacebookAsync(accessToken);
 
             var userInfo = await  _facebookAuthService.GetUserInfoAsync(accessToken);
              
             response.Data = new RegistrationApiDTO.Response();
             response.Data.AccessToken =authResponse.AccessToken;
+            response.Data.RefreshToken = authResponse.RefreshToken;
             return Ok(response);
 
         }
@@ -209,6 +221,34 @@ namespace ICare.API.Controllers
            
 
             return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("ChangePassword")]
+        [Authorize]
+        public ActionResult<ApiResponse> ChangePassword(CahngePasswordApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+            var user = _userServices.GetUser(User);
+            if(user == null)
+            {
+                response.AddError("there is something error");
+                return Ok(response);
+            }
+            var loginModel = new LoginApiDTO.Request()
+            {
+                Email = user.Email,
+                Password = request.OldPassword
+            };
+            if(_authService.Authentication(loginModel) == null)
+            {
+                response.AddError("Wrong password");
+                return Ok(response);
+            }
+            _userServices.ChangPassword(user.Id, request.NewPassword); 
+            
+            return Ok(response);
+
         }
 
         //[HttpPut]

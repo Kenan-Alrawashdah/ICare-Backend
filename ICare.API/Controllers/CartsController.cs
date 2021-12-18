@@ -52,6 +52,7 @@ namespace ICare.API.Controllers
         public async Task<ActionResult<ApiResponse<IEnumerable<GetCartItemsApiDTO.Response>>>> GetCartItems()
         {
             var response = new ApiResponse<IEnumerable<GetCartItemsApiDTO.Response>>();
+            var a = User;
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
 
@@ -83,7 +84,7 @@ namespace ICare.API.Controllers
 
             if( await _cartService.CheckItemExist(patient.Id,id))
             {
-                response.AddError("Item is already in your account");
+                response.AddError("Item is already in your cart");
                 return Ok(response);
             }
             else

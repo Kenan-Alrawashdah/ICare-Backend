@@ -61,7 +61,7 @@ namespace ICare.API.Controllers
                 Password = passwordForLogin
             };
             string refreshtoken;
-            var token = _tokenService.GenerateAccessToken(login, out refreshtoken);
+            var token = _tokenService.AuthAndGetToken(login, out refreshtoken);
             response.Data = new RegistrationApiDTO.Response();
             response.Data.AccessToken = token;
             response.Data.RefreshToken = refreshtoken;

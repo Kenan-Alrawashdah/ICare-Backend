@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ICare.Core.ApiDTO
 {
-    public class EditLocationApiDTO
+    public class PlacedOrdersApiDTO
     {
-        public class Request
+        public class Response
         {
+            public int OrderId { get; set; }
+
             public int Id { get; set; }
-            [MaxLength(50)]
             public string AddressName { get; set; }
 
-            [MaxLength(50)]
+            public int UserId { get; set; }
+
+
             public string PhoneNumber { get; set; }
 
 
-            [MaxLength(50)]
             public string City { get; set; }
 
             public int ZipCode { get; set; }
 
-            [MaxLength(50)]
             public string Details { get; set; }
 
-            [MaxLength(50)]
             public string Street { get; set; }
 
             public double lat { get; set; }

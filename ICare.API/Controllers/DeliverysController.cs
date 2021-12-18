@@ -1,6 +1,7 @@
 ﻿using ICare.Core.ApiDTO;
 using ICare.Core.Data;
 using ICare.Core.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -24,44 +25,28 @@ namespace ICare.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("getAllOrdersForDelivery")]
         public async Task<ActionResult<ApiResponse<getAllOrdersForDeliveryDTO.Response>>> getAllOrdersForDelivery()
         {
 
             var response = new ApiResponse<IEnumerable<getAllOrdersForDeliveryDTO.Response>>();
-            var request = new getAllOrdersForDeliveryDTO.Request();
 
-            //var user = _userServices.GetUser(User);
-            //var Delivery = _deliveryService.GetById(user.Id);
+            var user = _userServices.GetUser(User);
+            var Delivery = _deliveryService.GetDeliveryByUserId(user.Id);
 
-            request.DeliveryId = 1;
-             response.Data = await _deliveryService.getAllOrdersForDelivery(request);
-            if (response.Data == null)
+
+            var AllOrdersForDelivery =await _deliveryService.getAllOrdersForDelivery(Delivery.Id);
+            if (AllOrdersForDelivery == null)
+
             {
                 response.AddError("No Orders For Display");
                 return Ok(response);
             }
 
+            response.Data = AllOrdersForDelivery;
+
             return Ok(response);
-
-
-        }
-        [HttpGet]
-        [Route("getAllOrdersAvailableForDelivery")]
-        public async Task<ActionResult<ApiResponse<getAllOrdersForDeliveryDTO.Response>>> getAllOrdersAvailableForDelivery()
-        {
-
-            var response = new ApiResponse<IEnumerable<getAllOrdersForDeliveryDTO.Response>>();
-            response.Data = await _deliveryService.getAllOrdersAvailableForDelivery();
-
-            if (response.Data == null)
-            {
-                response.AddError("No Orders For Display");
-                return Ok(response);
-            }
-            return Ok(response);
-
-
         }
         //[HttpGet("GetAll")]
         //[ProducesResponseType(typeof(List<Delivery>), StatusCodes.Status200OK)]
@@ -98,6 +83,7 @@ namespace ICare.API.Controllers
             return _deliveryService.GetById(deliveryId);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("getNumberOfOrdersForDelivery")]
         public async Task<ActionResult<ApiResponse<getNumberOfOrdersForDeliveryDTO.Response>>> getNumberOfOrdersForDelivery()
@@ -114,26 +100,18 @@ namespace ICare.API.Controllers
             return Ok(response);
 
         }
+
+
+
+        [Authorize]
         [HttpGet]
-        [Route("ReservationAvailableCount")]
-        public async Task<ActionResult<ApiResponse<getReservationAvailableCountDTO>>> ReservationAvailableCount()
-        {
-            var request = new getReservationAvailableCountDTO();
-
-            var response = new ApiResponse<getReservationAvailableCountDTO>();
-            var NumberOfOrdersForDelivery = await _deliveryService.ReservationAvailableCount();
-            response.Data = new getReservationAvailableCountDTO();
-            response.Data = NumberOfOrdersForDelivery;
-            return Ok(response);
-
-        }
-        [HttpPatch]
-        [Route("TakeOrder")]
-
-        public ActionResult<ApiResponse> TakeOrder(int id)
+        [Route("TakeOrder/{orderId:int}")]
+        public ActionResult<ApiResponse> TakeOrder(int orderId)
         {
             var response = new ApiResponse();
-            var result = _deliveryService.TakeOrder(id);
+            var user = _userServices.GetUser(User);
+            var delivery = _deliveryService.GetDeliveryByUserId(user.Id);
+            var result = _deliveryService.TakeOrder(orderId, delivery.Id);
             if (result == false)
             {
                 response.AddError("Something Wrong");
@@ -141,9 +119,9 @@ namespace ICare.API.Controllers
             }
             return Ok(response);
         }
+
         [HttpPatch]
         [Route("OrderDeliverd")]
-
         public ActionResult<ApiResponse> OrderDeliverd(int id)
         {
             var response = new ApiResponse();

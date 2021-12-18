@@ -53,6 +53,7 @@ namespace ICare.Infra.Repository
             }
             catch (Exception ee)
             {
+                Console.WriteLine(ee.Message);
                 return false;
             }
             return true;
@@ -94,9 +95,9 @@ namespace ICare.Infra.Repository
             var p = new DynamicParameters();
             p.Add("@UserId", employeeModle.UserId, DbType.Int32, ParameterDirection.Input);
             p.Add("@CreatedOn", employeeModle.CreatedOn, DbType.Date, ParameterDirection.Input);
-            p.Add("@HourSalary", employeeModle.HourSalary, DbType.Double, ParameterDirection.Input);
-            p.Add("@MonthlyWorkingHours", employeeModle.MonthlyWorkingHours, DbType.Double, ParameterDirection.Input);
-            p.Add("@PricePerHour", employeeModle.PricePerHour, DbType.Double, ParameterDirection.Input);
+            p.Add("@PricePerHour", employeeModle.HourSalary, DbType.Double, ParameterDirection.Input);
+            p.Add("@DailyWorkingHours", employeeModle.MonthlyWorkingHours, DbType.Double, ParameterDirection.Input);
+            //p.Add("@PricePerHour", employeeModle.PricePerHour, DbType.Double, ParameterDirection.Input);
             
             try
             {

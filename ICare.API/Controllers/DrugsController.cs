@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ICare.Core.ApiDTO;
+using ICare.Core.ApiDTO.Drug;
 using ICare.Core.Data;
 using ICare.Core.IServices;
 using Microsoft.AspNetCore.Authorization;
@@ -83,6 +84,67 @@ namespace ICare.API.Controllers
 
             return response;
         }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<GetAllDrugsApiDTO.Response>>>> GetAll()
+        {
+            var response = new ApiResponse<IEnumerable<GetAllDrugsApiDTO.Response>>();
+            response.Data = await _drugService.GetAll();
+
+            return Ok(response);
+
+        }
+
+        [HttpPut]
+        [Route("AddQuantity")]
+        public ActionResult<ApiResponse> AddQuantity(AddQuantityApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+
+            _drugService.AddToQuantity(request.DrugId, request.Quantity);
+
+            return Ok(response); 
+        }
+
+        [HttpPut]
+        [Route("EditDrug")]
+        public async  Task<ActionResult<ApiResponse>> EditDrug([FromForm] UpdateDrugApiDTO.Request request)
+        {
+            var response = new ApiResponse();
+            var drug = new Drug
+            {
+                Id = request.Id,
+                DrugCategoryId = request.DrugCategoryId,
+                Name = request.Name,
+                Price = request.Price,
+                Brand = request.Brand,
+                AvailableQuantity = request.AvailableQuantity,
+                Description = request.Description
+            };
+            if (request.image != null)
+            {
+                if (!_fileService.IsPicture(request.image.FileName))
+                {
+                    response.AddError("The file must be an image");
+                    return Ok(response);
+                }
+                if (_fileService.CheckPictureSizeInMB(request.image.Length, 2))
+                {
+                    response.AddError("The file must be less than 2 MB");
+                    return Ok(response);
+                }
+                var imageName = _fileService.GenerateFileName(request.image.FileName);
+                await _fileService.SavePic(request.image, imageName);
+                drug.PicturePath = imageName;
+            }
+            _drugService.EditDrug(drug);
+
+            
+
+            return Ok(response); 
+        }
+        
 
 
     }

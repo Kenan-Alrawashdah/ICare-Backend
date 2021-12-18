@@ -20,24 +20,22 @@ namespace ICare.Infra.Services
     public class TokenService : ITokenService
     {
         
-        private  JwtOptions _jwtOptions = new JwtOptions();
-        private readonly IJWTRepository _jWTRepository;
+        private readonly JwtOptions _jwtOptions = new JwtOptions();
+        private readonly IAuthService _authService;
         private readonly IRefreshTokenServices _refreshTokenServices;
         private readonly IUserServices _userServices;
-        private readonly IResetPasswordServices resetPasswordServices;
 
-        public TokenService(IJWTRepository jWTRepository,IRefreshTokenServices refreshTokenServices,IUserServices userServices,IResetPasswordServices resetPasswordServices)
+        public TokenService(IAuthService authRespository, IRefreshTokenServices refreshTokenServices,IUserServices userServices)
         {
-            this._jWTRepository = jWTRepository;
+            this._authService = authRespository;
             this._refreshTokenServices = refreshTokenServices;
             this._userServices = userServices;
-            this.resetPasswordServices = resetPasswordServices;
         }
 
 
-        public string GenerateAccessToken(LoginApiDTO.Request loginDTO, out string refreshToken)
+        public string AuthAndGetToken(LoginApiDTO.Request loginDTO, out string refreshToken)
         {
-            var result = _jWTRepository.Authentication(loginDTO);
+            var result = _authService.Authentication(loginDTO);
             if (result == null)
             {
                 refreshToken = null;
@@ -45,46 +43,22 @@ namespace ICare.Infra.Services
             }
             else
             {
-            //1- token handler : generate token
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            //2- token key : to encode data to token (secure value)
-            var tokenKey = Encoding.ASCII.GetBytes("superSecretKey@345");
-
-            //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                //userName, roleName
-                Subject = new ClaimsIdentity(new Claim[]
-                    {
-                    new Claim(ClaimTypes.Name, result.FirstName),
-                    new Claim(ClaimTypes.Role, result.RoleName),
-                    new Claim(ClaimTypes.Email , result.Email)
-                   }),
-
-                //expire == session timeout
-                Expires = DateTime.UtcNow.AddSeconds(20),
-
-                //signcredintial ==(to assgin which encoding method to use) "Hmacsha256signutre"(method used to encode data)
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
-
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            refreshToken =  GenerateRefreshToken(result.Id);
-            return tokenHandler.WriteToken(token);
+                var token = GenerateAccessToken(result.FirstName, result.RoleName, result.Email);
+                refreshToken = GenerateRefreshToken(result.Id);
+                return token;
             }
         }
-        public string GenerateAccessTokenWithClaims(ClaimsPrincipal claims, out string refreshToken)
+
+        public string GenerateAccessTokenUsingClaims(ClaimsPrincipal claims, out string refreshToken)
         {
             
-
             var result = new ResponseLoginDTO
             {
                 Email = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value,
                 FirstName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value,
                 RoleName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value,
                
-        };
+            };
             if (result.Email == null)
             {
                 refreshToken = null;
@@ -98,37 +72,45 @@ namespace ICare.Infra.Services
                     refreshToken = null;
                     return null;
                 }
-                //1- token handler : generate token
-                var tokenHandler = new JwtSecurityTokenHandler();
-
-                //2- token key : to encode data to token (secure value)
-                var tokenKey = Encoding.ASCII.GetBytes("superSecretKey@345");
-
-                //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    //userName, roleName
-                    Subject = new ClaimsIdentity(new Claim[]
-                        {
-                    new Claim(ClaimTypes.Name, result.FirstName),
-                    new Claim(ClaimTypes.Role, result.RoleName),
-                    new Claim(ClaimTypes.Email , result.Email)
-                       }),
-
-                    //expire == session timeout
-                    Expires = DateTime.UtcNow.AddSeconds(20),
-
-                    //signcredintial ==(to assgin which encoding method to use) "Hmacsha256signutre"(method used to encode data)
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256)
-
-                };
-                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var token = GenerateAccessToken(result.FirstName, result.RoleName, result.Email);
                 refreshToken = GenerateRefreshToken(user.Id);
-                return tokenHandler.WriteToken(token);
+                return token;
             }
         }
 
-        private string GenerateRefreshToken(int userid)
+        public string GenerateAccessToken(string firstName, string role,string email)
+        {
+            //1- token handler : generate token
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            //2- token key : to encode data to token (secure value)
+            var tokenKey = Encoding.ASCII.GetBytes(_jwtOptions.Key);
+
+             
+
+            //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                //userName, roleName
+                Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, firstName),
+                    new Claim(ClaimTypes.Role, role),
+                    new Claim(ClaimTypes.Email , email)
+                   }),
+
+                //expire == session timeout
+                Expires = DateTime.UtcNow.AddMinutes(10),
+
+                //sign credential ==(to assign which encoding method to use) "Hmacsha256signutre"(method used to encode data)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
+
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+        public string GenerateRefreshToken(int userId)
         {
             var randomNumber = new byte[32];
             using (var rng = RandomNumberGenerator.Create())
@@ -137,7 +119,7 @@ namespace ICare.Infra.Services
                 var refreshToken = Convert.ToBase64String(randomNumber);
                 var model = new RefreshToken
                 {
-                    UserId = userid,
+                    UserId = userId,
                     RToken = refreshToken
                 };
                  _refreshTokenServices.AddRefreshToken(model);
@@ -165,8 +147,11 @@ namespace ICare.Infra.Services
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+            {
                 //throw new SecurityTokenException("Invalid token");
                 return null;
+            }
+                
 
             return principal;
         }

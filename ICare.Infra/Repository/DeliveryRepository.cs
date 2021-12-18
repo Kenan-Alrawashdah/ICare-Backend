@@ -74,10 +74,20 @@ namespace ICare.Infra.Repository
             return delivery;
         }
 
-        public async Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(getAllOrdersForDeliveryDTO.Request request)
+          public Delivery GetDeliveryByUserId(int userId)
         {
             var param = new DynamicParameters();
-            param.Add("@DeliveryId", request.DeliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("@UserId", userId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var delivery = _dbContext.Connection.QueryFirstOrDefault<Delivery>("GetByUserId", param,  commandType: CommandType.StoredProcedure);
+
+            return delivery;
+        }
+
+        public async Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(int deliveryId)
+        {
+            var param = new DynamicParameters();
+            param.Add("@DeliveryId", deliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
             var delivery =await _dbContext.Connection.QueryAsync<getAllOrdersForDeliveryDTO.Response>("getAllOrdersForDelivery", param, commandType: CommandType.StoredProcedure);
 
@@ -115,13 +125,14 @@ namespace ICare.Infra.Repository
             return delivery;
         }
 
-        public bool TakeOrder(int id)
+        public bool TakeOrder(int orderId,int deliveryId)
         {
             try
             {
                 var param = new DynamicParameters();
 
-                param.Add("@id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+                param.Add("@OrderId", orderId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+                param.Add("@DeliveryId", deliveryId, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
                 _dbContext.Connection.Execute("TakeOrder", param, commandType: CommandType.StoredProcedure);
 
@@ -151,38 +162,7 @@ namespace ICare.Infra.Repository
             }
         }
 
-        public async Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersAvailableForDelivery()
-        {
 
-            var result = await _dbContext.Connection.QueryAsync<getAllOrdersForDeliveryDTO.Response>("getAllOrdersAvailableForDelivery", commandType: CommandType.StoredProcedure);
 
-            return result;
-        }
-
-        public bool ReservationAvailable(int id)
-        {
-
-            try
-            {
-                var param = new DynamicParameters();
-
-                param.Add("@id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-
-                _dbContext.Connection.Execute("ReservationAvailable", param, commandType: CommandType.StoredProcedure);
-
-                return true;
-            }
-            catch (Exception erorr)
-            {
-                return false;
-            }
-        }
-
-        public async Task<getReservationAvailableCountDTO> ReservationAvailableCount()
-        {
-            var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<getReservationAvailableCountDTO>("ReservationAvailableCount", commandType: CommandType.StoredProcedure);
-
-            return result;
-        }
     }
 }

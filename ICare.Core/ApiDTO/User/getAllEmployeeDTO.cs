@@ -11,5 +11,9 @@ namespace ICare.Core.ApiDTO
 
         public string EmployeeEmail { get; set; }
 
+        public string RoleName { get; set; }
+        public double PricePerHour { get; set; }
+        public int DailyWorkingHours { get; set; }
+
     }
 }

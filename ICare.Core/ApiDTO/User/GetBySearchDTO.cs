@@ -18,6 +18,7 @@ namespace ICare.Core.ApiDTO
             public string DrugName { get; set; }
             public double DrugPrice { get; set; }
             public string DrugPicturePath { get; set; }
+            public string DrugDescription { get; set; }
         }
     }
 }

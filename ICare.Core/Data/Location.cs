@@ -27,5 +27,9 @@ namespace ICare.Core.Data
 
         [MaxLength(50)]
         public string Street { get; set; }
+
+        public double lat { get; set; }
+
+        public double lng { get; set; }
     }
 }

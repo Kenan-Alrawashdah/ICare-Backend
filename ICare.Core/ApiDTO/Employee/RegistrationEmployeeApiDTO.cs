@@ -10,7 +10,7 @@ namespace ICare.Core.ApiDTO
     {
         public class Request
         {
-            public int Id { get; set; }
+           // public int Id { get; set; }
             /// <summary>
             /// the Email Of the Employee
             /// </summary>
@@ -50,7 +50,7 @@ namespace ICare.Core.ApiDTO
           
             public double HourSalary { get; set; }
             public int MonthlyWorkingHours { get; set; }
-            public double? PricePerHour { get; set; }
+            //public double? PricePerHour { get; set; }
             public int RoleId { get; set; }
         }
 
