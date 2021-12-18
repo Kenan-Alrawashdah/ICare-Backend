@@ -43,6 +43,7 @@ namespace ICare.Infra.Repository
 
             }
         }
+  
 
         public ApplicationUser GetUser(ClaimsPrincipal userClaims)
         {
@@ -208,7 +209,6 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@Id", userId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@Email", Modle.Email, DbType.String, ParameterDirection.Input);
             p.Add("@PhoneNumber", Modle.PhoneNumber, DbType.String, ParameterDirection.Input);
             p.Add("@FirstName", Modle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", Modle.LastName, DbType.String, ParameterDirection.Input);
@@ -301,5 +301,23 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
+
+        public IEnumerable<GetPatientStatsLast5YearDTO> GetPatientStatsLast5Year()
+        {
+            var result = _dbContext.Connection.Query<GetPatientStatsLast5YearDTO>("GetPatientStatsLast5Year", commandType: CommandType.StoredProcedure);
+            return result;
+            }
+
+        public bool ChangPassword(int userId,string newPassword)
+        {
+            var newPass = _passwordHashingService.GetHash(newPassword);
+            var p = new DynamicParameters();
+            p.Add("@Id", userId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@PasswordHash",newPass, DbType.String, ParameterDirection.Input);
+            _dbContext.Connection.ExecuteAsync("UpdateUserPassword", p, commandType: CommandType.StoredProcedure);
+            return true; 
+            }
+
     }
 }

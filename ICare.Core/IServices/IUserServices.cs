@@ -23,11 +23,10 @@ namespace ICare.Core.IServices
         Task<bool> AddAdmin(ApplicationUser userModle);
         IEnumerable<GetBySearchDTO.Response> GetDrugByNameSearch(GetBySearchDTO.Request request);
         Task<bool> SetNewPassword(string email, string password);
-        Task<LoginApiDTO.Response> LoginWithFacebookAsync(string accessToken);
         IEnumerable<getAllEmployeeDTO> getAllEmployee();
         ApplicationUser GetUserByEmail(string email);
         Task<bool> Registration(RegistrationApiDTO.Request userModle);
-
-
+        IEnumerable<GetPatientStatsLast5YearDTO> GetPatientStatsLast5Year();
+        bool ChangPassword(int userId, string newPassword);
     }
 }

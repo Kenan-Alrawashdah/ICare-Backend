@@ -8,8 +8,10 @@ namespace ICare.Core.IServices
 {
     public interface ITokenService
     {
-        string GenerateAccessToken(LoginApiDTO.Request loginDTO, out string refreshToken);
-        string GenerateAccessTokenWithClaims(ClaimsPrincipal claims, out string refreshToken);
+        string AuthAndGetToken(LoginApiDTO.Request loginDTO, out string refreshToken);
+        string GenerateAccessToken(string firstName, string role, string email);
+        string GenerateAccessTokenUsingClaims(ClaimsPrincipal claims, out string refreshToken);
+        string GenerateRefreshToken(int userId);
         ClaimsPrincipal GetClaimsFromExpiredToken(string token);
     }
 }

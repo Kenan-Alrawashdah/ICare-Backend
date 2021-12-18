@@ -12,6 +12,6 @@ namespace ICare.Core.IRepository
         bool AddWater(AddWaterApiDTO.Request water, int patientId);
         bool DeleteWater(int id);
         bool EditWater(EditWaterApiDTO.Request water);
-        Task<Water> GetWaterByUserId(int userId);
+        Task<Water> GetPatientWater(int patientId);
     }
 }

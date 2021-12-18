@@ -33,9 +33,13 @@ namespace ICare.Infra.Services
         {
             return _waterRepository.DeleteWater(id);
         }
-        public async Task<Water> GetWaterByUserId(int userId)
+      
+        public async Task<Water> GetPatientWater(int patientId)
         {
-            return await _waterRepository.GetWaterByUserId(userId);
+            return await _waterRepository.GetPatientWater(patientId);
+
         }
+
+
     }
 }

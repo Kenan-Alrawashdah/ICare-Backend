@@ -11,28 +11,41 @@ namespace ICare.Core
     public class Background : IHostedService,IDisposable
     {
         private int num = 0;
-        private Timer timer;
-        private readonly IProcessBackground _processBackground;
+        private Timer timerDrug;
+        private Timer timerWater;
+        private readonly IProcessBackgroundService _processBackground;
 
-        public Background(IProcessBackground processBackground)
+        public Background(IProcessBackgroundService processBackground)
         {
             _processBackground = processBackground;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
-            timer = new Timer(async o =>
+            timerDrug = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
-                Console.WriteLine("printing  worker :"+ num);
+                Console.WriteLine("printing  Drug :" + num);
                 _processBackground.BringDrugsOnTime();
             },
             null,
             TimeSpan.Zero,
-            TimeSpan.FromSeconds(5)
+            TimeSpan.FromSeconds(60)
             );
-           
+
+            timerWater = new Timer(async o =>
+            {
+                Interlocked.Increment(ref num);
+
+                Console.WriteLine("printing  Water :" + num);
+                _processBackground.CheckWaterOnTime();
+            },
+           null,
+           TimeSpan.Zero,
+           TimeSpan.FromSeconds(35)
+           );
+
 
             return Task.CompletedTask;
         }
@@ -45,7 +58,7 @@ namespace ICare.Core
 
         public void Dispose()
         {
-            timer?.Dispose();
+            timerDrug?.Dispose();
         }
     }
 }

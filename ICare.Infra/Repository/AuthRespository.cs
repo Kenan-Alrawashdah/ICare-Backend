@@ -12,12 +12,12 @@ using System.Text;
 
 namespace ICare.Infra.Repository
 {
-   public class JWTRepository : IJWTRepository
+   public class AuthRespository : IAuthRespository
     {
         private readonly IDbContext _dbContext;
         private readonly IPasswordHashingService _passwordHashingService;
 
-        public JWTRepository(IDbContext dbContext, IPasswordHashingService passwordHashingService)
+        public AuthRespository(IDbContext dbContext, IPasswordHashingService passwordHashingService)
         {
             this._dbContext = dbContext;
             this._passwordHashingService = passwordHashingService;

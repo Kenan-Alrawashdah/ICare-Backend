@@ -2,9 +2,7 @@
 using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
@@ -34,10 +32,6 @@ namespace ICare.Infra.Services
             return _deliveryRepository.GetAll();
         }
 
-        public Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(getAllOrdersForDeliveryDTO.Request request)
-        {
-            return _deliveryRepository.getAllOrdersForDelivery(request);
-        }
 
         public Delivery GetById(int id)
         {
@@ -49,19 +43,33 @@ namespace ICare.Infra.Services
             return _deliveryRepository.getNumberOfOrdersForDelivery(request);
         }
 
+       
+
         public bool OrderDeliverd(int id)
         {
             return _deliveryRepository.OrderDeliverd(id);
         }
 
-        public bool TakeOrder(int id)
-        {
-            return _deliveryRepository.TakeOrder(id);
-        }
+
 
         public bool Update(Delivery delivery)
         {
             return _deliveryRepository.Update(delivery);
+        }
+
+        public bool TakeOrder(int orderId, int deliveryId)
+        {
+            return _deliveryRepository.TakeOrder(orderId, deliveryId);
+
+        }
+
+        public Delivery GetDeliveryByUserId(int userId)
+        {
+            return _deliveryRepository.GetDeliveryByUserId(userId);
+        }
+        public async Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(int deliveryId)
+        {
+            return await _deliveryRepository.getAllOrdersForDelivery(deliveryId);
         }
 
     }

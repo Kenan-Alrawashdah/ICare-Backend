@@ -20,6 +20,7 @@ namespace ICare.API.Factories
             var _dbContext = provider.GetService<IDbContext>();
             var _userServices = provider.GetService<IUserServices>();
             var _passwordSevices = provider.GetService<IPasswordHashingService>();
+            var _subscriptionTypeServices = provider.GetService<ISubscriptionTypeServices>();
             // Ensure database exist
             if (_dbContext.Connection.State != ConnectionState.Open)
             {
@@ -88,9 +89,22 @@ namespace ICare.API.Factories
                     
                 };
                 await _userServices.AddAdmin(adminUser);
-
             }
 
+
+            //Ensure status order is exist
+            var statusExists = _dbContext.Connection.ExecuteScalar<int?>("CheckOrderStatus",  commandType: CommandType.StoredProcedure);
+            if (statusExists == null)
+            {
+                await _dbContext.Connection.ExecuteAsync("CreateStatusOrder",  commandType: CommandType.StoredProcedure);
+            }
+
+            //Ensure status order is exist
+            var subscriptionExists = _dbContext.Connection.ExecuteScalar<int>("CheckSubscribeType", commandType: CommandType.StoredProcedure);
+            if (subscriptionExists != 3)
+            {
+                await _dbContext.Connection.ExecuteAsync("AddSubscribeTypes", commandType: CommandType.StoredProcedure);
+            }
 
         }
     }

@@ -61,6 +61,7 @@ namespace ICare.Core.ApiDTO
 
 
             public DateTime? EndDate { get; set; }
+            public string EndDate2 { get; set; }
 
             public string drugDoseTime1 { get; set; }
 

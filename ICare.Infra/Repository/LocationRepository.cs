@@ -30,6 +30,8 @@ namespace ICare.Infra.Repository
             p.Add("@ZipCode", location.ZipCode, DbType.String, ParameterDirection.Input);
             p.Add("@Details", location.Details, DbType.String, ParameterDirection.Input);
             p.Add("@Street", location.Street, DbType.String, ParameterDirection.Input);
+            p.Add("@Lat", location.lat, DbType.Double, ParameterDirection.Input);
+            p.Add("@Lng", location.lng, DbType.Double, ParameterDirection.Input);
             try
             {
                 var result =_dbContext.Connection.ExecuteAsync("LocationInsert", p, commandType: CommandType.StoredProcedure);
@@ -75,6 +77,8 @@ namespace ICare.Infra.Repository
             p.Add("@ZipCode", location.ZipCode, DbType.String, ParameterDirection.Input);
             p.Add("@Details", location.Details, DbType.String, ParameterDirection.Input);
             p.Add("@Street", location.Street, DbType.String, ParameterDirection.Input);
+            p.Add("@lat", location.lat, DbType.Double, ParameterDirection.Input);
+            p.Add("@lng", location.lng, DbType.Double, ParameterDirection.Input);
             try
             {
                 var result = _dbContext.Connection.ExecuteAsync("LocationUpdate", p, commandType: CommandType.StoredProcedure);
