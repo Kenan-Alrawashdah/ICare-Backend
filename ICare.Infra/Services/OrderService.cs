@@ -61,5 +61,19 @@ namespace ICare.Infra.Services
 
         }
 
+        public IEnumerable<GetPaymentOrdersDTO.Response> GetPaymentOrders()
+        {
+            return _orderRepository.GetPaymentOrders();
+        }
+
+        public IEnumerable<GetSalesStatsLast5YearDTO> GetSalesStatsLast5Year()
+        {
+            return _orderRepository.GetSalesStatsLast5Year();
+        }
+
+        public IEnumerable<GetPaymentOrdersDTO.Response> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust)
+        {
+            return _orderRepository.SearchInByDatePaymentOrders(resqust);
+        }
     }
 }

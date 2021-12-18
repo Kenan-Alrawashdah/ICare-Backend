@@ -43,10 +43,7 @@ namespace ICare.Infra.Services
             return _deliveryRepository.getNumberOfOrdersForDelivery(request);
         }
 
-        public Task<getReservationAvailableCountDTO> ReservationAvailableCount()
-        {
-            return _deliveryRepository.ReservationAvailableCount();
-        }
+       
 
         public bool OrderDeliverd(int id)
         {

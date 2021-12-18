@@ -134,20 +134,6 @@ namespace ICare.API.Controllers
             return Ok(response);
 
         }
-        [HttpPatch]
-        [Route("ReservationAvailable")]
-
-        public ActionResult<ApiResponse> ReservationAvailable(int id)
-        {
-            var response = new ApiResponse();
-            var result = _deliveryService.ReservationAvailable(id);
-            if (result == false)
-            {
-                response.AddError("Something Wrong");
-                return Ok(response);
-            }
-            return Ok(response);
-
-        }
+ 
     }
 }

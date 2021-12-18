@@ -151,8 +151,32 @@ namespace ICare.Infra.Repository
             return result; 
         }
 
+        public IEnumerable<GetPaymentOrdersDTO.Response> GetPaymentOrders()
+        {
+            var carts = _dbContext.Connection.Query<GetPaymentOrdersDTO.Response>("GetPaymentOrders", commandType: CommandType.StoredProcedure);
 
-         
+            return carts;
+        }
+
+        public IEnumerable<GetSalesStatsLast5YearDTO> GetSalesStatsLast5Year()
+        {
+            var carts = _dbContext.Connection.Query<GetSalesStatsLast5YearDTO>("GetSalesStatsLast5Year", commandType: CommandType.StoredProcedure);
+
+            return carts;
+        }
+
+        public IEnumerable<GetPaymentOrdersDTO.Response> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust)
+        {
+            var param = new DynamicParameters();
+
+            param.Add("@from", resqust.From, dbType: DbType.DateTime, direction: ParameterDirection.Input);
+            param.Add("@to", resqust.To, dbType: DbType.DateTime, direction: ParameterDirection.Input);
+
+            var carts = _dbContext.Connection.Query<GetPaymentOrdersDTO.Response>("SearchInByDatePaymentOrders", param, commandType: CommandType.StoredProcedure);
+
+            return carts;
+        }
+
 
         //public bool Delete(int orderId)
         //{
