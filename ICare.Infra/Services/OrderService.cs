@@ -1,4 +1,5 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
@@ -36,9 +37,25 @@ namespace ICare.Infra.Services
             return _orderRepository.GetById(orderId);
         }
 
+        public IEnumerable<GetPaymentOrdersDTO.Response> GetPaymentOrders()
+        {
+            return _orderRepository.GetPaymentOrders();
+        }
+
+        public IEnumerable<GetSalesStatsLast5YearDTO> GetSalesStatsLast5Year()
+        {
+            return _orderRepository.GetSalesStatsLast5Year();
+        }
+
+        public IEnumerable<GetPaymentOrdersDTO.Response> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust)
+        {
+            return _orderRepository.SearchInByDatePaymentOrders(resqust);
+        }
+
         public bool Update(Order order)
         {
             return _orderRepository.Update(order);
         }
+
     }
 }

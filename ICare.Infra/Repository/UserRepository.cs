@@ -301,5 +301,11 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
+        public IEnumerable<GetPatientStatsLast5YearDTO> GetPatientStatsLast5Year()
+        {
+            var result = _dbContext.Connection.Query<GetPatientStatsLast5YearDTO>("GetPatientStatsLast5Year", commandType: CommandType.StoredProcedure);
+            return result;
+        }
     }
 }

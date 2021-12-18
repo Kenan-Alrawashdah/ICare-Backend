@@ -19,18 +19,86 @@ namespace ICare.API.Controllers
         private readonly IDrugService _drugService;
         private readonly IFileService _fileService;
         private readonly IEmployessServices _employessServices;
+        private readonly IOrderService _orderService;
+        private readonly IUserServices _userServices;
+
         public AdminController(IDrugCategoryService drugCategoryService,
                                IDrugService drugService,
                                IFileService fileService,
-                               IEmployessServices employessServices)
+                               IEmployessServices employessServices,IOrderService orderService,IUserServices userServices)
         {
             this._drugCategoryService = drugCategoryService;
             this._drugService = drugService;
             this._fileService = fileService;
             this._employessServices = employessServices;
+            this._orderService = orderService;
+            this._userServices = userServices;
         }
 
+        [HttpGet]
+        [Route("GetPaymentOrders")]
+        public ActionResult<ApiResponse<GetPaymentOrdersDTO.Response>> GetPaymentOrders()
+        {
 
+            var response = new ApiResponse<IEnumerable<GetPaymentOrdersDTO.Response>>();
+            response.Data = _orderService.GetPaymentOrders();
+            if (response.Data == null)
+            {
+                response.AddError("no Testimonial for display");
+                return Ok(response);
+            }
+            return Ok(response);
+
+
+        }
+        [HttpPost]
+        [Route("SearchInByDatePaymentOrders")]
+        public ActionResult<ApiResponse<GetPaymentOrdersDTO.Response>> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust )
+        {
+
+            var response = new ApiResponse<IEnumerable<GetPaymentOrdersDTO.Response>>();
+            response.Data = _orderService.SearchInByDatePaymentOrders(resqust);
+            if (response.Data == null)
+            {
+                response.AddError("no Testimonial for display");
+                return Ok(response);
+            }
+            return Ok(response);
+
+
+        }
+        [HttpGet]
+        [Route("GetPatientStatsLast5Year")]
+        public ActionResult<ApiResponse<GetPatientStatsLast5YearDTO>> GetPatientStatsLast5Year()
+        {
+
+            var response = new ApiResponse<IEnumerable<GetPatientStatsLast5YearDTO>>();
+            response.Data = _userServices.GetPatientStatsLast5Year();
+            if (response.Data == null)
+            {
+                response.AddError("No Data for display");
+                return Ok(response);
+            }
+            return Ok(response);
+
+
+        }
+        [HttpGet]
+        [Route("GetSalesStatsLast5Year")]
+        public ActionResult<ApiResponse<GetSalesStatsLast5YearDTO>> GetSalesStatsLast5Year()
+        {
+
+            var response = new ApiResponse<IEnumerable<GetSalesStatsLast5YearDTO>>();
+            response.Data = _orderService.GetSalesStatsLast5Year();
+            if (response.Data == null)
+            {
+                response.AddError("No Data for display");
+                return Ok(response);
+            }
+            return Ok(response);
+
+
+        }
         #region Drug Category
         /// <summary>
         /// get all categories
