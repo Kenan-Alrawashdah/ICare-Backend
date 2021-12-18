@@ -18,6 +18,7 @@ namespace ICare.Core.IRepository
 
         Task<bool> Create(Order order, List<int> cartIds);
         Task<IEnumerable<GetAllOpenOredersApiDTO.Response>> GetAllOpenOrders();
+        Task<OrderDetailsApiDTO.Response> GetOrderDetails(int orderId);
         Task<IEnumerable<OrderDrugsApiDTO.Response>> GetOrderDrugs(int orderId);
         Task<IEnumerable<PaitentOrderApiDTO.Response>> GetPatientOrders(int patientID);
         Task<IEnumerable<PlacedOrdersApiDTO.Response>> GetPlacedOrders();

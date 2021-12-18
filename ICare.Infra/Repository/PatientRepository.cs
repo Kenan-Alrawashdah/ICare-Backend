@@ -50,7 +50,7 @@ namespace ICare.Infra.Repository
             foreach (var item in drugDoseTime)
             {
                 item.PatientDrugId = result;
-               await CreateDrugDoseTime(item);
+                await CreateDrugDoseTime(item);
             }
 
             return true;
@@ -77,8 +77,28 @@ namespace ICare.Infra.Repository
         public async Task<IEnumerable<MyDrugsApiDto.Drug>> GetMyDrugs(int patientId)
         {
             var p = new DynamicParameters();
-            p.Add("@pathientId", patientId,DbType.Int32, ParameterDirection.Input);
-            return await _dbContext.Connection.QueryAsync<MyDrugsApiDto.Drug>("GetMyDrugs", p, commandType: CommandType.StoredProcedure);
+            p.Add("@pathientId", patientId, DbType.Int32, ParameterDirection.Input);
+            var result = (await _dbContext.Connection.QueryAsync<MyDrugsApiDto.Drug>("GetMyDrugs", p, commandType: CommandType.StoredProcedure)).ToList();
+            var count = -1;
+            foreach (var item in result)
+            {
+                count++;
+                var p2 = new DynamicParameters();
+                p2.Add("@Id", item.Id, DbType.Int32, ParameterDirection.Input);
+
+
+                var doseTime = (await _dbContext.Connection.QueryAsync<TimeSpan>("GetDrugDoseTimeByPatientDrugId", p2, commandType: CommandType.StoredProcedure)).ToList();
+
+                result[count].Times = new List<String>();
+
+
+                foreach (var item2 in doseTime)
+                {
+                    result[count].Times.Add(item2.ToString());
+
+                }
+            }
+            return result;
 
         }
 
@@ -88,7 +108,7 @@ namespace ICare.Infra.Repository
             var p = new DynamicParameters();
             p.Add("@Id", id, DbType.Int32, ParameterDirection.Input);
             var drug = await _dbContext.Connection.QueryFirstOrDefaultAsync<PatientDrugs>("GetPatientDrugById", p, commandType: CommandType.StoredProcedure);
-            var doseTime =(await _dbContext.Connection.QueryAsync<TimeSpan>("GetDrugDoseTimeByPatientDrugId", p, commandType: CommandType.StoredProcedure)).ToList();
+            var doseTime = (await _dbContext.Connection.QueryAsync<TimeSpan>("GetDrugDoseTimeByPatientDrugId", p, commandType: CommandType.StoredProcedure)).ToList();
             var result = new EditDrugApiDTO.Response
             {
                 DrugName = drug.DrugName,
@@ -97,21 +117,21 @@ namespace ICare.Infra.Repository
             var count = 1;
             foreach (var item in doseTime)
             {
-                if(count == 1)
+                if (count == 1)
                 {
                     result.drugDoseTime1 = item.ToString();
                     count++;
                 }
-                else if(count == 2)
+                else if (count == 2)
                 {
                     result.drugDoseTime2 = item.ToString();
                     count++;
-                                    }
+                }
                 else if (count == 3)
                 {
                     result.drugDoseTime3 = item.ToString();
                     count++;
-                                    }
+                }
                 else if (count == 4)
                 {
                     result.drugDoseTime4 = item.ToString();
@@ -120,7 +140,7 @@ namespace ICare.Infra.Repository
 
             }
 
-            return result; 
+            return result;
         }
 
 
@@ -143,7 +163,7 @@ namespace ICare.Infra.Repository
                 await CreateDrugDoseTime(item);
             }
             return true;
-            }
+        }
 
         public async Task<bool> InsertPDFData(InsertPDFDataHealthReportDTO.Request request)
         {
@@ -169,7 +189,7 @@ namespace ICare.Infra.Repository
 
 
 
-       
+
         //public bool Create(Patient t)
         //{
         //    var p = new DynamicParameters();
