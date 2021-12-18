@@ -35,13 +35,17 @@ namespace ICare.API.Controllers
             var user = _userServices.GetUser(User);
             var Delivery = _deliveryService.GetDeliveryByUserId(user.Id);
 
+
             var AllOrdersForDelivery =await _deliveryService.getAllOrdersForDelivery(Delivery.Id);
             if (AllOrdersForDelivery == null)
+
             {
                 response.AddError("No Orders For Display");
                 return Ok(response);
             }
+
             response.Data = AllOrdersForDelivery;
+
             return Ok(response);
         }
         //[HttpGet("GetAll")]
@@ -97,6 +101,8 @@ namespace ICare.API.Controllers
 
         }
 
+
+
         [Authorize]
         [HttpGet]
         [Route("TakeOrder/{orderId:int}")]
@@ -120,6 +126,21 @@ namespace ICare.API.Controllers
         {
             var response = new ApiResponse();
             var result = _deliveryService.OrderDeliverd(id);
+            if (result == false)
+            {
+                response.AddError("Something Wrong");
+                return Ok(response);
+            }
+            return Ok(response);
+
+        }
+        [HttpPatch]
+        [Route("ReservationAvailable")]
+
+        public ActionResult<ApiResponse> ReservationAvailable(int id)
+        {
+            var response = new ApiResponse();
+            var result = _deliveryService.ReservationAvailable(id);
             if (result == false)
             {
                 response.AddError("Something Wrong");

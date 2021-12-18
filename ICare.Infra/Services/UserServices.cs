@@ -94,6 +94,12 @@ namespace ICare.Infra.Services
             return _userRepository.Registration(userModle);
         }
 
+
+        public IEnumerable<GetPatientStatsLast5YearDTO> GetPatientStatsLast5Year()
+        {
+            return _userRepository.GetPatientStatsLast5Year();
+        }
+
         public bool ChangPassword(int userId,string newPassword)
         {
             return _userRepository.ChangPassword(userId, newPassword);

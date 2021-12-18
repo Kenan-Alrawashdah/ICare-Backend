@@ -20,11 +20,14 @@ namespace ICare.Infra.Repository
         {
             _dbContext = dbContext;
         }
+
         public async Task<bool> Create(Order order,List<int> cartIds)
+
         {
             try
             {
                 var param = new DynamicParameters();
+
 
                 param.Add("@TotalPrice", order.TotalPrice, dbType: DbType.Double, direction: ParameterDirection.Input);
                 param.Add("@PatientId", order.PatientId, dbType: DbType.Int32, direction: ParameterDirection.Input);
@@ -36,6 +39,7 @@ namespace ICare.Infra.Repository
                 {
                     CreateOrderDrugs(item, orderId);
                 }
+
                 return true;
             }
             catch (Exception erorr)
@@ -43,6 +47,7 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
 
         public async Task<OrderDetailsApiDTO.Response> GetOrderDetails(int orderId)
         {
@@ -66,16 +71,20 @@ namespace ICare.Infra.Repository
 
         }
 
+
         private bool CreateOrderDrugs(int cartId,int orderId)
+
         {
             try
             {
                 var param = new DynamicParameters();
 
+
                 param.Add("@OrderId", orderId, dbType: DbType.Int32, direction: ParameterDirection.Input);
                 param.Add("@CartId", cartId, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
                 _dbContext.Connection.Execute("OrderDrugsInsert", param, commandType: CommandType.StoredProcedure);
+
                 return true;
             }
             catch (Exception erorr)
@@ -83,6 +92,7 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
 
         
 
@@ -199,5 +209,6 @@ namespace ICare.Infra.Repository
         //        return false;
         //    }
         //}
+
     }
 }
