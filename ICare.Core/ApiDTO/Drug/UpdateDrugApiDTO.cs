@@ -13,8 +13,6 @@ namespace ICare.Core.ApiDTO.Drug
             [Required]
             public int Id { get; set; }
 
-            [Required]
-            public int DrugCategoryId { get; set; }
 
             [Required]
             [MaxLength(150)]

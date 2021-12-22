@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace ICare.Core.IRepository
 {
-    public interface ISubscriptionRepository 
+    public interface ISubscriptionRepository
     {
-        Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request);
-        Task<bool> DeletePatientSubscription(int id);
-        Task<Subscription> GetByPatientId(int id);
-        Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request);
-        Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription();
-        Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request);
+        Task<IEnumerable<SubscribeType>> GetAll();
 
+        //Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request);
+        //Task<bool> DeletePatientSubscription(int id);
+        //Task<Subscription> GetByPatientId(int id);
+        //Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request);
+        //Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription();
+        //Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request);
+        bool SubscriptionInsert(int patientId, int subscriptionId);
     }
 }

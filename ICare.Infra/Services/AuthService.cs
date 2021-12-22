@@ -24,6 +24,10 @@ namespace ICare.Infra.Services
         {
             return _authRespository.Authentication(loginDTO); 
         }
+        public ResponseLoginDTO Authentication(string email)
+        {
+            return _authRespository.Authentication(email);
+        }
     }
 }
 

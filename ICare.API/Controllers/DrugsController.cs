@@ -115,7 +115,6 @@ namespace ICare.API.Controllers
             var drug = new Drug
             {
                 Id = request.Id,
-                DrugCategoryId = request.DrugCategoryId,
                 Name = request.Name,
                 Price = request.Price,
                 Brand = request.Brand,
@@ -140,11 +139,21 @@ namespace ICare.API.Controllers
             }
             _drugService.EditDrug(drug);
 
-            
+            return Ok(response); 
+        }
+
+        [HttpGet]
+        [Route("GetRandomdrugs")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<GetAllDrugsApiDTO.Response>>>> GetRandomdrugs()
+        {
+            var response = new ApiResponse<IEnumerable<GetAllDrugsApiDTO.Response>>();
+
+            response.Data = await _drugService.GetRandomdrugs();
 
             return Ok(response); 
         }
-        
+
+
 
 
     }

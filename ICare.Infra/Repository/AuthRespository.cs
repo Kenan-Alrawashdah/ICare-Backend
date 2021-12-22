@@ -50,5 +50,19 @@ namespace ICare.Infra.Repository
 
             return result;
         }
+
+        public ResponseLoginDTO Authentication(string email)
+        {
+
+            var p = new DynamicParameters();
+            p.Add("@Email", email, dbType: DbType.String, ParameterDirection.Input);
+            var result = _dbContext.Connection.QueryFirstOrDefault<ResponseLoginDTO>("AuthLogin", p, commandType: CommandType.StoredProcedure);
+
+            var e = new DynamicParameters();
+            e.Add("@Id", result.RoleId, dbType: DbType.Int32, ParameterDirection.Input);
+            result.RoleName = _dbContext.Connection.QueryFirstOrDefault<string>("GetRoleyNameById", e, commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
     }
 }

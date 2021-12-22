@@ -17,35 +17,16 @@ namespace ICare.Infra.Services
         {
             this._SubscriptionRepository = SubscriptionRepository;
         }
-        public Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request)
+
+        public bool SubscriptionInsert(int patientId, int subscriptionId)
         {
-            return _SubscriptionRepository.AddPatientSubscription(request);
+            return  _SubscriptionRepository.SubscriptionInsert(patientId, subscriptionId);
         }
 
-        public Task<bool> DeletePatientSubscription(int id)
+        public async Task<IEnumerable<SubscribeType>> GetAll()
         {
-            return _SubscriptionRepository.DeletePatientSubscription(id);
-        }
+            return await _SubscriptionRepository.GetAll();
 
-
-        public Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
-        {
-            return _SubscriptionRepository.GetAllPatientSubscription();
-        }
-
-        public Task<Subscription> GetByPatientId(int id)
-        {
-            return _SubscriptionRepository.GetByPatientId(id);
-        }
-
-        public Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request)
-        {
-            return _SubscriptionRepository.SubscriptionPayment(request);
-        }
-
-        public Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request)
-        {
-            return _SubscriptionRepository.UpdatePatientSubscription(request);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ICare.Core.ApiDTO;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +16,5 @@ namespace ICare.Core.IRepository
         T GetById(int id);
 
         IEnumerable<T> GetAll();
-
     }
 }

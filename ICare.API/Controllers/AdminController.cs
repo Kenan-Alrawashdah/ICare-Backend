@@ -21,11 +21,17 @@ namespace ICare.API.Controllers
         private readonly IEmployessServices _employessServices;
         private readonly IOrderService _orderService;
         private readonly IUserServices _userServices;
+        private readonly IDeliveryService _deliveryService;
+        private readonly IPasswordHashingService _passwordHashingService;
 
         public AdminController(IDrugCategoryService drugCategoryService,
                                IDrugService drugService,
                                IFileService fileService,
-                               IEmployessServices employessServices,IOrderService orderService,IUserServices userServices)
+                               IEmployessServices employessServices,
+                               IOrderService orderService,
+                               IUserServices userServices,
+                               IDeliveryService deliveryService,
+                               IPasswordHashingService passwordHashingService)
         {
             this._drugCategoryService = drugCategoryService;
             this._drugService = drugService;
@@ -33,6 +39,8 @@ namespace ICare.API.Controllers
             this._employessServices = employessServices;
             this._orderService = orderService;
             this._userServices = userServices;
+            this._deliveryService = deliveryService;
+            this._passwordHashingService = passwordHashingService;
         }
 
         [HttpGet]
@@ -230,9 +238,7 @@ namespace ICare.API.Controllers
         {
             var response = new ApiResponse<GetCategoryByIdApiDTO.Response>();
             var category = _drugCategoryService.GetById(id);
-            response.AddError("Error 1");
-            response.AddError("Error 2");
-            return Ok(response);
+     
             if (category == null)
             {
                 response.AddError("There is no Category with this id");
@@ -245,6 +251,26 @@ namespace ICare.API.Controllers
                 name = category.Name
             };
         
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("CreateDelivery")]
+        public ActionResult<ApiResponse> CreateDelivery(CreateDeliveryApiDTO.Request  request)
+        {
+            var response = new ApiResponse();
+            var exist = _userServices.CheckEmailExist(request.Email); 
+            if(exist)
+            {
+                response.AddError("The email is already used");
+                return Ok(response); 
+            }
+
+
+            var hashedPassword = _passwordHashingService.GetHash(request.Password);
+            request.Password = hashedPassword;
+            _deliveryService.RegistrationDelivery(request);
+
             return Ok(response);
         }
 

@@ -47,6 +47,15 @@ namespace ICare.Infra.Services
             return _patientRepository.InsertPDFData(request);
 
         }
+        public bool DeletePatientDrug(int id)
+        {
+            return _patientRepository.DeletePatientDrug(id);
+        }
+        public bool DeleteLocation(int id)
+        {
+            return _patientRepository.DeleteLocation(id);
+        }
+
 
 
         //public bool Create(Patient patient)

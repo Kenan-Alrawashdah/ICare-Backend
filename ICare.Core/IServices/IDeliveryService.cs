@@ -15,6 +15,7 @@ namespace ICare.Core.IServices
         Delivery GetDeliveryByUserId(int userId);
         Task<getNumberOfOrdersForDeliveryDTO.Response> getNumberOfOrdersForDelivery(getNumberOfOrdersForDeliveryDTO.Request request);
         bool OrderDeliverd(int id);
+        bool RegistrationDelivery(CreateDeliveryApiDTO.Request userModle);
         bool TakeOrder(int orderId, int deliveryId);
     }
 }

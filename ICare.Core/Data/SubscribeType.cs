@@ -16,12 +16,12 @@ namespace ICare.Core.Data
         [Required]
         public bool OnSale { get; set; }
 
-        public double PriceAfterSale { get; set; }
+        public double? PriceAfterSale { get; set; }
 
         [Required]
         public bool HasRibbon { get; set; }
 
-        public string Ribbon { get; set; }
+        public string? Ribbon { get; set; }
 
         [Required]
         public string Name { get; set; }
