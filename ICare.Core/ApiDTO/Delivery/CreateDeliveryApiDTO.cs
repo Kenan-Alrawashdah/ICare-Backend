@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace ICare.Core.ApiDTO
 {
-    public class RegistrationEmployeeApiDTO
+    public class CreateDeliveryApiDTO
     {
         public class Request
         {
-           // public int Id { get; set; }
+            // public int Id { get; set; }
             /// <summary>
             /// the Email Of the Employee
             /// </summary>
@@ -46,16 +45,7 @@ namespace ICare.Core.ApiDTO
             [Required]
             [MaxLength(50)]
             public string LastName { get; set; }
-          
-            public double HourSalary { get; set; }
-            public int MonthlyWorkingHours { get; set; }
-            //public double? PricePerHour { get; set; }
-            public int RoleId { get; set; }
-        }
 
-        public class Response
-        {
-            public string Token { get; set; }
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+
 namespace ICare.Infra.Services
 {
     public class NotificationServices : INotificationServices
@@ -37,6 +40,11 @@ namespace ICare.Infra.Services
         public bool Update(Notification Notification)
         {
             return _NotificationRepository.Update(Notification);
+        }
+        public async Task<IEnumerable<GetNotifications.Response>> UserNotificationsByDate(DateTime date, int patientId)
+        {
+            return await _NotificationRepository.UserNotificationsByDate(date, patientId);
+
         }
     }
 }

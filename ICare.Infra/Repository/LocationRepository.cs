@@ -96,7 +96,7 @@ namespace ICare.Infra.Repository
             p.Add("@Id", id, DbType.Int32, ParameterDirection.Input);
             try
             {
-                var result = _dbContext.Connection.ExecuteAsync("LocationDelete", p, commandType: CommandType.StoredProcedure);
+                var result = _dbContext.Connection.Execute("DeleteLocation", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
             catch (Exception e)

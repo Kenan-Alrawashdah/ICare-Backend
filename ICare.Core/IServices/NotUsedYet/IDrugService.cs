@@ -16,5 +16,6 @@ namespace ICare.Core.IServices
         Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetAll();
         Task<GetDrugByIdApiDTO.Response> GetById(int drugId);
         Task<IEnumerable<GetCategoryDrugsApiDTO.Response>> GetCategoryDrugs(int drugId);
+        Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetRandomdrugs();
     }
 }

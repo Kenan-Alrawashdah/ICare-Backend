@@ -28,6 +28,12 @@ namespace ICare.Infra.Services
 
         }
 
+        public bool EditSubscribeType(SubscribeType subscribeType)
+        {
+            return  _subscriptionTypeRepository.EditSubscribeType(subscribeType);
+
+        }
+
         //public bool Create(SubscribeType subscribeType)
         //{
         //    return _subscriptionTypeRepository.Create(subscribeType);

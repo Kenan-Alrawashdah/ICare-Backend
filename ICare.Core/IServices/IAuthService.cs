@@ -9,5 +9,6 @@ namespace ICare.Core.IServices
     public interface IAuthService
     {
         ResponseLoginDTO Authentication(LoginApiDTO.Request loginDTO);
+        ResponseLoginDTO Authentication(string email);
     }
 }

@@ -1,9 +1,11 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using ICare.Core.IRepository;
 using ICare.Core.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Infra.Services
 {
@@ -38,6 +40,11 @@ namespace ICare.Infra.Services
         public bool Update(HealthReport healthReport)
         {
             return _HealthReportRepository.Update(healthReport);
+        }
+        public async Task<IEnumerable<GetHelethReportsApiDTO.Reponse>> GetAllHelthReportByMonth(int patienId, int month, int year)
+        {
+            return await _HealthReportRepository.GetAllHealthReportByMonth(patienId,month,year);
+
         }
     }
 }

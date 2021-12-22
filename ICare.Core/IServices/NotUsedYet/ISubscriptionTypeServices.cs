@@ -8,6 +8,7 @@ namespace ICare.Core.IServices
 {
     public interface ISubscriptionTypeServices
     {
+        bool EditSubscribeType(SubscribeType subscribeType);
         Task<IEnumerable<SubscribeType>> GetAll();
         Task<SubscribeType> GetById(int id);
     }

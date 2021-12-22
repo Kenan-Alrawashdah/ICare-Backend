@@ -22,14 +22,23 @@ namespace ICare.API.Controllers
         private readonly ILocationSevices _locationSevices;
         private readonly IWaterServices _waterServices;
         private readonly ISubscriptionServices _subscriptionServices;
+        private readonly INotificationServices _notificationServices;
+        private readonly IHealthReportServices _healthReportServices;
 
-        public PatientController(IPatientServices patientServices, IUserServices userServices, IFileService fileService, ILocationSevices locationSevices,IWaterServices waterServices , ISubscriptionServices subscriptionServices)
+        public PatientController(IPatientServices patientServices,
+            IUserServices userServices, IFileService fileService,
+            ILocationSevices locationSevices, IWaterServices waterServices, 
+            ISubscriptionServices subscriptionServices,
+            INotificationServices notificationServices,
+            IHealthReportServices healthReportServices)
         {
             this._patientServices = patientServices;
             this._userServices = userServices;
             this._locationSevices = locationSevices;
             this._waterServices = waterServices;
             this._subscriptionServices = subscriptionServices;
+            this._notificationServices = notificationServices;
+            this._healthReportServices = healthReportServices;
             this._fileService = fileService;
 
         }
@@ -203,19 +212,19 @@ namespace ICare.API.Controllers
 
 
 
-            FileStream docStream = new FileStream("wwwroot/Files/PatientPDFFiles/"+ fileName, FileMode.Open, FileAccess.Read);
+            FileStream docStream = new FileStream("wwwroot/Files/PatientPDFFiles/" + fileName, FileMode.Open, FileAccess.Read);
 
             PdfLoadedDocument loadedDocument = new PdfLoadedDocument(docStream);
 
             PdfLoadedForm form = loadedDocument.Form;
 
-            var request =new InsertPDFDataHealthReportDTO.Request();
+            var request = new InsertPDFDataHealthReportDTO.Request();
 
             request.CheckUpName = (form.Fields[0] as PdfLoadedTextBoxField).Text;
-            request.BloodType = (form.Fields[1] as PdfLoadedTextBoxField).Text ;
-            request.BloodSugarLevel = (form.Fields[2] as PdfLoadedTextBoxField).Text ;
+            request.BloodType = (form.Fields[1] as PdfLoadedTextBoxField).Text;
+            request.BloodSugarLevel = (form.Fields[2] as PdfLoadedTextBoxField).Text;
 
-            request.CheckUpDate = (form.Fields[3] as PdfLoadedTextBoxField).Text ;
+            request.CheckUpDate = (form.Fields[3] as PdfLoadedTextBoxField).Text;
 
 
             loadedDocument.Close(true);
@@ -235,7 +244,7 @@ namespace ICare.API.Controllers
         }
 
 
-       
+
 
 
         /// <summary>
@@ -320,7 +329,7 @@ namespace ICare.API.Controllers
                 Street = request.Street,
                 Details = request.Details,
                 ZipCode = request.ZipCode,
-                lng = request.lng, 
+                lng = request.lng,
                 lat = request.lat
             };
             _locationSevices.EditLocation(location);
@@ -335,17 +344,17 @@ namespace ICare.API.Controllers
         [Authorize]
         [HttpDelete]
         [Route("DeleteLocation/{id:int}")]
-        public ActionResult<ApiResponse> DeleteLocation(int id) 
+        public ActionResult<ApiResponse> DeleteLocation(int id)
         {
             var response = new ApiResponse();
-           if( _locationSevices.DeleteLocation(id))
+            if (_locationSevices.DeleteLocation(id))
             {
                 return Ok(response);
             }
             else
             {
                 response.AddError("There is something error");
-                return Ok(response); 
+                return Ok(response);
             }
 
         }
@@ -365,7 +374,7 @@ namespace ICare.API.Controllers
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
 
-            if (_waterServices.AddWater(request,patient.Id))
+            if (_waterServices.AddWater(request, patient.Id))
             {
                 return Ok(response);
             }
@@ -376,7 +385,7 @@ namespace ICare.API.Controllers
             }
         }
 
-        
+
 
         /// <summary>
         /// Edit water page 
@@ -413,14 +422,14 @@ namespace ICare.API.Controllers
         [Route("DeleteWater/{id:int}")]
         public ActionResult<ApiResponse> DeleteWater(int id)
         {
-            var response = new ApiResponse(); 
-            if(_waterServices.DeleteWater(id))
+            var response = new ApiResponse();
+            if (_waterServices.DeleteWater(id))
             {
                 return Ok(response);
             }
             else
             {
-                response.AddError("There is something error"); 
+                response.AddError("There is something error");
                 return Ok(response);
             }
 
@@ -439,7 +448,7 @@ namespace ICare.API.Controllers
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
             var water = await _waterServices.GetPatientWater(patient.Id);
-            if(water == null)
+            if (water == null)
             {
                 response.AddError("The patient Don't have water notification");
                 return Ok(response);
@@ -449,141 +458,75 @@ namespace ICare.API.Controllers
             response.Data.From = water.From.ToString();
             response.Data.To = water.To.ToString();
             response.Data.Every = water.Every;
-            return Ok(response); 
+            return Ok(response);
 
         }
 
-
-
-        [Authorize]
         [HttpPost]
-        [Route("AddPatientSubscription")]
-        public async Task<ActionResult<ApiResponse>> AddPatientSubscription(int subscribeTypeId)
+        [Route("GetUserNotifications")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<GetNotifications.Response>>>> GetUserNotifications(GetNotifications.Request request)
         {
-            var respnse = new ApiResponse<AddPatientSubscriptionDTO.Request>();
+            var response = new ApiResponse<IEnumerable<GetNotifications.Response>>();
+            //var user = _userServices.GetUser(User);
+            //var patient = _patientServices.GetPatientByUserId(user.Id);
+
+            response.Data = await _notificationServices.UserNotificationsByDate(request.Date, 2);
+
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("DeleteDrug/{id:int}")]
+        public ActionResult<ApiResponse> DeleteDrug(int id)
+        {
+            var response = new ApiResponse();
+
+            _patientServices.DeletePatientDrug(id);
+
+            return Ok(response); 
+        }
+
+        [HttpPost]
+        [Route("GetHealthReports")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<GetHelethReportsApiDTO.Reponse>>>> GetHealthReports(GetHelethReportsApiDTO.Request request)
+        {
+            var response = new ApiResponse<IEnumerable<GetHelethReportsApiDTO.Reponse>>();
             var user = _userServices.GetUser(User);
             var patient = _patientServices.GetPatientByUserId(user.Id);
-
-            AddPatientSubscriptionDTO.Request request = new AddPatientSubscriptionDTO.Request();
-           
-            request.SubscribeTypeId = subscribeTypeId;
-            request.PatientId = patient.Id;
-            var result = await _subscriptionServices.AddPatientSubscription(request);
-
-            return Ok(respnse);
-
-        }
-        /// <summary>
-        /// Delete Patient Subscription
-        /// </summary>
-        /// <param name="id">id of the patient recored to delete</param>
-        /// <returns></returns>
-        [Authorize]
-        [HttpDelete]
-        [Route("DeletePatientSubscription/{id:int}")]
-        public async Task<ActionResult<ApiResponse>> DeletePatientSubscription(int id)
-        {
-            var response = new ApiResponse();
-            if (await _subscriptionServices.DeletePatientSubscription(id))
-            {
-                return Ok(response);
-            }
-            else
-            {
-                response.AddError("There is something error");
-                return Ok(response);
-            }
-
-        }
-        /// <summary>
-        /// Get Subscription By Patient Id
-        /// </summary>
-        /// <param name="id">id of the patient recored to Get</param>
-        /// <returns></returns>
-        [Authorize]
-        [HttpGet]
-        [Route("GetByPatientId/{id:int}")]
-        public async Task<ActionResult<ApiResponse>> GetByPatientId(int id)
-        {
-            var response = new ApiResponse<Subscription>();
-
-            var result = await _subscriptionServices.GetByPatientId(id);
-            response.Data = result;
-            if (result != null)
-            {
-                return Ok(response);
-            }
-            else
-            {
-                response.AddError("There is something error");
-                return Ok(response);
-            }
-        }
-
-        /// <summary>
-        /// Update Patient Subscription 
-        /// </summary>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        [Authorize]
-        [HttpPut]
-        [Route("UpdatePatientSubscription")]
-        public async Task<ActionResult<ApiResponse>> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request)
-        {
-            var response = new ApiResponse();
-
-            if (await _subscriptionServices.UpdatePatientSubscription(request))
-            {
-                return Ok(response);
-            }
-            else
-            {
-                response.AddError("There is something error");
-                return Ok(response);
-            }
+            response.Data = await _healthReportServices.GetAllHelthReportByMonth(patient.Id, request.Month, request.Year);
+            return Ok(response);
 
         }
 
-        [HttpGet]
-        [Route("GetAllPatientSubscription")]
-        public async Task<ActionResult<ApiResponse>> GetAllPatientSubscription()
-        {
-            var response = new ApiResponse<IEnumerable<GetAllPatientSubscriptionDTO>>();
-            var result = await _subscriptionServices.GetAllPatientSubscription();
-            response.Data = result;
-            if (result != null)
-            {
-                return Ok(response);
-            }
-            else
-            {
-                response.AddError("There is No Patient Subscription");
-                return Ok(response);
-            }
-
-        }
-        [Authorize]
         [HttpPost]
-        [Route("SubscriptionPayment")]
-        public async Task<ActionResult<ApiResponse>> SubscriptionPayment(int subscribeTypeId, SubscriptionPaymentDTO.Request request)
+        [Route("CreateHealthReport")]
+        public ActionResult<ApiResponse> CreateHealthReport(AddHealthReportApiDTO.Resquest resquest)
         {
-            var response = new ApiResponse<Payment>();
-            
-            var result = await _subscriptionServices.SubscriptionPayment(request);
-            response.Data = result;
-            if (result != null)
+            var response = new ApiResponse();
+            var user = _userServices.GetUser(User);
+            var patient = _patientServices.GetPatientByUserId(user.Id);
+            var heathReport = new HealthReport
             {
-                return Ok(response);
-                AddPatientSubscription(subscribeTypeId);
-            }
-            else
-            {
-                response.AddError("There is something error");
-                return Ok(response);
-            }
+                PatientId = patient.Id,
+                Type = resquest.Name,
+                Value = resquest.Value
+            };
 
+            _healthReportServices.Create(heathReport);
+
+            return Ok(response); 
         }
 
+        [HttpDelete]
+        [Route("DeleteHealthReport/{id:int}")]
+        public ActionResult<ApiResponse> DeleteHealthReport(int id)
+        {
+            var response = new ApiResponse();
+
+            _healthReportServices.Delete(id);
+
+            return Ok(response);
+        }
 
 
     }
