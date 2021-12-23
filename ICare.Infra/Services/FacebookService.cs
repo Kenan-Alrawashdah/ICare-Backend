@@ -30,7 +30,7 @@ namespace ICare.Infra.Services
             await _facebookAuthService.ValidateAccressTokenAsync(accessToken);
 
             var userInfo = await _facebookAuthService.GetUserInfoAsync(accessToken);
-            var user = _userServices.GetUserByEmail(userInfo.Id + "@facebook.com");
+            var user = _userServices.GetUserByEmail(userInfo.Email);
             var password = _resetPasswordServices.CreateRandomPassword(9);
 
             if (user == null)
@@ -39,7 +39,7 @@ namespace ICare.Infra.Services
 
                 RegistrationApiDTO.Request request = new RegistrationApiDTO.Request()
                 {
-                    Email = userInfo.Id + "@facebook.com",
+                    Email = userInfo.Email,
                     FirstName = userInfo.FirstName,
                     LastName = userInfo.LastName,
                     PhoneNumber = "",
@@ -52,7 +52,7 @@ namespace ICare.Infra.Services
                 var result = new LoginApiDTO.Response();
                 var LoginModel = new LoginApiDTO.Request()
                 {
-                    Email = userInfo.Id + "@facebook.com",
+                    Email = userInfo.Email,
                     Password = password
                 };
                 result.AccessToken = _tokenService.AuthAndGetToken(LoginModel, out refreshToken);
