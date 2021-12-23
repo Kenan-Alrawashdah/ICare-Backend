@@ -59,11 +59,11 @@ namespace ICare.Infra.Repository
         //        return false;
         //    }
         //}
-        //public async Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
-        //{
-        //    var result = _dbContext.Connection.Query<GetAllPatientSubscriptionDTO>("SubscriptionGetAll", commandType: CommandType.StoredProcedure);
-        //    return result;
-        //}
+        public async Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
+        {
+            var result = _dbContext.Connection.Query<GetAllPatientSubscriptionDTO>("SubscriptionGetAll", commandType: CommandType.StoredProcedure);
+            return result;
+        }
 
         //public async Task<Subscription> GetByPatientId(int id)
         //{

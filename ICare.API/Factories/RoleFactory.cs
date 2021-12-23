@@ -120,7 +120,7 @@ namespace ICare.API.Factories
                 await _dbContext.Connection.ExecuteAsync("CreateStatusOrder",  commandType: CommandType.StoredProcedure);
             }
 
-            //Ensure status order is exist
+            //Ensure Subscribe Type is exist
             var subscriptionExists = _dbContext.Connection.ExecuteScalar<int>("CheckSubscribeType", commandType: CommandType.StoredProcedure);
             if (subscriptionExists != 3)
             {

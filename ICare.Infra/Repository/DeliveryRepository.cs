@@ -39,6 +39,12 @@ namespace ICare.Infra.Repository
             return true;
         }
 
+        public async Task<IEnumerable<ApplicationUser>> GetAllDeliveries()
+        {
+            var result = await _dbContext.Connection.QueryAsync<ApplicationUser>("GetAllDeliveries", commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
         public bool Create(Delivery delivery)
         {
             try

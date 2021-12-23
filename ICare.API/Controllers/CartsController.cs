@@ -49,6 +49,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetCartItems")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse<IEnumerable<GetCartItemsApiDTO.Response>>>> GetCartItems()
         {
             var response = new ApiResponse<IEnumerable<GetCartItemsApiDTO.Response>>();
