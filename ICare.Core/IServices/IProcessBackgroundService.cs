@@ -9,5 +9,7 @@ namespace ICare.Core.IServices
     {
         void BringDrugsOnTime();
         void CheckWaterOnTime();
+        void CheckExpierDrug();
+        void CheckExpierSubscription();
     }
 }
