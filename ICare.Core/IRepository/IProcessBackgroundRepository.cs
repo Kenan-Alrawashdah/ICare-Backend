@@ -1,4 +1,5 @@
 ﻿using ICare.Core.ApiDTO.Patient;
+using ICare.Core.ApiDTO.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,5 +10,7 @@ namespace ICare.Core.IRepository
     {
         IEnumerable<SendDrugByEmailDTO.Response> BringDrugsOnTime() ;
         IEnumerable<string> CheckWaterOnTime();
+        IEnumerable<SendDrugByEmailDTO.Response> CheckExpierDrug();
+        IEnumerable<GetExpierSubscriptionDTO> CheckExpierSubscription();
     }
 }

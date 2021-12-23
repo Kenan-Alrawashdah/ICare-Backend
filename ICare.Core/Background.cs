@@ -11,8 +11,8 @@ namespace ICare.Core
     public class Background : IHostedService,IDisposable
     {
         private int num = 0;
-        private Timer timerDrug;
-        private Timer timerWater;
+        private Timer timer;
+        
         private readonly IProcessBackgroundService _processBackground;
 
         public Background(IProcessBackgroundService processBackground)
@@ -22,7 +22,7 @@ namespace ICare.Core
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
-            timerDrug = new Timer(async o =>
+            timer = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -34,7 +34,7 @@ namespace ICare.Core
             TimeSpan.FromSeconds(60)
             );
 
-            timerWater = new Timer(async o =>
+            timer = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -45,6 +45,29 @@ namespace ICare.Core
            TimeSpan.Zero,
            TimeSpan.FromSeconds(35)
            );
+
+            timer = new Timer(async o =>
+            {
+                Interlocked.Increment(ref num);
+
+                Console.WriteLine("printing  Expier Drug :" + num);
+                _processBackground.CheckExpierDrug();
+            },
+           null,
+           TimeSpan.Zero,
+           TimeSpan.FromSeconds(35)
+           );
+            timer = new Timer(async o =>
+            {
+                Interlocked.Increment(ref num);
+
+                Console.WriteLine("printing  Expier Subsecption :" + num);
+                _processBackground.CheckExpierSubscription();
+            },
+          null,
+          TimeSpan.Zero,
+          TimeSpan.FromSeconds(50)
+          );
 
 
             return Task.CompletedTask;
@@ -58,7 +81,7 @@ namespace ICare.Core
 
         public void Dispose()
         {
-            timerDrug?.Dispose();
+            timer?.Dispose();
         }
     }
 }
