@@ -41,6 +41,38 @@ namespace ICare.Infra.Services
             }
         }
 
+        public void CheckExpierDrug()
+        {
+            var result = _processBackgroundRepository.CheckExpierDrug();
+            if (result.ToList().Count > 0)
+            {
+
+                foreach (var item in result)
+                {
+
+                   Console.WriteLine("Drug :" + item.Email +":"+ item.NameDrug);
+                    _notificationServices.Create(new Notification { Message = $"we want to alert you that your medicine {item.NameDrug.ToUpper()} has been expired ", PatientId = item.Id });
+                    _mailingService.SendEmailAsync(item.Email, "Expire Drug", $"we want to alert you that your medicine {item.NameDrug.ToUpper()} has been expired ");
+                }
+
+            }
+        }
+
+        public void CheckExpierSubscription()
+        {
+            var result = _processBackgroundRepository.CheckExpierSubscription();
+            if (result.ToList().Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    Console.WriteLine("ExpierSubscription Email :" + item.Email);
+                       _mailingService.SendEmailAsync(item.Email, "Expier subscription Icare", "Dear Icare subscriber, tomorrow your subscription will expire." +
+                        " If you want to continue with us, renew your subscription");
+                }
+            }
+
+        }
+
         public void CheckWaterOnTime()
         {
             var result = _processBackgroundRepository.CheckWaterOnTime();
@@ -55,5 +87,7 @@ namespace ICare.Infra.Services
             }
 
         }
+
+
     }
 }
