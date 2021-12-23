@@ -1,7 +1,9 @@
-﻿using ICare.Core.Data;
+﻿using ICare.Core.ApiDTO;
+using ICare.Core.Data;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ICare.Core.IServices
 {
@@ -16,5 +18,6 @@ namespace ICare.Core.IServices
         HealthReport GetById(int id);
 
         IEnumerable<HealthReport> GetAll();
+        Task<IEnumerable<GetHelethReportsApiDTO.Reponse>> GetAllHelthReportByMonth(int patienId, int month, int year);
     }
 }

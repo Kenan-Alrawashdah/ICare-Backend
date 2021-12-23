@@ -16,6 +16,12 @@ namespace ICare.Infra.Services
             _deliveryRepository = deliveryRepository;
         }
 
+        public bool RegistrationDelivery(CreateDeliveryApiDTO.Request userModle)
+        {
+            return _deliveryRepository.RegistrationDelivery(userModle);
+
+        }
+
 
         public bool Create(Delivery delivery)
         {

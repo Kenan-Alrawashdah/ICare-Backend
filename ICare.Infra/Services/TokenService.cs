@@ -51,12 +51,15 @@ namespace ICare.Infra.Services
 
         public string GenerateAccessTokenUsingClaims(ClaimsPrincipal claims, out string refreshToken)
         {
+            var email = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+            
+            var r = _authService.Authentication(email);
             
             var result = new ResponseLoginDTO
             {
-                Email = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value,
-                FirstName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value,
-                RoleName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value,
+                Email = r.Email,
+                FirstName = r.FirstName,
+                RoleName =  r.RoleName
                
             };
             if (result.Email == null)

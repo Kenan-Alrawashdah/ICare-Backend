@@ -27,6 +27,30 @@
             The picture of the drug
             </summary>
         </member>
+        <member name="P:ICare.Core.ApiDTO.CreateDeliveryApiDTO.Request.Email">
+            <summary>
+            the Email Of the Employee
+            </summary>
+            <example>Test@test.test</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.CreateDeliveryApiDTO.Request.Password">
+            <summary>
+            the password of the Employee
+            </summary>
+            <example>Q!qwe123</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.CreateDeliveryApiDTO.Request.PhoneNumber">
+            <summary>
+            
+            </summary>
+            <example>0777777777</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.CreateDeliveryApiDTO.Request.FirstName">
+            <example>First Name</example>
+        </member>
+        <member name="P:ICare.Core.ApiDTO.CreateDeliveryApiDTO.Request.LastName">
+            <example>Last Name</example>
+        </member>
         <member name="P:ICare.Core.ApiDTO.EditEmployeeApiDTO.Request.PhoneNumber">
             <summary>
             

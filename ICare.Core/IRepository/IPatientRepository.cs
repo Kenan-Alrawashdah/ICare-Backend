@@ -8,6 +8,8 @@ namespace ICare.Core.IRepository
     public interface IPatientRepository
     {
         Task<bool> AddPatientDrugs(PatientDrugs t, List<DrugDoseTime> drugDoseTime);
+        bool DeleteLocation(int id);
+        bool DeletePatientDrug(int id);
         Task<bool> EditPatientDrugs(PatientDrugs patientDrug, List<DrugDoseTime> drugDoseTime);
         Task<EditDrugApiDTO.Response> GetDrug(int id);
         Task<IEnumerable<MyDrugsApiDto.Drug>> GetMyDrugs(int patientId);

@@ -23,7 +23,12 @@ namespace ICare.Infra.Services
             return _drugRepository.Create(drug);
         }
 
-      
+        public async Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetRandomdrugs()
+        {
+            return await _drugRepository.GetRandomdrugs();
+
+        }
+
 
         public async Task<GetDrugByIdApiDTO.Response> GetById(int drugId)
         {

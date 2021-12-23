@@ -32,9 +32,6 @@ namespace ICare.Infra.Repository
             p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
             p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
             p.Add("@RoleId", userModle.RoleId, DbType.Int32, ParameterDirection.Input);
-            //TODO
-            //p.Add("@ProfilePicturePath", null, DbType.String, ParameterDirection.Input);
-
 
 
             try
@@ -94,10 +91,8 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@UserId", employeeModle.UserId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@CreatedOn", employeeModle.CreatedOn, DbType.Date, ParameterDirection.Input);
             p.Add("@PricePerHour", employeeModle.HourSalary, DbType.Double, ParameterDirection.Input);
             p.Add("@DailyWorkingHours", employeeModle.MonthlyWorkingHours, DbType.Double, ParameterDirection.Input);
-            //p.Add("@PricePerHour", employeeModle.PricePerHour, DbType.Double, ParameterDirection.Input);
             
             try
             {
