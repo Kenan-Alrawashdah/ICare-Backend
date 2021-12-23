@@ -192,8 +192,8 @@ namespace ICare.Infra.Repository
             p.Add("@CreatedOn", request.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@CheckUpName", request.CheckUpName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@BloodType", request.BloodType, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("@BloodSugarLevel", request.BloodSugarLevel, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("@CheckUpDate", request.CheckUpDate, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@BloodSugarLevel", "", dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@CheckUpDate", "", dbType: DbType.String, direction: ParameterDirection.Input);
             try
             {
                 var result = await _dbContext.Connection.ExecuteAsync("InsertPDFData", p, commandType: CommandType.StoredProcedure);

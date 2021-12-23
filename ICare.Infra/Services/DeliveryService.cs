@@ -22,6 +22,10 @@ namespace ICare.Infra.Services
 
         }
 
+        public async Task<IEnumerable<ApplicationUser>> GetAllDeliveries()
+        {
+            return await _deliveryRepository.GetAllDeliveries();
+        }
 
         public bool Create(Delivery delivery)
         {

@@ -89,7 +89,7 @@ namespace ICare.Infra.Services
             //2- token key : to encode data to token (secure value)
             var tokenKey = Encoding.ASCII.GetBytes(_jwtOptions.Key);
 
-             
+
 
             //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -97,13 +97,13 @@ namespace ICare.Infra.Services
                 //userName, roleName
                 Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, firstName),
-                    new Claim(ClaimTypes.Role, role),
-                    new Claim(ClaimTypes.Email , email)
-                   }),
+                        new Claim(ClaimTypes.Name, firstName),
+                        new Claim(ClaimTypes.Role, role),
+                        new Claim(ClaimTypes.Email, email)
+                    }),
 
                 //expire == session timeout
-                Expires = DateTime.UtcNow.AddMinutes(10),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.Lifetime),
 
                 //sign credential ==(to assign which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

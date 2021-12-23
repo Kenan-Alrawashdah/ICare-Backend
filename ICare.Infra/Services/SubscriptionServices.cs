@@ -28,5 +28,10 @@ namespace ICare.Infra.Services
             return await _SubscriptionRepository.GetAll();
 
         }
+        public async Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
+        {
+            return await _SubscriptionRepository.GetAllPatientSubscription();
+
+        }
     }
 }

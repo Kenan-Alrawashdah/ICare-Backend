@@ -33,8 +33,6 @@ namespace ICare.API.Controllers
         [Route("EmployeeRegistration")]
         public ActionResult<ApiResponse<RegistrationEmployeeApiDTO.Response>> EmployeeRegistration(RegistrationEmployeeApiDTO.Request request)
         {
-            var hashedPassword = _passwordHashingService.GetHash(request.Password);
-            request.Password = hashedPassword;
 
             return _employessServices.RegistrationEmployee(request);
         }

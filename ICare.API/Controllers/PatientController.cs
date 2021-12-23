@@ -124,6 +124,8 @@ namespace ICare.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("EditDrug/{id:int}")]
+        [Authorize]
+
         public async Task<ActionResult<ApiResponse<EditDrugApiDTO.Response>>> EditDrug(int id)
         {
             var response = new ApiResponse<EditDrugApiDTO.Response>();
@@ -219,26 +221,35 @@ namespace ICare.API.Controllers
             PdfLoadedForm form = loadedDocument.Form;
 
             var request = new InsertPDFDataHealthReportDTO.Request();
-
-            request.CheckUpName = (form.Fields[0] as PdfLoadedTextBoxField).Text;
-            request.BloodType = (form.Fields[1] as PdfLoadedTextBoxField).Text;
-            request.BloodSugarLevel = (form.Fields[2] as PdfLoadedTextBoxField).Text;
-
-            request.CheckUpDate = (form.Fields[3] as PdfLoadedTextBoxField).Text;
-
-
+            var response = new ApiResponse();
+            if(form == null )
+            {
+                response.AddError("please upload our pdf");
+                return Ok(response);
+            }
+            request.CheckUpName = (form.Fields[0] as PdfLoadedTextBoxField)?.Text;
+            request.BloodType = (form.Fields[1] as PdfLoadedTextBoxField)?.Text;
+           
             loadedDocument.Close(true);
 
 
             request.PatientId = patient.Id;
             //TODO: change check 
-            var response = new ApiResponse();
-            var result = _patientServices.InsertPDFData(request);
-            if (result == null)
+            if(request.CheckUpName == "" || request.BloodType == "")
             {
-                response.AddError("No Data In Pdf File");
+                response.AddError("Please fill all fields");
                 return Ok(response);
             }
+
+            var heathReport = new HealthReport
+            {
+                PatientId = patient.Id,
+                Type = request.CheckUpName,
+                Value = request.BloodType
+            };
+
+              _healthReportServices.Create(heathReport);
+            
 
             return Ok(response);
         }
@@ -467,10 +478,10 @@ namespace ICare.API.Controllers
         public async Task<ActionResult<ApiResponse<IEnumerable<GetNotifications.Response>>>> GetUserNotifications(GetNotifications.Request request)
         {
             var response = new ApiResponse<IEnumerable<GetNotifications.Response>>();
-            //var user = _userServices.GetUser(User);
-            //var patient = _patientServices.GetPatientByUserId(user.Id);
+            var user = _userServices.GetUser(User);
+            var patient = _patientServices.GetPatientByUserId(user.Id);
 
-            response.Data = await _notificationServices.UserNotificationsByDate(request.Date, 2);
+            response.Data = await _notificationServices.UserNotificationsByDate(request.Date, patient.Id);
 
             return Ok(response);
         }
@@ -526,6 +537,25 @@ namespace ICare.API.Controllers
             _healthReportServices.Delete(id);
 
             return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("GetAllPatientSubscription")]
+        public async Task<ActionResult<ApiResponse>> GetAllPatientSubscription()
+        {
+            var response = new ApiResponse<IEnumerable<GetAllPatientSubscriptionDTO>>();
+            var result = await _subscriptionServices.GetAllPatientSubscription();
+            response.Data = result;
+            if (result != null)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                response.AddError("There is No Patient Subscription");
+                return Ok(response);
+            }
+
         }
 
 

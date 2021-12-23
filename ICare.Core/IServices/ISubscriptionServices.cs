@@ -10,6 +10,7 @@ namespace ICare.Core.IServices
     public interface ISubscriptionServices
     {
         Task<IEnumerable<SubscribeType>> GetAll();
+        Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription();
 
         //Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request);
         //Task<bool> DeletePatientSubscription(int id);

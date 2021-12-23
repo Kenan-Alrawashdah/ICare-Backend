@@ -59,6 +59,28 @@ namespace ICare.API.Controllers
 
 
         }
+
+        [HttpDelete]
+        [Route("DeleteUser/{id:int}")]
+        public ActionResult<ApiResponse> DeleteUser(int id)
+        {
+            var response = new ApiResponse();
+            _userServices.Delete(id);
+
+            return Ok(response); 
+        }
+
+        [HttpGet]
+        [Route("GetAllDeliveries")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<ApplicationUser>>>> GetAllDeliveries()
+        {
+            var response = new ApiResponse<IEnumerable<ApplicationUser>>();
+
+            response.Data = await _deliveryService.GetAllDeliveries();
+
+            return Ok(response); 
+        }
+
         [HttpPost]
         [Route("SearchInByDatePaymentOrders")]
         public ActionResult<ApiResponse<GetPaymentOrdersDTO.Response>> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust )

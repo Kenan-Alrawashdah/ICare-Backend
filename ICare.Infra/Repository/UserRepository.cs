@@ -185,7 +185,7 @@ namespace ICare.Infra.Repository
                 var result = _dbContext.Connection.Execute("UserDelete", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return false;
             }
