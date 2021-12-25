@@ -95,11 +95,11 @@ namespace ICare.API.Extension
             services.AddScoped<ITestimonialService, TestimonialService>();
             services.AddScoped<IAccountantService, AccountantService>();
             services.AddHttpClient();
-            services.AddScoped<IFacebookAuthService, FacebookAuthService>();
             services.AddScoped<IEmailServices, EmailServices>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IRefreshTokenServices, RefreshTokenServices>();
-            services.AddScoped<IFacebookService, FacebookService>();
+            services.AddScoped<ISocialLoginAndRegistrationService, SocialLoginAndRegistrationService>();
+
 
         }
     }
