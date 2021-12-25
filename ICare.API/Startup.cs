@@ -42,13 +42,6 @@ namespace ICare.API
             });
             services.AddOpenAPI();
 
-
-            var facebookAuthSettings = new FacebookAuthSettingsService();
-            Configuration.Bind(nameof(FacebookAuthSettingsService), facebookAuthSettings);
-            services.AddSingleton(facebookAuthSettings);
-
-
-
             services.AddControllers();
 
             services.DependencyInjection();
