@@ -83,7 +83,7 @@ namespace ICare.Core
 
         public void Dispose()
         {
-            timer?.Dispose();
+            timer60Seconds?.Dispose();
         }
     }
 }
