@@ -25,13 +25,13 @@ namespace ICare.API.Controllers
         public async Task<ActionResult> AnnualCareSystemReport()
         {
 
-             var theTopContext=await _accountantService.AnnualCareSystemReport();
+             var AnnualCareSystemReport = await _accountantService.AnnualCareSystemReport();
 
 
 
             var builder = new StringBuilder();
             builder.AppendLine("Name,Order Amount,Profits,OrderDate");
-            foreach (var item in theTopContext)
+            foreach (var item in AnnualCareSystemReport)
             {
 
                builder.AppendLine($"{item.Name},{item.OrderAmount + "$"},{item.Profits },{item.OrderDate}");

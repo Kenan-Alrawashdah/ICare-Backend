@@ -48,6 +48,12 @@ namespace ICare.Infra.Services
             return _cartRepository.MinusQuantity(cartId);
         }
 
+        public bool ChangeQuantity(int cartId, int Quantity)
+        {
+            return _cartRepository.ChangeQuantity(cartId, Quantity);
+        }
+
+
 
 
         //public IEnumerable<Cart> GetAll()

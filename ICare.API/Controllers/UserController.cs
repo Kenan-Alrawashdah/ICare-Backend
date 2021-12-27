@@ -21,20 +21,18 @@ namespace ICare.API.Controllers
         private readonly IPasswordHashingService _passwordHashingService;
         private readonly ITokenService _jWTService;
         private readonly IResetPasswordServices _resetPasswordServices;
-        private readonly IFacebookAuthService _facebookAuthService;
         private readonly IAuthService _authService;
-        private readonly IFacebookService _facebookService;
+        private readonly ISocialLoginAndRegistrationService _socialLoginAndRegistration;
 
-        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, ITokenService jWTService,IResetPasswordServices resetPasswordServices, IFacebookAuthService facebookAuthService,IAuthService authService, IFacebookService facebookService)
+        public UserController(IUserServices userServices,IFileService fileService, IPasswordHashingService passwordHashingService, ITokenService jWTService,IResetPasswordServices resetPasswordServices,IAuthService authService,ISocialLoginAndRegistrationService socialLoginAndRegistration)
         {
             this._userServices = userServices;
             this._fileService = fileService;
             this._passwordHashingService = passwordHashingService;
             this._jWTService = jWTService;
             this._resetPasswordServices = resetPasswordServices;
-            this._facebookAuthService = facebookAuthService;
             this._authService = authService;
-            this._facebookService = facebookService;
+            this._socialLoginAndRegistration = socialLoginAndRegistration;
         }
 
         /// <summary>
@@ -73,22 +71,24 @@ namespace ICare.API.Controllers
 
             return Ok(response);
         }
+        /// <summary>
+        /// SignUp Page for Patient
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>token</returns>
         [HttpPost]
-        [Route("FacebookLogin")]
-        public async Task<ActionResult<ApiResponse>> FacebookLogin(string accessToken )
+        [Route("PatientRegistrationUsingSocial")]
+        public async Task<ActionResult<ApiResponse<RegistrationApiDTO.Response>>> PatientRegistrationUsingSocial(RegistrationApiDTO.Request request)
         {
+
+
             var response = new ApiResponse<RegistrationApiDTO.Response>();
 
-            var authResponse = await _facebookService.LoginWithFacebookAsync(accessToken);
+            response.Data =await _socialLoginAndRegistration.LoginAndRegistrationUsingSocial(request);
 
-            var userInfo = await  _facebookAuthService.GetUserInfoAsync(accessToken);
-             
-            response.Data = new RegistrationApiDTO.Response();
-            response.Data.AccessToken =authResponse.AccessToken;
-            response.Data.RefreshToken = authResponse.RefreshToken;
             return Ok(response);
-
         }
+
 
             /// <summary>
             /// Upload profile image for user
