@@ -11,8 +11,10 @@ namespace ICare.Core
     public class Background : IHostedService,IDisposable
     {
         private int num = 0;
-        private Timer timer;
-        
+        private Timer timer60Seconds;
+        private Timer timer1Day;
+
+
         private readonly IProcessBackgroundService _processBackground;
 
         public Background(IProcessBackgroundService processBackground)
@@ -22,7 +24,7 @@ namespace ICare.Core
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
-            timer = new Timer(async o =>
+            timer60Seconds = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -34,7 +36,7 @@ namespace ICare.Core
             TimeSpan.FromSeconds(60)
             );
 
-            timer = new Timer(async o =>
+            timer60Seconds = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -43,10 +45,10 @@ namespace ICare.Core
             },
            null,
            TimeSpan.Zero,
-           TimeSpan.FromSeconds(35)
+           TimeSpan.FromSeconds(60)
            );
 
-            timer = new Timer(async o =>
+            timer1Day = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -55,9 +57,9 @@ namespace ICare.Core
             },
            null,
            TimeSpan.Zero,
-           TimeSpan.FromSeconds(35)
+           TimeSpan.FromDays(1)
            );
-            timer = new Timer(async o =>
+            timer1Day = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -66,7 +68,7 @@ namespace ICare.Core
             },
           null,
           TimeSpan.Zero,
-          TimeSpan.FromSeconds(50)
+          TimeSpan.FromDays(1)
           );
 
 
