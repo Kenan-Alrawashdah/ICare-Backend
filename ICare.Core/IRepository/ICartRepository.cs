@@ -15,5 +15,6 @@ namespace ICare.Core.IRepository
         bool Delete(int cartId);
         Task<IEnumerable<GetCartItemsApiDTO.Response>> GetCartItems(int userId);
         bool MinusQuantity(int cartId);
+        bool ChangeQuantity(int cartId,int Quantity);
     }
 }

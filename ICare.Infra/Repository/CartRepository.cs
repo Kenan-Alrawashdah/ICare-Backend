@@ -108,6 +108,18 @@ namespace ICare.Infra.Repository
 
         }
 
+        public bool ChangeQuantity(int cartId, int Quantity)
+        {
+            var param = new DynamicParameters();
+            param.Add("@CartId", cartId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("@Quantity", Quantity, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+
+            _dbContext.Connection.ExecuteAsync("ChangeQuantity", param, commandType: CommandType.StoredProcedure);
+
+            return true;
+        }
+
         //public IEnumerable<Cart> GetAll()
         //{
         //    var carts = _dbContext.Connection.Query<Cart>("CartGetAll", commandType: CommandType.StoredProcedure);

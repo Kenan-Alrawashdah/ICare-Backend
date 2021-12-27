@@ -116,6 +116,16 @@ namespace ICare.API.Controllers
             return result;
         }
 
+        [HttpGet]
+        [Route("ChangeQuantity/{id:int}&{Quantity:int}")]
+        public ActionResult<ApiResponse> ChangeQuantity(int id,int Quantity)
+        {
+            var result = new ApiResponse();
+
+            _cartService.ChangeQuantity(id, Quantity);
+
+            return result;
+        }
 
     }
 }
