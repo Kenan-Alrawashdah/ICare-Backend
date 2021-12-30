@@ -9,6 +9,6 @@ namespace ICare.Core.Data
 
         public string Key { get; set; } = "superSecretKey@345";
 
-        public int Lifetime { get; set; } = 10;
+        public int Lifetime { get; set; } = 15;
     }
 }

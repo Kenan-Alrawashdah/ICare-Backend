@@ -48,40 +48,14 @@ namespace ICare.API.Controllers
 
             return Ok(response);
         }
-        //[HttpGet("GetAll")]
-        //[ProducesResponseType(typeof(List<Delivery>), StatusCodes.Status200OK)]
-        //public List<Delivery> GetAllBook()
-        //{
-        //    return _deliveryService.GetAll().ToList();
-        //}
 
-        //[HttpPost("Add")]
-        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //public bool AddDelivery(Delivery delivery)
-        //{
-        //    return _deliveryService.Create(delivery);
-        //}
 
-        //[HttpDelete("Delete/{deliveryId:int}")]
-        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //public bool DeleteDelivery(int deliveryId)
+        //[HttpPost("GetById/{deliveryId:int}")]
+        //[ProducesResponseType(typeof(Delivery), StatusCodes.Status200OK)]
+        //public Delivery GetDeliveryById(int deliveryId)
         //{
-        //    return _deliveryService.Delete(deliveryId);
+        //    return _deliveryService.GetById(deliveryId);
         //}
-
-        //[HttpPut("Update")]
-        //[ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //public bool UpdateDelivery(Delivery delivery)
-        //{
-        //    return _deliveryService.Update(delivery);
-        //}
-
-        [HttpPost("GetById/{deliveryId:int}")]
-        [ProducesResponseType(typeof(Delivery), StatusCodes.Status200OK)]
-        public Delivery GetDeliveryById(int deliveryId)
-        {
-            return _deliveryService.GetById(deliveryId);
-        }
 
         [Authorize]
         [HttpGet]

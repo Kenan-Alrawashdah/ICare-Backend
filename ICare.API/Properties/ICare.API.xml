@@ -136,12 +136,6 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:ICare.API.Controllers.TokenController.Revoke">
-            <summary>
-            Delete the current refresh token of the current user
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
             <summary>
             SignUp Page for Patient

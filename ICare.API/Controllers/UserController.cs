@@ -251,52 +251,7 @@ namespace ICare.API.Controllers
 
         }
 
-        //[HttpPut]
-        //[Route("Update")]
-        //[ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public bool Update(ApplicationUser UserModel)
-        //{
-        //    return _userServices.Update(UserModel);
-        //}
-
-        //[HttpDelete]
-        //[Route("Delete/{id}")]
-        //[ProducesResponseType(type: typeof(bool), StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public bool Delete(int id)
-        //{
-        //    return _userServices.Delete(id);
-        //}
-
-        //[HttpGet]
-        //[Route("GetById/{id}")]
-        //public ActionResult<ApiResponse<GetUserByIdApiDTO.Response>> GetById(int id)
-        //{
-        //    var response = new ApiResponse<GetUserByIdApiDTO.Response>();
-        //    var user = _userServices.GetById(id); 
-        //    if(user == null)
-        //    {
-        //        response.AddError("No User With this id");
-        //        return response; 
-        //    }
-
-        //    response.Data = new GetUserByIdApiDTO.Response
-        //    {
-        //        User = user
-        //    };
-
-        //    return Ok(response);
-        //}
-
-        //[HttpGet]
-        //[Route("GetAll")]
-        //public ActionResult<ApiResponse<GetAllUserApiDTO.Response>> GetAll()
-        //{
-        //    var response = new ApiResponse<GetAllUserApiDTO.Response>();
-
-        //    return Ok(response);
-        //}
+       
 
     }
 }

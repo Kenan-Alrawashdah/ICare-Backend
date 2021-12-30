@@ -1,5 +1,6 @@
 ﻿using ICare.Core.ApiDTO;
 using ICare.Core.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Employee,Admin")]
     public class AccountantController : ControllerBase
     {
         private readonly IAccountantService _accountantService;

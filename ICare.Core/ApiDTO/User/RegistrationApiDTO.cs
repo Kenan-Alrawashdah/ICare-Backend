@@ -32,7 +32,6 @@ namespace ICare.Core.ApiDTO
             /// 
             /// </summary>
             /// <example>0777777777</example>
-            [Required]
             [MaxLength(15)]
             [Phone]
             public string PhoneNumber { get; set; }

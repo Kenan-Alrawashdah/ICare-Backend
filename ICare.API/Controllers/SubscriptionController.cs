@@ -78,6 +78,7 @@ namespace ICare.API.Controllers
 
         [HttpPut]
         [Route("EditSubscription")]
+        [Authorize(Roles ="Admin")]
         public ActionResult<ApiResponse> EditSubscription(SubscribeType subscribeType)
         {
             var response = new ApiResponse();

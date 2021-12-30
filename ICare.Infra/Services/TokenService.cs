@@ -51,7 +51,7 @@ namespace ICare.Infra.Services
 
         public string GenerateAccessTokenUsingClaims(ClaimsPrincipal claims, out string refreshToken)
         {
-            var email = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value;
+            var email = claims.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
             
             var r = _authService.Authentication(email);
             
@@ -91,7 +91,7 @@ namespace ICare.Infra.Services
 
 
 
-            //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
+            //3- token descriptor :( Name , role , email ) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 //userName, roleName
@@ -103,7 +103,7 @@ namespace ICare.Infra.Services
                     }),
 
                 //expire == session timeout
-                Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.Lifetime),
+                Expires = DateTime.UtcNow.AddSeconds(10),
 
                 //sign credential ==(to assign which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
@@ -142,7 +142,7 @@ namespace ICare.Infra.Services
                 ValidateLifetime = false,
                 ValidateIssuerSigningKey = true,
 
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtOptions.Key))
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

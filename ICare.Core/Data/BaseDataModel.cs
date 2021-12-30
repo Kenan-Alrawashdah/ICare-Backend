@@ -8,6 +8,6 @@ namespace ICare.Core.Data
         [Key]
         public int Id { get; set; }
 
-        public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedOn { get; set; } = DateTime.Now;
     }
 }
