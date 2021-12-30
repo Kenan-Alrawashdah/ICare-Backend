@@ -2,6 +2,7 @@
 using ICare.Core.ApiDTO.Admin.Role;
 using ICare.Core.Data;
 using ICare.Core.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,6 +14,7 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IDrugCategoryService _drugCategoryService;

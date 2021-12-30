@@ -475,6 +475,7 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("GetUserNotifications")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse<IEnumerable<GetNotifications.Response>>>> GetUserNotifications(GetNotifications.Request request)
         {
             var response = new ApiResponse<IEnumerable<GetNotifications.Response>>();
@@ -499,6 +500,7 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("GetHealthReports")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse<IEnumerable<GetHelethReportsApiDTO.Reponse>>>> GetHealthReports(GetHelethReportsApiDTO.Request request)
         {
             var response = new ApiResponse<IEnumerable<GetHelethReportsApiDTO.Reponse>>();
@@ -511,6 +513,7 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("CreateHealthReport")]
+        [Authorize]
         public ActionResult<ApiResponse> CreateHealthReport(AddHealthReportApiDTO.Resquest resquest)
         {
             var response = new ApiResponse();

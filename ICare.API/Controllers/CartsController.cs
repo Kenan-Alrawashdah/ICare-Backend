@@ -31,6 +31,7 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("AddDrugToCategory")]
+        [Authorize]
         public ActionResult<ApiResponse> AddCart(AddToCartApiDTO.Request request)
         {
             var response = new ApiResponse();
@@ -66,6 +67,7 @@ namespace ICare.API.Controllers
 
         [HttpDelete]
         [Route("DeleteCartItem/{id:int}")]
+        [Authorize]
         public ActionResult<ApiResponse> DeleteCartItem(int id)
         {
             var response = new ApiResponse();
@@ -77,6 +79,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("CheckItemIfInCart/{id:int}")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> CheckItemIfInCart(int id)
         {
             var response = new ApiResponse();
@@ -96,6 +99,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("AddQuantity/{id:int}")]
+        [Authorize]
         public ActionResult<ApiResponse> AddQuantity(int id)
         {
             var result = new ApiResponse();
@@ -107,6 +111,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("MinusQuantity/{id:int}")]
+        [Authorize]
         public ActionResult<ApiResponse> MinusQuantity(int id)
         {
             var result = new ApiResponse();
@@ -118,6 +123,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("ChangeQuantity/{id:int}&{Quantity:int}")]
+        [Authorize]
         public ActionResult<ApiResponse> ChangeQuantity(int id,int Quantity)
         {
             var result = new ApiResponse();

@@ -28,6 +28,7 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("CreateOrder")]
+        [Authorize]
         public async Task<ActionResult<ApiResponse>> CreateOrder(AddOrederApiDTO.Request request)
         {
             var response = new ApiResponse();
@@ -47,6 +48,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetPatientOrders")]
+        [Authorize]
         public async Task<ActionResult<PaitentOrderApiDTO.Response>> GetPatientOrders()
         {
             var response = new ApiResponse<IEnumerable<PaitentOrderApiDTO.Response>>();
@@ -59,6 +61,8 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetOpenOrders")]
+        [Authorize]
+
         public async Task<ActionResult<ApiResponse<IEnumerable<GetAllOpenOredersApiDTO.Response>>>> GetOpenOrders()
         {
             var response = new ApiResponse<IEnumerable<GetAllOpenOredersApiDTO.Response>>();

@@ -14,6 +14,7 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DrugsController : ControllerBase
     {
         private readonly IDrugService _drugService;
