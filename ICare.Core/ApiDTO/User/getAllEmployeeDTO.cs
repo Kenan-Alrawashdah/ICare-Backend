@@ -6,6 +6,8 @@ namespace ICare.Core.ApiDTO
 {
     public class getAllEmployeeDTO
     {
+        public int Id { get; set; }
+
         public string EmployeeName { get; set; }
         public string EmployeePhoneNumber { get; set; }
 

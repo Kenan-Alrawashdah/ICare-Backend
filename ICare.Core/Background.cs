@@ -11,8 +11,10 @@ namespace ICare.Core
     public class Background : IHostedService,IDisposable
     {
         private int num = 0;
-        private Timer timerDrug;
-        private Timer timerWater;
+        private Timer timer60Seconds;
+        private Timer timer1Day;
+
+
         private readonly IProcessBackgroundService _processBackground;
 
         public Background(IProcessBackgroundService processBackground)
@@ -22,7 +24,7 @@ namespace ICare.Core
         public Task StartAsync(CancellationToken cancellationToken)
         {
 
-            timerDrug = new Timer(async o =>
+            timer60Seconds = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -34,7 +36,7 @@ namespace ICare.Core
             TimeSpan.FromSeconds(60)
             );
 
-            timerWater = new Timer(async o =>
+            timer60Seconds = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
@@ -43,8 +45,31 @@ namespace ICare.Core
             },
            null,
            TimeSpan.Zero,
-           TimeSpan.FromSeconds(35)
+           TimeSpan.FromSeconds(60)
            );
+
+            timer1Day = new Timer(async o =>
+            {
+                Interlocked.Increment(ref num);
+
+                Console.WriteLine("printing  Expier Drug :" + num);
+                _processBackground.CheckExpierDrug();
+            },
+           null,
+           TimeSpan.Zero,
+           TimeSpan.FromDays(1)
+           );
+            timer1Day = new Timer(async o =>
+            {
+                Interlocked.Increment(ref num);
+
+                Console.WriteLine("printing  Expier Subsecption :" + num);
+                _processBackground.CheckExpierSubscription();
+            },
+          null,
+          TimeSpan.Zero,
+          TimeSpan.FromDays(1)
+          );
 
 
             return Task.CompletedTask;
@@ -58,7 +83,7 @@ namespace ICare.Core
 
         public void Dispose()
         {
-            timerDrug?.Dispose();
+            timer60Seconds?.Dispose();
         }
     }
 }

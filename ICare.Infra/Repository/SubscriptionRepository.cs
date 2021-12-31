@@ -18,17 +18,15 @@ namespace ICare.Infra.Repository
         {
             this._dbContext = dbContext;
         }
-        public async Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request)
+        public bool SubscriptionInsert(int patientId , int subscriptionId)
         {
             var p = new DynamicParameters();
-            p.Add("@CreatedOn", request.CreatedOn, DbType.DateTime, ParameterDirection.Input);
-            p.Add("@PatientId", request.PatientId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@SubscribeTypeId", request.SubscribeTypeId, DbType.Int32, ParameterDirection.Input);
-
+            p.Add("@PatientId", patientId, DbType.Int32, ParameterDirection.Input);
+            p.Add("@SubscribeTypeId", subscriptionId, DbType.Int32, ParameterDirection.Input);
 
             try
             {
-                var result = await _dbContext.Connection.ExecuteAsync("SubscriptionInsert", p, commandType: CommandType.StoredProcedure);
+                var result =  _dbContext.Connection.ExecuteAsync("SubscriptionInsert", p, commandType: CommandType.StoredProcedure);
                 return true;
             }
             catch (Exception)
@@ -37,69 +35,77 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
-        public async Task<bool> DeletePatientSubscription(int id)
+
+        public async Task<IEnumerable<SubscribeType>> GetAll()
         {
-            var p = new DynamicParameters();
-            p.Add("@PatientId", id, dbType: DbType.Int32, ParameterDirection.Input);
-
-            try
-            {
-                var result = await _dbContext.Connection.ExecuteAsync("SubscriptionDelete", p, commandType: CommandType.StoredProcedure);
-                return true;
-            }
-            catch (Exception)
-            {
-
-                return false;
-            }
+            var result = await _dbContext.Connection.QueryAsync<SubscribeType>("GetTypes", commandType: CommandType.StoredProcedure);
+            return result;
         }
+
+
+        //public async Task<bool> DeletePatientSubscription(int id)
+        //{
+        //    var p = new DynamicParameters();
+        //    p.Add("@PatientId", id, dbType: DbType.Int32, ParameterDirection.Input);
+
+        //    try
+        //    {
+        //        var result = await _dbContext.Connection.ExecuteAsync("SubscriptionDelete", p, commandType: CommandType.StoredProcedure);
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        return false;
+        //    }
+        //}
         public async Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription()
         {
             var result = _dbContext.Connection.Query<GetAllPatientSubscriptionDTO>("SubscriptionGetAll", commandType: CommandType.StoredProcedure);
             return result;
         }
 
-        public async Task<Subscription> GetByPatientId(int id)
-        {
-            var p = new DynamicParameters();
-            p.Add("@PatientId", id, DbType.Int32, ParameterDirection.Input);
+        //public async Task<Subscription> GetByPatientId(int id)
+        //{
+        //    var p = new DynamicParameters();
+        //    p.Add("@PatientId", id, DbType.Int32, ParameterDirection.Input);
 
-            var result = _dbContext.Connection.QueryFirstOrDefault<Subscription>("SubscriptionSelect", p, commandType: CommandType.StoredProcedure);
+        //    var result = _dbContext.Connection.QueryFirstOrDefault<Subscription>("SubscriptionSelect", p, commandType: CommandType.StoredProcedure);
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        public async Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request)
-        {
-            var p = new DynamicParameters();
-            p.Add("@CardNumber", request.CardNumber, DbType.Int32, ParameterDirection.Input);
-            p.Add("@Expirydate", request.Expirydate, DbType.String, ParameterDirection.Input);
-            p.Add("@cvcCode", request.cvcCode, DbType.Int32, ParameterDirection.Input);
-            p.Add("@CardName", request.CardName, DbType.String, ParameterDirection.Input);
+        //public async Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request)
+        //{
+        //    var p = new DynamicParameters();
+        //    p.Add("@CardNumber", request.CardNumber, DbType.Int32, ParameterDirection.Input);
+        //    p.Add("@Expirydate", request.Expirydate, DbType.String, ParameterDirection.Input);
+        //    p.Add("@cvcCode", request.cvcCode, DbType.Int32, ParameterDirection.Input);
+        //    p.Add("@CardName", request.CardName, DbType.String, ParameterDirection.Input);
 
-            var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<Payment>("SubscriptionSelect", p, commandType: CommandType.StoredProcedure);
-            return result;
+        //    var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<Payment>("SubscriptionSelect", p, commandType: CommandType.StoredProcedure);
+        //    return result;
 
 
-        }
+        //}
 
-        public async Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request)
-        {
-            var p = new DynamicParameters();
-            p.Add("@PatientId", request.PatientId, DbType.Int32, ParameterDirection.Input);
-            p.Add("@SubscribeTypeId", request.SubscribeTypeId, DbType.Int32, ParameterDirection.Input);
+        //public async Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request)
+        //{
+        //    var p = new DynamicParameters();
+        //    p.Add("@PatientId", request.PatientId, DbType.Int32, ParameterDirection.Input);
+        //    p.Add("@SubscribeTypeId", request.SubscribeTypeId, DbType.Int32, ParameterDirection.Input);
 
-            try
-            {
-                var result = await _dbContext.Connection.ExecuteAsync("SubscriptionUpdate", p, commandType: CommandType.StoredProcedure);
-                return true;
-            }
+        //    try
+        //    {
+        //        var result = await _dbContext.Connection.ExecuteAsync("SubscriptionUpdate", p, commandType: CommandType.StoredProcedure);
+        //        return true;
+        //    }
 
-            catch (Exception)
-            {
-                return false;
-            }
-        }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
 
     }
 }

@@ -75,5 +75,10 @@ namespace ICare.Infra.Services
         {
             return _orderRepository.SearchInByDatePaymentOrders(resqust);
         }
+
+        public bool SetOrderAsDelivered(int orderId)
+        {
+            return _orderRepository.SetOrderAsDelivered(orderId);
+        }
     }
 }

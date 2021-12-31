@@ -16,10 +16,12 @@ namespace ICare.API.Controllers
     {
 
         private readonly IEmployessServices _employessServices;
+        private readonly IPasswordHashingService _passwordHashingService;
 
-        public EmployeeController(IEmployessServices employessServices)
+        public EmployeeController(IEmployessServices employessServices,IPasswordHashingService passwordHashingService)
         {
             this._employessServices = employessServices;
+            this._passwordHashingService = passwordHashingService;
         }
 
         /// <summary>
@@ -31,7 +33,8 @@ namespace ICare.API.Controllers
         [Route("EmployeeRegistration")]
         public ActionResult<ApiResponse<RegistrationEmployeeApiDTO.Response>> EmployeeRegistration(RegistrationEmployeeApiDTO.Request request)
         {
-          return  _employessServices.RegistrationEmployee(request);
+
+            return _employessServices.RegistrationEmployee(request);
         }
 
 

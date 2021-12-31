@@ -16,9 +16,6 @@ namespace ICare.API.Factories
 
         public static void AddAuth(this IServiceCollection services,IConfiguration configuration )
         {
-
-            var jwtOptions = configuration.GetSection("JwtOptions").Get<JwtOptions>();
-
             services.AddAuthentication(
                  x =>
                  {
@@ -32,9 +29,10 @@ namespace ICare.API.Factories
                       y.TokenValidationParameters = new TokenValidationParameters
                       {
                           ValidateIssuerSigningKey = true,
-                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtOptions.Key)),
+                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("superSecretKey@345")),
                           ValidateIssuer = false,
                           ValidateAudience = false,
+                          // Check Validate life time
                           ValidateLifetime = true,
                           ClockSkew = TimeSpan.Zero
                       };

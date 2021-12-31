@@ -71,6 +71,27 @@ namespace ICare.API.Factories
                 await _dbContext.Connection.ExecuteAsync("RolesInsert", ee, commandType: CommandType.StoredProcedure);
             }
 
+            //Ensure "Delivery" Role Exist 
+            var i = new DynamicParameters();
+            i.Add("@Name", "Delivery", DbType.String, ParameterDirection.Input);
+            var deliveryRoleExists = _dbContext.Connection.ExecuteScalar<int?>("GetRoleIdByName", i, commandType: CommandType.StoredProcedure);
+            if (deliveryRoleExists == null)
+            {
+                var dd = new DynamicParameters();
+                dd.Add("@Name", "Delivery", DbType.String, ParameterDirection.Input);
+                await _dbContext.Connection.ExecuteAsync("RolesInsert", dd, commandType: CommandType.StoredProcedure);
+            }
+
+            //Ensure "Pharmacist" Role Exist 
+            var f = new DynamicParameters();
+            f.Add("@Name", "Pharmacist", DbType.String, ParameterDirection.Input);
+            var pharmacistRoleExists = _dbContext.Connection.ExecuteScalar<int?>("GetRoleIdByName", f, commandType: CommandType.StoredProcedure);
+            if (pharmacistRoleExists == null)
+            {
+                var ff = new DynamicParameters();
+                ff.Add("@Name", "Pharmacist", DbType.String, ParameterDirection.Input);
+                await _dbContext.Connection.ExecuteAsync("RolesInsert", ff, commandType: CommandType.StoredProcedure);
+            }
 
 
             // Ensure admin user exist
@@ -99,7 +120,7 @@ namespace ICare.API.Factories
                 await _dbContext.Connection.ExecuteAsync("CreateStatusOrder",  commandType: CommandType.StoredProcedure);
             }
 
-            //Ensure status order is exist
+            //Ensure Subscribe Type is exist
             var subscriptionExists = _dbContext.Connection.ExecuteScalar<int>("CheckSubscribeType", commandType: CommandType.StoredProcedure);
             if (subscriptionExists != 3)
             {

@@ -9,12 +9,15 @@ namespace ICare.Core.IServices
 {
     public interface ISubscriptionServices
     {
-        Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request);
-        Task<bool> DeletePatientSubscription(int id);
-        Task<Subscription> GetByPatientId(int id);
-        Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request);
+        Task<IEnumerable<SubscribeType>> GetAll();
         Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription();
-        Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request);
 
+        //Task<bool> AddPatientSubscription(AddPatientSubscriptionDTO.Request request);
+        //Task<bool> DeletePatientSubscription(int id);
+        //Task<Subscription> GetByPatientId(int id);
+        //Task<bool> UpdatePatientSubscription(UpdatePatientSubscriptionDTO.Request request);
+        //Task<IEnumerable<GetAllPatientSubscriptionDTO>> GetAllPatientSubscription();
+        //Task<Payment> SubscriptionPayment(SubscriptionPaymentDTO.Request request);
+        bool SubscriptionInsert(int patientId, int subscriptionId);
     }
 }

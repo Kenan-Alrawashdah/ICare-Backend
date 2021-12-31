@@ -9,6 +9,6 @@ namespace ICare.Core.IRepository
     public interface IAuthRespository
     {
         ResponseLoginDTO Authentication(LoginApiDTO.Request login);
-
+        ResponseLoginDTO Authentication(string email);
     }
 }

@@ -21,6 +21,30 @@ namespace ICare.Infra.Repository
             _dbContext = dbContext;
         }
 
+        public bool RegistrationDelivery(CreateDeliveryApiDTO.Request userModle)
+        {
+
+            var p = new DynamicParameters();
+            p.Add("@Email", userModle.Email, DbType.String, ParameterDirection.Input);
+            p.Add("@CreatedOn", DateTime.UtcNow, DbType.DateTime, ParameterDirection.Input);
+            p.Add("@PasswordHash", userModle.Password, DbType.String, ParameterDirection.Input);
+            p.Add("@PhoneNumber", userModle.PhoneNumber, DbType.String, ParameterDirection.Input);
+            p.Add("@FirstName", userModle.FirstName, DbType.String, ParameterDirection.Input);
+            p.Add("@LastName", userModle.LastName, DbType.String, ParameterDirection.Input);
+
+             _dbContext.Connection.ExecuteAsync("DeliveryInsert", p, commandType: CommandType.StoredProcedure);
+
+                
+            
+            return true;
+        }
+
+        public async Task<IEnumerable<ApplicationUser>> GetAllDeliveries()
+        {
+            var result = await _dbContext.Connection.QueryAsync<ApplicationUser>("GetAllDeliveries", commandType: CommandType.StoredProcedure);
+            return result;
+        }
+
         public bool Create(Delivery delivery)
         {
             try

@@ -35,19 +35,19 @@ namespace ICare.API.Controllers
         public async Task<ActionResult<ApiResponse<TokenApiModel.Response>>> Refresh(TokenApiModel.Request model)
         {
             var princibles = _tokenService.GetClaimsFromExpiredToken(model.AccessToken);
-
+            
             var user = _userServices.GetUser(princibles);
 
             if (user == null)
             {
-                return BadRequest("Invaled Access Token");
+                return BadRequest("Invalid Access Token");
             }
 
-            var refreshToken = await _refreshTokenServices.GetRefreshTokenByUserId(user.Id);
+            var refreshToken = (await _refreshTokenServices.GetRefreshTokenByUserId(user.Id)).RToken;
 
-            if (model.RefreshToken != refreshToken.RToken)
+            if (model.RefreshToken != refreshToken)
             {
-                return BadRequest("Invaled Refresh Token");
+                return BadRequest("Invalid Refresh Token");
             }
 
             var response = new ApiResponse<TokenApiModel.Response>();
@@ -61,21 +61,6 @@ namespace ICare.API.Controllers
 
 
             return Ok(response);
-        }
-
-        /// <summary>
-        /// Delete the current refresh token of the current user
-        /// </summary>
-        /// <returns></returns>
-        [HttpPost]
-        [Route("Revoke")]
-        [Authorize]
-        public async Task<ApiResponse> Revoke()
-        {
-            // var user = await _userManager.GetUserAsync(User);
-            // user.RefreshToken = null;
-            //await _userManager.UpdateAsync(user);
-            return new ApiResponse();
         }
     }
 }

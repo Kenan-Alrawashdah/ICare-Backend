@@ -35,6 +35,23 @@ namespace ICare.Infra.Repository
 
         }
 
+        public bool EditSubscribeType(SubscribeType subscribeType)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", subscribeType.Id, DbType.Int32, ParameterDirection.Input);
+            p.Add("@Price", subscribeType.Price, DbType.Double, ParameterDirection.Input);
+            p.Add("@Days", subscribeType.Days, DbType.Int32, ParameterDirection.Input);
+            p.Add("@OnSale", subscribeType.OnSale, DbType.Boolean, ParameterDirection.Input);
+            p.Add("@PriceAfterSale", subscribeType.PriceAfterSale, DbType.Double, ParameterDirection.Input);
+            p.Add("@HasRibbon", subscribeType.HasRibbon, DbType.Boolean, ParameterDirection.Input);
+            p.Add("@Ribbon", subscribeType.Ribbon, DbType.String, ParameterDirection.Input);
+            p.Add("@Name", subscribeType.Name, DbType.String, ParameterDirection.Input);
+            p.Add("@RibbonColor", subscribeType.RibbonColor, DbType.String, ParameterDirection.Input);
+
+            var result =  _dbContext.Connection.ExecuteAsync("SubscribeTypeUpdate", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+
 
 
         //public bool Create(SubscribeType t)

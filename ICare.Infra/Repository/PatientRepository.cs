@@ -36,6 +36,24 @@ namespace ICare.Infra.Repository
             }
         }
 
+        public bool DeletePatientDrug(int id)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var result = _dbContext.Connection.ExecuteAsync("DeletePatientDrugs", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+
+        public bool DeleteLocation(int id)
+        {
+            var p = new DynamicParameters();
+            p.Add("@Id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+
+            var result = _dbContext.Connection.ExecuteAsync("DeleteLocation", p, commandType: CommandType.StoredProcedure);
+            return true;
+        }
+
         public async Task<bool> AddPatientDrugs(PatientDrugs patientDrug, List<DrugDoseTime> drugDoseTime)
         {
             var p = new DynamicParameters();
@@ -45,7 +63,7 @@ namespace ICare.Infra.Repository
             p.Add("@EndDate", patientDrug.EndDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
             p.Add("@DrugName", patientDrug.DrugName, dbType: DbType.String, direction: ParameterDirection.Input);
 
-            var result = _dbContext.Connection.ExecuteScalar<int>("PatientDrugsInsert", p, commandType: CommandType.StoredProcedure);
+            var result =await _dbContext.Connection.ExecuteScalarAsync<int>("PatientDrugsInsert", p, commandType: CommandType.StoredProcedure);
 
             foreach (var item in drugDoseTime)
             {
@@ -72,6 +90,8 @@ namespace ICare.Infra.Repository
                 return false;
             }
         }
+
+        
 
 
         public async Task<IEnumerable<MyDrugsApiDto.Drug>> GetMyDrugs(int patientId)
@@ -172,8 +192,8 @@ namespace ICare.Infra.Repository
             p.Add("@CreatedOn", request.CreatedOn, dbType: DbType.Date, direction: ParameterDirection.Input);
             p.Add("@CheckUpName", request.CheckUpName, dbType: DbType.String, direction: ParameterDirection.Input);
             p.Add("@BloodType", request.BloodType, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("@BloodSugarLevel", request.BloodSugarLevel, dbType: DbType.String, direction: ParameterDirection.Input);
-            p.Add("@CheckUpDate", request.CheckUpDate, dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@BloodSugarLevel", "", dbType: DbType.String, direction: ParameterDirection.Input);
+            p.Add("@CheckUpDate", "", dbType: DbType.String, direction: ParameterDirection.Input);
             try
             {
                 var result = await _dbContext.Connection.ExecuteAsync("InsertPDFData", p, commandType: CommandType.StoredProcedure);

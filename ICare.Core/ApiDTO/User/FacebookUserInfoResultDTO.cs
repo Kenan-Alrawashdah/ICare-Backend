@@ -14,8 +14,8 @@ namespace ICare.Core.ApiDTO
         public string LastName { get; set; }
         [JsonProperty("picture")]
         public FacebookPicture Picture { get; set; }
-        //[JsonProperty("email")]
-        //public string Email { get; set; }
+        [JsonProperty("email")]
+        public string Email { get; set; }
         [JsonProperty("id")]
         public string Id { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using ICare.Core.ApiDTO;
 using ICare.Core.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Employee,Admin")]
     public class AccountantController : ControllerBase
     {
         private readonly IAccountantService _accountantService;
@@ -25,13 +27,13 @@ namespace ICare.API.Controllers
         public async Task<ActionResult> AnnualCareSystemReport()
         {
 
-             var theTopContext=await _accountantService.AnnualCareSystemReport();
+             var AnnualCareSystemReport = await _accountantService.AnnualCareSystemReport();
 
 
 
             var builder = new StringBuilder();
             builder.AppendLine("Name,Order Amount,Profits,OrderDate");
-            foreach (var item in theTopContext)
+            foreach (var item in AnnualCareSystemReport)
             {
 
                builder.AppendLine($"{item.Name},{item.OrderAmount + "$"},{item.Profits },{item.OrderDate}");

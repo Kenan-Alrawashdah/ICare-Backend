@@ -29,7 +29,8 @@ namespace ICare.API.Controllers
         public ActionResult<ApiResponse<LoginApiDTO.Response>> SignIn(LoginApiDTO.Request requestLoginDTO)
         {
             var response = new ApiResponse<LoginApiDTO.Response>();
-            string refreshToken;
+
+            string refreshToken ;
             var token = _tokenService.AuthAndGetToken(requestLoginDTO, out refreshToken);
             if (token == null)
             {

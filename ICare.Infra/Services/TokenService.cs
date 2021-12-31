@@ -51,12 +51,15 @@ namespace ICare.Infra.Services
 
         public string GenerateAccessTokenUsingClaims(ClaimsPrincipal claims, out string refreshToken)
         {
+            var email = claims.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            
+            var r = _authService.Authentication(email);
             
             var result = new ResponseLoginDTO
             {
-                Email = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress")?.Value,
-                FirstName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value,
-                RoleName = claims.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")?.Value,
+                Email = r.Email,
+                FirstName = r.FirstName,
+                RoleName =  r.RoleName
                
             };
             if (result.Email == null)
@@ -86,21 +89,21 @@ namespace ICare.Infra.Services
             //2- token key : to encode data to token (secure value)
             var tokenKey = Encoding.ASCII.GetBytes(_jwtOptions.Key);
 
-             
 
-            //3- token descriptor :( userName , roleNoleName) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
+
+            //3- token descriptor :( Name , role , email ) + expire == session timeout + sign credential == Hmacsha256signtre (method) 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 //userName, roleName
                 Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, firstName),
-                    new Claim(ClaimTypes.Role, role),
-                    new Claim(ClaimTypes.Email , email)
-                   }),
+                        new Claim(ClaimTypes.Name, firstName),
+                        new Claim(ClaimTypes.Role, role),
+                        new Claim(ClaimTypes.Email, email)
+                    }),
 
                 //expire == session timeout
-                Expires = DateTime.UtcNow.AddMinutes(10),
+                Expires = DateTime.UtcNow.AddMinutes(_jwtOptions.Lifetime),
 
                 //sign credential ==(to assign which encoding method to use) "Hmacsha256signutre"(method used to encode data)
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
@@ -139,7 +142,7 @@ namespace ICare.Infra.Services
                 ValidateLifetime = false,
                 ValidateIssuerSigningKey = true,
 
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Key))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_jwtOptions.Key))
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

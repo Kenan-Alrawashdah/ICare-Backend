@@ -86,15 +86,35 @@ namespace ICare.Infra.Repository
         {
             var p = new DynamicParameters();
             p.Add("@Id", drug.Id, DbType.Int32, ParameterDirection.Input);
-            p.Add("@DrugCategoryId", drug.DrugCategoryId, DbType.Int32, ParameterDirection.Input);
             p.Add("@Name", drug.Name, DbType.String, ParameterDirection.Input);
             p.Add("@Price", drug.Price, DbType.Double, ParameterDirection.Input);
-            p.Add("@PicturePath", drug.PicturePath, DbType.String, ParameterDirection.Input);
+            if(drug.PicturePath == null)
+            {
+                p.Add("@PicturePath", "", DbType.String, ParameterDirection.Input);
+            }
+            else
+            {
+                p.Add("@PicturePath", drug.PicturePath, DbType.String, ParameterDirection.Input);
+            }
             p.Add("@Brand", drug.Brand, DbType.String, ParameterDirection.Input);
             p.Add("@AvailableQuantity", drug.AvailableQuantity, DbType.Int32, ParameterDirection.Input);
             p.Add("@Description", drug.Description, DbType.String, ParameterDirection.Input);
-            _dbContext.Connection.ExecuteAsync("DrugUpdate", p, commandType: CommandType.StoredProcedure);
-            return true;
+            try
+            {
+                _dbContext.Connection.Execute("DrugUpdate", p, commandType: CommandType.StoredProcedure);
+                return true;
+            }
+            catch (Exception e)
+            {
+
+                return false;
+            }
+           
+        }
+
+        public async Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetRandomdrugs()
+        {
+          return await _dbContext.Connection.QueryAsync<GetAllDrugsApiDTO.Response>("GetRandomDrugs",  commandType: CommandType.StoredProcedure);
         }
 
         //public IEnumerable<Drug> GetAll()

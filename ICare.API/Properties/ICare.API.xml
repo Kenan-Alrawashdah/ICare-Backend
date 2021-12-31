@@ -129,27 +129,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ICare.API.Controllers.PatientController.DeletePatientSubscription(System.Int32)">
-            <summary>
-            Delete Patient Subscription
-            </summary>
-            <param name="id">id of the patient recored to delete</param>
-            <returns></returns>
-        </member>
-        <member name="M:ICare.API.Controllers.PatientController.GetByPatientId(System.Int32)">
-            <summary>
-            Get Subscription By Patient Id
-            </summary>
-            <param name="id">id of the patient recored to Get</param>
-            <returns></returns>
-        </member>
-        <member name="M:ICare.API.Controllers.PatientController.UpdatePatientSubscription(ICare.Core.ApiDTO.UpdatePatientSubscriptionDTO.Request)">
-            <summary>
-            Update Patient Subscription 
-            </summary>
-            <param name="request"></param>
-            <returns></returns>
-        </member>
         <member name="M:ICare.API.Controllers.TokenController.Refresh(ICare.Core.ApiDTO.TokenApiModel.Request)">
             <summary>
             Issue a new access token
@@ -157,13 +136,14 @@
             <param name="model"></param>
             <returns></returns>
         </member>
-        <member name="M:ICare.API.Controllers.TokenController.Revoke">
-            <summary>
-            Delete the current refresh token of the current user
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:ICare.API.Controllers.UserController.PatientRegistration(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
+            <summary>
+            SignUp Page for Patient
+            </summary>
+            <param name="request"></param>
+            <returns>token</returns>
+        </member>
+        <member name="M:ICare.API.Controllers.UserController.PatientRegistrationUsingSocial(ICare.Core.ApiDTO.RegistrationApiDTO.Request)">
             <summary>
             SignUp Page for Patient
             </summary>

@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using ICare.Core.ApiDTO.Patient;
+using ICare.Core.ApiDTO.User;
 using ICare.Core.Data;
 using ICare.Core.ICommon;
 using ICare.Core.IRepository;
@@ -42,24 +43,28 @@ namespace ICare.Infra.Repository
 
             return emails;
         }
+
+        public IEnumerable<SendDrugByEmailDTO.Response> CheckExpierDrug()
+        {
+            var result = _DbContext.Connection.Query<SendDrugByEmailDTO.Response>
+                          ("CheckExpierDrug", commandType: CommandType.StoredProcedure);
+
+
+
+            return result;
+        }
+
+        //GetExpierSubscriptionDTO
+
+        public IEnumerable<GetExpierSubscriptionDTO> CheckExpierSubscription()
+        {
+            var result = _DbContext.Connection.Query<GetExpierSubscriptionDTO>
+                          ("CheckPatientSubscription", commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
     }
+
 }
 
 
-/*create proc checkWaterOnTime
- as
- DECLARE @hour  int
-SET @hour = datepart(hour, getdate())
-DECLARE @mi  int
-SET @mi = datepart(mi, getdate())
-DECLARE @minet  int
-set @minet = @hour * 60 + @mi
- select u.Email 
- from Water w 
- join Patient p on p.Id = w.PatientId
- join [dbo].[User] u on u.id = p.UserId
- where w.FromTime <= concat(@hour,':',@mi,':00') 
- and
- w.ToTime >= concat(@hour,':',@mi,':00')
- and @minet % w.Every = 0
- */

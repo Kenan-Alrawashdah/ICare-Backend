@@ -8,6 +8,7 @@ namespace ICare.Core.IRepository
 {
     public interface ISubscriptionTypeRepository
     {
+        bool EditSubscribeType(SubscribeType subscribeType);
         Task<IEnumerable<SubscribeType>> GetAll();
         Task<SubscribeType> GetById(int id);
     }

@@ -9,11 +9,12 @@ namespace ICare.Core.IRepository
 {
     public interface IDeliveryRepository : ICRUDRepository<Delivery>
     {
-
+        Task<IEnumerable<ApplicationUser>> GetAllDeliveries();
         Task<IEnumerable<getAllOrdersForDeliveryDTO.Response>> getAllOrdersForDelivery(int deliveryId);
         Delivery GetDeliveryByUserId(int userId);
         Task<getNumberOfOrdersForDeliveryDTO.Response> getNumberOfOrdersForDelivery(getNumberOfOrdersForDeliveryDTO.Request request);
         bool OrderDeliverd(int id);
+        bool RegistrationDelivery(CreateDeliveryApiDTO.Request userModle);
         bool TakeOrder(int orderId, int deliveryId);
 
     }
