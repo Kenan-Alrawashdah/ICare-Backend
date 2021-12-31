@@ -22,6 +22,6 @@ namespace ICare.Core.IServices
         Task<IEnumerable<PlacedOrdersApiDTO.Response>> GetPlacedOrders();
         bool SetOrderAsCanceled(int orderId);
         bool SetOrderAsPlaced(int orderId);
-
+        bool SetOrderAsDelivered(int orderId);
     }
 }

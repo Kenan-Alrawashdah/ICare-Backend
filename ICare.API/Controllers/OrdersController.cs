@@ -130,5 +130,16 @@ namespace ICare.API.Controllers
             return Ok(response); 
 
         }
+
+        [HttpGet]
+        [Route("SetOrderAsDelivered/{id:int}")]
+        public ActionResult<ApiResponse> SetOrderAsDelivered(int id)
+        {
+            var response = new ApiResponse();
+
+            _orderService.SetOrderAsDelivered(id); 
+
+            return Ok(response); 
+        }
     }
 }

@@ -14,7 +14,6 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class AdminController : ControllerBase
     {
         private readonly IDrugCategoryService _drugCategoryService;
@@ -47,6 +46,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetPaymentOrders")]
+        [Authorize]
         public ActionResult<ApiResponse<GetPaymentOrdersDTO.Response>> GetPaymentOrders()
         {
 
@@ -64,6 +64,8 @@ namespace ICare.API.Controllers
 
         [HttpDelete]
         [Route("DeleteUser/{id:int}")]
+        [Authorize]
+
         public ActionResult<ApiResponse> DeleteUser(int id)
         {
             var response = new ApiResponse();
@@ -74,6 +76,8 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetAllDeliveries")]
+        [Authorize]
+
         public async Task<ActionResult<ApiResponse<IEnumerable<ApplicationUser>>>> GetAllDeliveries()
         {
             var response = new ApiResponse<IEnumerable<ApplicationUser>>();
@@ -85,6 +89,8 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("SearchInByDatePaymentOrders")]
+        [Authorize]
+
         public ActionResult<ApiResponse<GetPaymentOrdersDTO.Response>> SearchInByDatePaymentOrders(GetPaymentOrdersDTO.Resqust resqust )
         {
 
@@ -101,6 +107,8 @@ namespace ICare.API.Controllers
         }
         [HttpGet]
         [Route("GetPatientStatsLast5Year")]
+        [Authorize]
+
         public ActionResult<ApiResponse<GetPatientStatsLast5YearDTO>> GetPatientStatsLast5Year()
         {
 
@@ -116,6 +124,7 @@ namespace ICare.API.Controllers
 
         }
         [HttpGet]
+        [Authorize]
         [Route("GetSalesStatsLast5Year")]
         public ActionResult<ApiResponse<GetSalesStatsLast5YearDTO>> GetSalesStatsLast5Year()
         {
@@ -162,6 +171,8 @@ namespace ICare.API.Controllers
         /// <returns>bool</returns>
         [HttpPost]
         [Route("Category/AddCategory")]
+        [Authorize]
+
         public async Task<ActionResult<ApiResponse>> AddCategory(IFormFile image, [FromForm] string name)
         {
             var response = new ApiResponse();
@@ -199,6 +210,8 @@ namespace ICare.API.Controllers
         /// <returns>bool</returns>
         [HttpDelete]
         [Route("Category/Delete/{id}")]
+        [Authorize]
+
         public ActionResult<ApiResponse> DeleteDrugCategory(int id)
         {
             var response = new ApiResponse();
@@ -220,6 +233,8 @@ namespace ICare.API.Controllers
         /// <returns>bool</returns>
         [HttpPut]
         [Route("Category/Update")]
+        [Authorize]
+
         public async  Task<ActionResult<ApiResponse>> UpdateDrugCategory([FromForm]int id,IFormFile image, [FromForm] string name)
         {
             var response = new ApiResponse();

@@ -9,13 +9,15 @@ namespace ICare.Infra.Services
 {
     public class SocialLoginAndRegistrationService : ISocialLoginAndRegistrationService
     {
+        private readonly IAuthService _authService;
         private readonly IUserServices _userServices;
         private readonly IPasswordHashingService _passwordHashingService;
         private readonly IResetPasswordServices _resetPasswordServices;
         private readonly ITokenService _tokenService;
 
-        public SocialLoginAndRegistrationService(IUserServices userServices , IPasswordHashingService passwordHashingService, IResetPasswordServices resetPasswordServices, ITokenService tokenService)
+        public SocialLoginAndRegistrationService(IAuthService authService ,IUserServices userServices , IPasswordHashingService passwordHashingService, IResetPasswordServices resetPasswordServices, ITokenService tokenService)
         {
+            this._authService = authService;
             this._userServices = userServices;
             this._passwordHashingService = passwordHashingService;
             this._resetPasswordServices = resetPasswordServices;
@@ -49,7 +51,9 @@ namespace ICare.Infra.Services
             {
 
                 var result = new RegistrationApiDTO.Response();
-                result.AccessToken = _tokenService.GenerateAccessToken(user.FirstName, "Patient", user.Email);
+
+                var userInfo = _authService.Authentication(user.Email);
+                result.AccessToken = _tokenService.GenerateAccessToken(userInfo.FirstName, userInfo.RoleName, user.Email);
                 result.RefreshToken = _tokenService.GenerateRefreshToken(user.Id);
                 return result;
             }

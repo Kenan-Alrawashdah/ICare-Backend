@@ -27,10 +27,4 @@
   </ItemGroup>
 
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Files\PatientPDFFiles\" />
-    <Folder Include="wwwroot\Images\" />
-  </ItemGroup>
-
-
 </Project>

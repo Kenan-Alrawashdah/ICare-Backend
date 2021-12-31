@@ -14,7 +14,6 @@ namespace ICare.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class DrugsController : ControllerBase
     {
         private readonly IDrugService _drugService;
@@ -29,6 +28,8 @@ namespace ICare.API.Controllers
 
         [HttpPost]
         [Route("AddDrug")]
+        [Authorize]
+
         public async Task<ActionResult<ApiResponse>> AddDrug([FromForm]AddDrugApiDTO.Request request)
         {
             var response = new ApiResponse();
@@ -64,6 +65,7 @@ namespace ICare.API.Controllers
         
         [HttpGet]
         [Route("GetDrugById/{id:int}")]
+
         public async Task<ActionResult<ApiResponse<GetDrugByIdApiDTO.Response>>> GetDrugById(int id)
         {
             var response = new ApiResponse<GetDrugByIdApiDTO.Response>();
@@ -77,6 +79,7 @@ namespace ICare.API.Controllers
 
         [HttpGet]
         [Route("GetCategoryDrugs/{id:int}")]
+
         public async Task<ActionResult<ApiResponse<IEnumerable<GetCategoryDrugsApiDTO.Response>>>> GetCategoryDrugs(int id)
         {
             var response = new ApiResponse<IEnumerable<GetCategoryDrugsApiDTO.Response>>();
@@ -99,6 +102,8 @@ namespace ICare.API.Controllers
 
         [HttpPut]
         [Route("AddQuantity")]
+        [Authorize]
+
         public ActionResult<ApiResponse> AddQuantity(AddQuantityApiDTO.Request request)
         {
             var response = new ApiResponse();
@@ -110,6 +115,8 @@ namespace ICare.API.Controllers
 
         [HttpPut]
         [Route("EditDrug")]
+        [Authorize]
+
         public async  Task<ActionResult<ApiResponse>> EditDrug([FromForm] UpdateDrugApiDTO.Request request)
         {
             var response = new ApiResponse();
