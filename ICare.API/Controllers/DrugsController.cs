@@ -162,6 +162,18 @@ namespace ICare.API.Controllers
         }
 
 
+        [HttpDelete]
+        [Route("DeleteDrug/{id:int}")]
+        public ActionResult<ApiResponse> DeleteDrug(int id)
+        {
+            var response = new ApiResponse();
+
+            _drugService.Delete(id);
+
+            return Ok(response); 
+        }
+
+
 
 
     }

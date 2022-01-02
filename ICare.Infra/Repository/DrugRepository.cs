@@ -145,20 +145,20 @@ namespace ICare.Infra.Repository
         //        return false;
         //    }
         //}
-        //public bool Delete(int drugId)
-        //{
-        //    try
-        //    {
-        //        var param = new DynamicParameters();
-        //        param.Add("@Id", drugId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+        public bool Delete(int drugId)
+        {
+            try
+            {
+                var param = new DynamicParameters();
+                param.Add("@Id", drugId, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
-        //        _dbContext.Connection.Execute("DrugDelete", param, commandType: CommandType.StoredProcedure);
-        //        return true;
-        //    }
-        //    catch (Exception erorr)
-        //    {
-        //        return false;
-        //    }
-        //}
+                _dbContext.Connection.Execute("DrugDelete", param, commandType: CommandType.StoredProcedure);
+                return true;
+            }
+            catch (Exception erorr)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -10,7 +10,6 @@ namespace ICare.Core
 {
     public class Background : IHostedService,IDisposable
     {
-        private int num = 0;
         private Timer timer60Seconds;
         private Timer timer1Day;
 
@@ -26,51 +25,29 @@ namespace ICare.Core
 
             timer60Seconds = new Timer(async o =>
             {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Drug :" + num);
+                Console.WriteLine("printing  Drug " );
+                Console.WriteLine("printing  Water " );
                 _processBackground.BringDrugsOnTime();
+                _processBackground.CheckWaterOnTime();
             },
             null,
             TimeSpan.Zero,
             TimeSpan.FromSeconds(60)
             );
 
-            timer60Seconds = new Timer(async o =>
-            {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Water :" + num);
-                _processBackground.CheckWaterOnTime();
-            },
-           null,
-           TimeSpan.Zero,
-           TimeSpan.FromSeconds(60)
-           );
 
             timer1Day = new Timer(async o =>
             {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Expier Drug :" + num);
+                Console.WriteLine("printing Expier Subsecption");
+                Console.WriteLine("printing  Expier Drug");
                 _processBackground.CheckExpierDrug();
+                _processBackground.CheckExpierSubscription();
             },
            null,
            TimeSpan.Zero,
            TimeSpan.FromDays(1)
            );
-            timer1Day = new Timer(async o =>
-            {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Expier Subsecption :" + num);
-                _processBackground.CheckExpierSubscription();
-            },
-          null,
-          TimeSpan.Zero,
-          TimeSpan.FromDays(1)
-          );
-
+           
 
             return Task.CompletedTask;
         }
@@ -84,6 +61,7 @@ namespace ICare.Core
         public void Dispose()
         {
             timer60Seconds?.Dispose();
+            timer1Day?.Dispose();
         }
     }
 }

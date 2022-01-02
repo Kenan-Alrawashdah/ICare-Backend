@@ -57,6 +57,12 @@ namespace ICare.Infra.Services
 
         }
 
+        public bool Delete(int drugId)
+        {
+            return _drugRepository.Delete(drugId);
+
+        }
+
 
 
     }
