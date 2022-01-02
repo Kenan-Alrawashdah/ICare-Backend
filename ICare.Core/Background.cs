@@ -29,48 +29,31 @@ namespace ICare.Core
                 Interlocked.Increment(ref num);
 
                 Console.WriteLine("printing  Drug :" + num);
+                Console.WriteLine("printing  Water :" + num);
                 _processBackground.BringDrugsOnTime();
+                _processBackground.CheckWaterOnTime();
             },
             null,
             TimeSpan.Zero,
             TimeSpan.FromSeconds(60)
             );
 
-            timer60Seconds = new Timer(async o =>
-            {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Water :" + num);
-                _processBackground.CheckWaterOnTime();
-            },
-           null,
-           TimeSpan.Zero,
-           TimeSpan.FromSeconds(60)
-           );
 
             timer1Day = new Timer(async o =>
             {
                 Interlocked.Increment(ref num);
 
+                Console.WriteLine("printing Expier Subsecption :" + num);
                 Console.WriteLine("printing  Expier Drug :" + num);
                 _processBackground.CheckExpierDrug();
+                _processBackground.CheckExpierSubscription();
+
             },
            null,
            TimeSpan.Zero,
            TimeSpan.FromDays(1)
            );
-            timer1Day = new Timer(async o =>
-            {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Expier Subsecption :" + num);
-                _processBackground.CheckExpierSubscription();
-            },
-          null,
-          TimeSpan.Zero,
-          TimeSpan.FromDays(1)
-          );
-
+           
 
             return Task.CompletedTask;
         }
@@ -84,6 +67,7 @@ namespace ICare.Core
         public void Dispose()
         {
             timer60Seconds?.Dispose();
+            timer1Day?.Dispose();
         }
     }
 }
