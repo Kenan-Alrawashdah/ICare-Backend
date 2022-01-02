@@ -10,7 +10,6 @@ namespace ICare.Core
 {
     public class Background : IHostedService,IDisposable
     {
-        private int num = 0;
         private Timer timer60Seconds;
         private Timer timer1Day;
 
@@ -26,10 +25,8 @@ namespace ICare.Core
 
             timer60Seconds = new Timer(async o =>
             {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Drug :" + num);
-                Console.WriteLine("printing  Water :" + num);
+                Console.WriteLine("printing  Drug " );
+                Console.WriteLine("printing  Water " );
                 _processBackground.BringDrugsOnTime();
                 _processBackground.CheckWaterOnTime();
             },
@@ -41,13 +38,10 @@ namespace ICare.Core
 
             timer1Day = new Timer(async o =>
             {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing Expier Subsecption :" + num);
-                Console.WriteLine("printing  Expier Drug :" + num);
+                Console.WriteLine("printing Expier Subsecption");
+                Console.WriteLine("printing  Expier Drug");
                 _processBackground.CheckExpierDrug();
                 _processBackground.CheckExpierSubscription();
-
             },
            null,
            TimeSpan.Zero,
