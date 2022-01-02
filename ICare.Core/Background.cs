@@ -30,23 +30,13 @@ namespace ICare.Core
 
                 Console.WriteLine("printing  Drug :" + num);
                 _processBackground.BringDrugsOnTime();
+                Console.WriteLine("printing  Water :" + num);
+                _processBackground.CheckWaterOnTime();
             },
             null,
             TimeSpan.Zero,
             TimeSpan.FromSeconds(60)
-            );
-
-            timer60Seconds = new Timer(async o =>
-            {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Water :" + num);
-                _processBackground.CheckWaterOnTime();
-            },
-           null,
-           TimeSpan.Zero,
-           TimeSpan.FromSeconds(60)
-           );
+            );  
 
             timer1Day = new Timer(async o =>
             {
@@ -54,24 +44,13 @@ namespace ICare.Core
 
                 Console.WriteLine("printing  Expier Drug :" + num);
                 _processBackground.CheckExpierDrug();
+                Console.WriteLine("printing  Expier Subsecption :" + num);
+                _processBackground.CheckExpierSubscription();
             },
            null,
            TimeSpan.Zero,
            TimeSpan.FromDays(1)
            );
-            timer1Day = new Timer(async o =>
-            {
-                Interlocked.Increment(ref num);
-
-                Console.WriteLine("printing  Expier Subsecption :" + num);
-                _processBackground.CheckExpierSubscription();
-            },
-          null,
-          TimeSpan.Zero,
-          TimeSpan.FromDays(1)
-          );
-
-
             return Task.CompletedTask;
         }
 
