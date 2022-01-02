@@ -12,6 +12,7 @@ namespace ICare.Core.IServices
     {
         bool AddToQuantity(int drugId, int quantity);
         bool Create(Drug drug);
+        bool Delete(int drugId);
         bool EditDrug(Drug drug);
         Task<IEnumerable<GetAllDrugsApiDTO.Response>> GetAll();
         Task<GetDrugByIdApiDTO.Response> GetById(int drugId);
